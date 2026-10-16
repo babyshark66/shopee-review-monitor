@@ -1,0 +1,4 @@
+shop_name,shop_url,shop_id,enabled,last_checked_at,status,error_message
+Shop Ánh Dương,https://shopee.vn/shop.111,111,TRUE,,
+Shop Bốn Mùa,https://shopee.vn/shop.222,222,true,,
+Shop Tắt (ví dụ tắt),https://shopee.vn/shop.333,333,FALSE,,

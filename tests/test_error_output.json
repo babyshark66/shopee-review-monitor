@@ -1,0 +1,115 @@
+{
+  "name": "z_test_error_output",
+  "nodes": [
+    {
+      "id": "e1",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "e2",
+      "name": "Ctx2",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        220,
+        0
+      ],
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a1",
+              "name": "shop_id",
+              "value": "S1",
+              "type": "string"
+            },
+            {
+              "id": "a2",
+              "name": "shop_name",
+              "value": "ShopErr",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "e3",
+      "name": "Boom",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        440,
+        0
+      ],
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "throw new Error('boom-test');"
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "e4",
+      "name": "Observe",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        700,
+        120
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const item = $input.first();\nconst out = { json_keys: Object.keys(item.json), error: item.json.error ?? null };\ntry { out.ctx_via_item = $('Ctx2').item.json.shop_id; } catch (e) { out.ctx_via_item = 'ERR:' + e.message; }\ntry { out.paired = JSON.stringify(item.pairedItem ?? null); } catch (e) { out.paired = 'ERR'; }\nreturn [{ json: out }];"
+      }
+    }
+  ],
+  "connections": {
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "Ctx2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ctx2": {
+      "main": [
+        [
+          {
+            "node": "Boom",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Boom": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Observe",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "active": false,
+  "id": "ztesterrorout1"
+}

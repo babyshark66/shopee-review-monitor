@@ -1,0 +1,1817 @@
+{
+  "id": "shopeereviewmirror1",
+  "name": "Shopee Review Monitor [MIRROR TEST - Sheets faked]",
+  "nodes": [
+    {
+      "id": "manualtrigger",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        300
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "scheduletrigger",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        120
+      ],
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 6
+            }
+          ]
+        }
+      },
+      "disabled": true
+    },
+    {
+      "id": "config",
+      "name": "Config",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        220,
+        300
+      ],
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a01",
+              "name": "DATA_SOURCE",
+              "value": "import",
+              "type": "string"
+            },
+            {
+              "id": "a02",
+              "name": "OLLAMA_ENABLED",
+              "value": true,
+              "type": "boolean"
+            },
+            {
+              "id": "a03",
+              "name": "OLLAMA_URL",
+              "value": "http://172.24.0.1:11434/api/chat",
+              "type": "string"
+            },
+            {
+              "id": "a04",
+              "name": "OLLAMA_MODEL",
+              "value": "qwen2.5-coder:1.5b",
+              "type": "string"
+            },
+            {
+              "id": "a05",
+              "name": "MAX_SHOPS",
+              "value": 10,
+              "type": "number"
+            },
+            {
+              "id": "a06",
+              "name": "MAX_PRODUCTS_PER_SHOP",
+              "value": 20,
+              "type": "number"
+            },
+            {
+              "id": "a07",
+              "name": "MAX_REVIEWS_PER_PRODUCT",
+              "value": 50,
+              "type": "number"
+            },
+            {
+              "id": "a08",
+              "name": "MAX_REVIEW_PAGES",
+              "value": 3,
+              "type": "number"
+            },
+            {
+              "id": "a09",
+              "name": "REVIEW_PAGE_SIZE",
+              "value": 20,
+              "type": "number"
+            },
+            {
+              "id": "a10",
+              "name": "MAX_AI_PER_PRODUCT",
+              "value": 10,
+              "type": "number"
+            },
+            {
+              "id": "a11",
+              "name": "REQUEST_DELAY_MS",
+              "value": 100,
+              "type": "number"
+            },
+            {
+              "id": "a12",
+              "name": "AI_DELAY_MS",
+              "value": 100,
+              "type": "number"
+            },
+            {
+              "id": "a13",
+              "name": "SHOPEE_API_HOST",
+              "value": "https://partner.shopeemobile.com",
+              "type": "string"
+            },
+            {
+              "id": "a14",
+              "name": "SHOPEE_PARTNER_ID",
+              "value": "",
+              "type": "string"
+            },
+            {
+              "id": "a15",
+              "name": "SHOPEE_ACCESS_TOKEN",
+              "value": "",
+              "type": "string"
+            },
+            {
+              "id": "a16",
+              "name": "SHOPEE_PARTNER_KEY",
+              "value": "",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "initrunstats",
+      "name": "Init Run Stats",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        440,
+        300
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "\nconst _sd = $getWorkflowStaticData('global');\n_sd.fixtures = {\"shops\": [{\"shop_id\": \"111\", \"shop_name\": \"Shop Ánh Dương\", \"shop_url\": \"https://shopee.vn/shop.111\", \"enabled\": \"TRUE\", \"last_checked_at\": \"\", \"status\": \"\", \"error_message\": \"\"}, {\"shop_id\": \"222\", \"shop_name\": \"Shop Bốn Mùa\", \"shop_url\": \"https://shopee.vn/shop.222\", \"enabled\": \"true\", \"last_checked_at\": \"\", \"status\": \"\", \"error_message\": \"\"}, {\"shop_id\": \"333\", \"shop_name\": \"Shop Tắt (disabled)\", \"shop_url\": \"https://shopee.vn/shop.333\", \"enabled\": \"FALSE\", \"last_checked_at\": \"\", \"status\": \"\", \"error_message\": \"\"}], \"product_imports\": [{\"shop_id\": \"111\", \"item_id\": \"501\", \"product_name\": \"Son môi Velvet Red\"}, {\"shop_id\": \"111\", \"item_id\": \"502\", \"product_name\": \"Kem dưỡng ẩm Aloe\"}, {\"shop_id\": \"111\", \"item_id\": \"501\", \"product_name\": \"Son môi Velvet Red (trung)\"}, {\"shop_id\": \"222\", \"item_id\": \"601\", \"product_name\": \"Túi xách da mềm\"}], \"review_imports\": [{\"shop_id\": \"111\", \"item_id\": \"501\", \"comment_id\": \"R1\", \"rating_star\": 5, \"comment\": \"San pham tot (dup cua seed)\", \"review_time\": \"2026-10-01T10:00:00.000Z\"}, {\"shop_id\": \"111\", \"item_id\": \"501\", \"comment_id\": \"R2\", \"rating_star\": 2, \"comment\": \"Giao hang cham, hang bi loi son\", \"review_time\": \"1760000000\"}, {\"shop_id\": \"111\", \"item_id\": \"501\", \"comment_id\": \"R2\", \"rating_star\": 2, \"comment\": \"Giao hang cham (trung trong batch)\", \"review_time\": \"1760000000\"}, {\"shop_id\": \"111\", \"item_id\": \"501\", \"comment_id\": \"R3\", \"rating_star\": 4, \"comment\": \"Dep nhung mau chot hoi nhạt\", \"review_time\": \"01/10/2026 10:30\"}, {\"shop_id\": \"111\", \"item_id\": \"502\", \"comment_id\": \"R10\", \"rating_star\": 1, \"comment\": \"Kem dich vu, khong giong mo ta\", \"review_time\": \"2026-10-02T08:00:00Z\"}, {\"shop_id\": \"222\", \"item_id\": \"601\", \"comment_id\": \"R20\", \"rating_star\": 5, \"comment\": \"Tui dep, giao nhanh\", \"review_time\": \"2026-10-03\"}, {\"shop_id\": \"222\", \"item_id\": \"601\", \"comment_id\": \"\", \"rating_star\": 3, \"comment\": \"Thieu comment_id se bi bo qua\", \"review_time\": \"2026-10-03\"}], \"seed_reviews\": [{\"review_key\": \"111_501_R1\", \"shop_id\": \"111\", \"shop_name\": \"Shop Ánh Dương\", \"item_id\": \"501\", \"product_name\": \"Son môi Velvet Red\", \"comment_id\": \"R1\", \"rating_star\": 5, \"comment\": \"San pham rat tot\", \"review_time\": \"2026-09-30T00:00:00.000Z\", \"collected_at\": \"2026-10-01T00:00:00.000Z\", \"sentiment\": \"positive\", \"issues\": \"[]\", \"summary\": \"Khen sản phẩm\", \"urgency\": \"low\", \"analysis_status\": \"done\"}, {\"review_key\": \"111_501_R9\", \"shop_id\": \"111\", \"shop_name\": \"Shop Ánh Dương\", \"item_id\": \"501\", \"product_name\": \"Son môi Velvet Red\", \"comment_id\": \"R9\", \"rating_star\": 1, \"comment\": \"Cham giao hang qua, dong goi cau tat\", \"review_time\": \"2026-09-30T01:00:00.000Z\", \"collected_at\": \"2026-10-01T00:00:00.000Z\", \"sentiment\": \"\", \"issues\": \"\", \"summary\": \"\", \"urgency\": \"\", \"analysis_status\": \"pending\"}]};\n_sd.sheets = { Products: [], Reviews: JSON.parse(JSON.stringify(_sd.fixtures.seed_reviews)), RunLog: [] };\n\nconst sd = $getWorkflowStaticData('global');\nsd.shops = [];\nsd.productChecks = [];\nsd.run_errors = [];\nsd.counts = { products: 0, reviews_new: 0, analyses_done: 0, analyses_failed: 0 };\nsd.cur = null;\nsd.run_started_at = new Date().toISOString();\nreturn [{ json: { started_at: sd.run_started_at } }];"
+      }
+    },
+    {
+      "id": "googlesheetsreadshops",
+      "name": "Google Sheets - Read Shops",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        660,
+        300
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const sd = $getWorkflowStaticData('global');\nreturn (sd.fixtures.shops || []).map(function (r) { return { json: r, pairedItem: { item: 0 } }; });"
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "codefilterenabledshops",
+      "name": "Code - Filter Enabled Shops",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        880,
+        300
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const cfg = $('Config').first().json;\nconst rows = $input.all().map(function (i) { return i.json; }).filter(function (r) { return r && (r.shop_url || r.shop_id); });\nfunction parseShopId(r) {\n  if (r.shop_id !== undefined && r.shop_id !== null && String(r.shop_id).trim() !== '') return String(r.shop_id).trim();\n  const url = String(r.shop_url || '');\n  const m = url.match(/\\/shop\\/(\\d+)/) || url.match(/-s\\.(\\d+)/) || url.match(/\\.s\\.(\\d+)/);\n  return m ? m[1] : '';\n}\nfunction yes(v) {\n  const s = String(v === undefined || v === null ? '' : v).trim().toLowerCase();\n  return ['true','1','yes','y','on'].indexOf(s) !== -1;\n}\nconst sd = $getWorkflowStaticData('global');\nconst out = [];\nconst seen = {};\nlet skipped = 0;\nfor (let i = 0; i < rows.length; i++) {\n  const r = rows[i];\n  if (!yes(r.enabled)) continue;\n  const shop_id = parseShopId(r);\n  if (!shop_id) { skipped++; continue; }\n  if (seen[shop_id]) continue;\n  seen[shop_id] = true;\n  out.push({ json: {\n    shop_id: shop_id,\n    shop_name: r.shop_name || '',\n    shop_url: r.shop_url || '',\n    enabled: 'true',\n    last_checked_at: '',\n    status: 'pending',\n    error_message: ''\n  }, pairedItem: { item: 0 } });\n}\nsd.counts.shops_skipped = skipped;\nconst maxShops = Number(cfg.MAX_SHOPS) || 10;\nreturn out.slice(0, maxShops);"
+      }
+    },
+    {
+      "id": "loopovershops",
+      "name": "Loop Over Shops",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        1100,
+        300
+      ],
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      }
+    },
+    {
+      "id": "ifproductsource",
+      "name": "IF - Product Source",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1320,
+        200
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "c_ifproductsource",
+              "leftValue": "={{ $('Config').first().json.DATA_SOURCE }}",
+              "rightValue": "open_api",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "codebuildproductsign",
+      "name": "Code - Build Product Sign",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1540,
+        80
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "function utf8Bytes(str) {\n  if (typeof TextEncoder !== 'undefined') return new TextEncoder().encode(str);\n  const out = [];\n  for (let i = 0; i < str.length; i++) {\n    let c = str.charCodeAt(i);\n    if (c < 0x80) out.push(c);\n    else if (c < 0x800) out.push(0xc0 | (c >> 6), 0x80 | (c & 0x3f));\n    else if (c >= 0xd800 && c <= 0xdbff) {\n      const c2 = str.charCodeAt(++i);\n      c = 0x10000 + ((c & 0x3ff) << 10) + (c2 & 0x3ff);\n      out.push(0xf0 | (c >> 18), 0x80 | ((c >> 12) & 0x3f), 0x80 | ((c >> 6) & 0x3f), 0x80 | (c & 0x3f));\n    } else out.push(0xe0 | (c >> 12), 0x80 | ((c >> 6) & 0x3f), 0x80 | (c & 0x3f));\n  }\n  return Uint8Array.from(out);\n}\nconst K = [\n  0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,\n  0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,\n  0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,\n  0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,\n  0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,\n  0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,\n  0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,\n  0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2\n];\nfunction rotr(x, n) { return (x >>> n) | (x << (32 - n)); }\nfunction sha256Bytes(msgBytes) {\n  const len = msgBytes.length;\n  const bitLen = len * 8;\n  const data = new Uint8Array((((len + 8) >> 6) + 1) * 64);\n  data.set(msgBytes);\n  data[len] = 0x80;\n  const dv = new DataView(data.buffer);\n  dv.setUint32(data.length - 4, bitLen >>> 0, false);\n  dv.setUint32(data.length - 8, Math.floor(bitLen / 0x100000000), false);\n  const H = [0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19];\n  const w = new Uint32Array(64);\n  for (let off = 0; off < data.length; off += 64) {\n    for (let i = 0; i < 16; i++) w[i] = dv.getUint32(off + i * 4, false);\n    for (let i = 16; i < 64; i++) {\n      const s0 = rotr(w[i-15],7) ^ rotr(w[i-15],18) ^ (w[i-15] >>> 3);\n      const s1 = rotr(w[i-2],17) ^ rotr(w[i-2],19) ^ (w[i-2] >>> 10);\n      w[i] = (w[i-16] + s0 + w[i-7] + s1) >>> 0;\n    }\n    let a=H[0],b=H[1],c=H[2],d=H[3],e=H[4],f=H[5],g=H[6],h=H[7];\n    for (let i = 0; i < 64; i++) {\n      const S1 = rotr(e,6) ^ rotr(e,11) ^ rotr(e,25);\n      const ch = (e & f) ^ (~e & g);\n      const t1 = (h + S1 + ch + K[i] + w[i]) >>> 0;\n      const S0 = rotr(a,2) ^ rotr(a,13) ^ rotr(a,22);\n      const maj = (a & b) ^ (a & c) ^ (b & c);\n      const t2 = (S0 + maj) >>> 0;\n      h = g; g = f; f = e; e = (d + t1) >>> 0; d = c; c = b; b = a; a = (t1 + t2) >>> 0;\n    }\n    H[0]=(H[0]+a)>>>0; H[1]=(H[1]+b)>>>0; H[2]=(H[2]+c)>>>0; H[3]=(H[3]+d)>>>0;\n    H[4]=(H[4]+e)>>>0; H[5]=(H[5]+f)>>>0; H[6]=(H[6]+g)>>>0; H[7]=(H[7]+h)>>>0;\n  }\n  const out = new Uint8Array(32);\n  const odv = new DataView(out.buffer);\n  H.forEach(function (v, i) { odv.setUint32(i * 4, v, false); });\n  return out;\n}\nfunction bytesToHex(b) { return Array.from(b).map(function (x) { return x.toString(16).padStart(2, '0'); }).join(''); }\nfunction hmacSha256Hex(keyStr, msgStr) {\n  let key = utf8Bytes(keyStr);\n  if (key.length > 64) key = sha256Bytes(key);\n  const ipad = new Uint8Array(64);\n  const opad = new Uint8Array(64);\n  for (let i = 0; i < 64; i++) {\n    const kb = i < key.length ? key[i] : 0;\n    ipad[i] = kb ^ 0x36;\n    opad[i] = kb ^ 0x5c;\n  }\n  const innerHash = sha256Bytes(Uint8Array.from([...ipad, ...utf8Bytes(msgStr)]));\n  return bytesToHex(sha256Bytes(Uint8Array.from([...opad, ...innerHash])));\n}\n\nconst cfg = $('Config').first().json;\nconst shop = $json;\nconst path = '/api/v2/product/get_item_list';\nconst timestamp = Math.floor(Date.now() / 1000);\nconst partner_id = String(cfg.SHOPEE_PARTNER_ID || '');\nconst access_token = String(cfg.SHOPEE_ACCESS_TOKEN || '');\nconst shop_id = String(shop.shop_id || '');\nconst base = partner_id + path + timestamp + access_token + shop_id;\nconst sign = hmacSha256Hex(String(cfg.SHOPEE_PARTNER_KEY || ''), base);\nconst out = {};\nfor (const k in shop) { if (Object.prototype.hasOwnProperty.call(shop, k)) out[k] = shop[k]; }\nout._path = path;\nout._timestamp = timestamp;\nout._partner_id = partner_id;\nout._access_token = access_token;\nout._shop_id = shop_id;\nout._sign = sign;\nreturn [{ json: out, pairedItem: { item: 0 } }];"
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "httpshopeegetitemlist",
+      "name": "HTTP - Shopee Get Item List",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        1760,
+        80
+      ],
+      "parameters": {
+        "method": "GET",
+        "url": "={{ $('Config').first().json.SHOPEE_API_HOST + '/api/v2/product/get_item_list' }}",
+        "options": {
+          "timeout": 30000
+        },
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "partner_id",
+              "value": "={{ $json._partner_id }}"
+            },
+            {
+              "name": "timestamp",
+              "value": "={{ String($json._timestamp) }}"
+            },
+            {
+              "name": "shop_id",
+              "value": "={{ $json._shop_id }}"
+            },
+            {
+              "name": "access_token",
+              "value": "={{ $json._access_token }}"
+            },
+            {
+              "name": "sign",
+              "value": "={{ $json._sign }}"
+            },
+            {
+              "name": "offset",
+              "value": "0"
+            },
+            {
+              "name": "page_size",
+              "value": "={{ String(Math.min(Number($('Config').first().json.MAX_PRODUCTS_PER_SHOP || 20), 100)) }}"
+            }
+          ]
+        }
+      },
+      "onError": "continueErrorOutput",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "id": "codemapapiproducts",
+      "name": "Code - Map API Products",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1980,
+        80
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const body = $json && typeof $json === 'object' ? $json : {};\nconst err = body.error !== undefined ? body.error : (body.response ? body.response.error : undefined);\nlet items = body.item !== undefined ? body.item : ((body.response && body.response.item) || body.items || (body.response && body.response.items) || []);\nif (err !== undefined && err !== null && err !== '' && err !== 0 && err !== '0') {\n  throw new Error('Shopee get_item_list error: ' + JSON.stringify(err) + ' ' + String(body.message || ''));\n}\nif (!Array.isArray(items)) throw new Error('Phan hoi get_item_list khong dung dinh dang: ' + JSON.stringify(body).slice(0, 300));\nlet ctx = {};\ntry { ctx = $('Loop Over Shops').item.json; } catch (e) { ctx = $input.first() ? $input.first().json : {}; }\nconst out = [];\nfor (let i = 0; i < items.length; i++) {\n  const it = items[i] || {};\n  const rawId = it.item_id !== undefined ? it.item_id : (it.itemid !== undefined ? it.itemid : '');\n  const item_id = String(rawId).trim();\n  if (!item_id) continue;\n  out.push({ json: {\n    shop_id: String(ctx.shop_id || it.shop_id || ''),\n    shop_name: ctx.shop_name || '',\n    item_id: item_id,\n    product_name: it.item_name || it.name || '',\n    product_url: ''\n  }, pairedItem: { item: 0 } });\n}\nif (out.length === 0) {\n  return [{ json: { _marker: 'no_products', shop_id: String(ctx.shop_id || ''), shop_name: ctx.shop_name || '' }, pairedItem: { item: 0 } }];\n}\nreturn out;"
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "googlesheetsreadproductimports",
+      "name": "Google Sheets - Read Product Imports",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1540,
+        300
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const sd = $getWorkflowStaticData('global');\nlet shopId = '';\ntry { shopId = $('Loop Over Shops').item.json.shop_id; } catch (e) {}\nconst rows = (sd.fixtures.product_imports || []).filter(function (r) { return String(r.shop_id) === String(shopId); });\nif (!rows.length) return [{ json: {} }];\nreturn rows.map(function (r) { return { json: r, pairedItem: { item: 0 } }; });"
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "codenormalizeproducts",
+      "name": "Code - Normalize Products",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2200,
+        300
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const cfg = $('Config').first().json;\nlet shop = {};\ntry { shop = $('Loop Over Shops').item.json; } catch (e) { shop = $input.first() ? $input.first().json : {}; }\nconst sd = $getWorkflowStaticData('global');\nconst rows = $input.all().map(function (i) { return i.json; }).filter(function (r) {\n  return r && !r._marker && r.item_id !== undefined && r.item_id !== null && String(r.item_id).trim() !== '';\n});\nconst seen = {};\nconst out = [];\nconst maxProducts = Number(cfg.MAX_PRODUCTS_PER_SHOP) || 20;\nfor (let i = 0; i < rows.length; i++) {\n  const r = rows[i];\n  const item_id = String(r.item_id).trim();\n  if (seen[item_id]) continue;\n  seen[item_id] = true;\n  let product_url = r.product_url || '';\n  const sid = String(r.shop_id || shop.shop_id || '');\n  if (!product_url && sid && item_id) product_url = 'https://shopee.vn/product/' + sid + '/' + item_id;\n  out.push({ json: {\n    shop_id: sid,\n    shop_name: r.shop_name || shop.shop_name || '',\n    item_id: item_id,\n    product_name: r.product_name || '',\n    product_url: product_url,\n    last_review_check: '',\n    status: 'pending'\n  }, pairedItem: { item: 0 } });\n  if (out.length >= maxProducts) break;\n}\nconst shopRow = {\n  shop_id: String(shop.shop_id || (out[0] ? out[0].json.shop_id : '') || ''),\n  status: 'ok',\n  last_checked_at: new Date().toISOString(),\n  error_message: ''\n};\nsd.shops.push(shopRow);\nif (out.length === 0) {\n  return [{ json: { _marker: 'no_products', shop_id: shopRow.shop_id, shop_name: shop.shop_name || '' }, pairedItem: { item: 0 } }];\n}\nreturn out;"
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "codeshoperror",
+      "name": "Code - Shop Error",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1760,
+        480
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "function errMsg(e) {\n  if (e === undefined || e === null || e === '') return 'unknown error';\n  if (typeof e === 'string') return e;\n  if (typeof e === 'object') {\n    if (typeof e.message === 'string' && e.message) return e.message;\n    try { return JSON.stringify(e); } catch (err) { return String(e); }\n  }\n  return String(e);\n}\nconst sd = $getWorkflowStaticData('global');\nlet shop = {};\nif ($json && $json.shop_id) { shop = $json; }\nelse { try { shop = $('Loop Over Shops').item.json; } catch (e) { shop = {}; } }\nconst msg = errMsg($json && $json.error).slice(0, 500);\nconst row = {\n  shop_id: String(shop.shop_id || ''),\n  status: 'error',\n  last_checked_at: new Date().toISOString(),\n  error_message: msg\n};\nsd.shops.push(row);\nsd.run_errors.push({ scope: 'shop', key: row.shop_id, message: msg });\nreturn [{ json: { shop_id: row.shop_id, status: 'error', error_message: msg }, pairedItem: { item: 0 } }];"
+      }
+    },
+    {
+      "id": "codecollectdiscoveredproducts",
+      "name": "Code - Collect Discovered Products",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2420,
+        300
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const sd = $getWorkflowStaticData('global');\nconst seen = {};\nconst out = [];\nconst all = $input.all();\nfor (let i = 0; i < all.length; i++) {\n  const r = all[i].json;\n  if (!r || r._marker || r.item_id === undefined || r.item_id === null || String(r.item_id).trim() === '') continue;\n  const shop_id = String(r.shop_id || '');\n  const item_id = String(r.item_id).trim();\n  const key = shop_id + '_' + item_id;\n  if (seen[key]) continue;\n  seen[key] = true;\n  out.push({ json: {\n    shop_id: shop_id,\n    shop_name: r.shop_name || '',\n    item_id: item_id,\n    product_name: r.product_name || '',\n    product_url: r.product_url || '',\n    last_review_check: '',\n    status: 'pending'\n  }, pairedItem: { item: i } });\n}\nsd.counts.products = out.length;\nif (out.length === 0) return [{ json: { _marker: 'no_products' }, pairedItem: { item: 0 } }];\nreturn out;"
+      }
+    },
+    {
+      "id": "ifanyproducts",
+      "name": "IF - Any Products",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        2640,
+        300
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "c_ifanyproducts",
+              "leftValue": "={{ ($json.item_id !== undefined && String($json.item_id) !== '') ? 'yes' : 'no' }}",
+              "rightValue": "yes",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "googlesheetsupsertproducts",
+      "name": "Google Sheets - Upsert Products",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2860,
+        220
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const sd = $getWorkflowStaticData('global');\nsd.sheets.Products = sd.sheets.Products || [];\nconst cols = [\"shop_id\", \"shop_name\", \"item_id\", \"product_name\", \"product_url\", \"last_review_check\", \"status\"];\nconst input = $input.all();\ninput.forEach(function (item) {\n  const r = item.json;\n  let found = -1;\n  for (let i = 0; i < sd.sheets.Products.length; i++) {\n    const p = sd.sheets.Products[i];\n    if (String(p.shop_id) === String(r.shop_id) && String(p.item_id) === String(r.item_id)) { found = i; break; }\n  }\n  const row = {};\n  cols.forEach(function (c) { row[c] = r[c] !== undefined ? r[c] : ''; });\n  if (found >= 0) sd.sheets.Products[found] = Object.assign(sd.sheets.Products[found], row);\n  else sd.sheets.Products.push(row);\n});\nreturn input.map(function (item, idx) {\n  const jsonOut = {};\n  cols.forEach(function (c) { jsonOut[c] = item.json[c] !== undefined ? item.json[c] : ''; });\n  return { json: jsonOut, pairedItem: { item: idx } };\n});"
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "loopoverproducts",
+      "name": "Loop Over Products",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        3080,
+        220
+      ],
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      }
+    },
+    {
+      "id": "codethrottle",
+      "name": "Code - Throttle",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3300,
+        220
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const cfg = $('Config').first().json;\nconst ms = Math.max(0, Number(cfg.REQUEST_DELAY_MS) || 0);\nif (ms > 0) await new Promise(function (resolve) { setTimeout(resolve, Math.min(ms, 10000)); });\nreturn $input.all();"
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "googlesheetsreadproductreviews",
+      "name": "Google Sheets - Read Product Reviews",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3520,
+        220
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const sd = $getWorkflowStaticData('global');\nconst rows = (sd.sheets.Reviews || []).filter(function (r) {\n  return String(r.shop_id) === String($json.shop_id) && String(r.item_id) === String($json.item_id);\n});\nif (!rows.length) return [{ json: {} }];\nreturn rows.map(function (r) { return { json: r, pairedItem: { item: 0 } }; });"
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "codebuildproductstate",
+      "name": "Code - Build Product State",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3740,
+        220
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const rows = $input.all().map(function (i) { return i.json; }).filter(function (r) { return r && r.review_key; });\nlet product = {};\ntry { product = $('Loop Over Products').item.json; } catch (e) { product = rows[0] || {}; }\nconst existing_keys = [];\nconst pending = [];\nfor (let i = 0; i < rows.length; i++) {\n  const r = rows[i];\n  existing_keys.push(String(r.review_key));\n  if (String(r.analysis_status || '').toLowerCase() === 'pending') pending.push(r);\n}\nreturn [{ json: {\n  shop_id: String(product.shop_id || (rows[0] ? rows[0].shop_id : '') || ''),\n  shop_name: product.shop_name || '',\n  item_id: String(product.item_id || (rows[0] ? rows[0].item_id : '') || ''),\n  product_name: product.product_name || '',\n  existing_keys: existing_keys,\n  pending: pending\n}, pairedItem: { item: 0 } }];"
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "ifreviewsource",
+      "name": "IF - Review Source",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        3960,
+        140
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "c_ifreviewsource",
+              "leftValue": "={{ $('Config').first().json.DATA_SOURCE }}",
+              "rightValue": "open_api",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "googlesheetsreadreviewimports",
+      "name": "Google Sheets - Read Review Imports",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4180,
+        40
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const sd = $getWorkflowStaticData('global');\nconst rows = (sd.fixtures.review_imports || []).filter(function (r) {\n  return String(r.shop_id) === String($json.shop_id) && String(r.item_id) === String($json.item_id);\n});\nif (!rows.length) return [{ json: {} }];\nreturn rows.map(function (r) { return { json: r, pairedItem: { item: 0 } }; });"
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "codeinitreviewfetch",
+      "name": "Code - Init Review Fetch",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4180,
+        240
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const sd = $getWorkflowStaticData('global');\nlet state = {};\ntry { state = $('Code - Build Product State').item.json; } catch (e) { state = $json || {}; }\nsd.cur = { acc: [], cursor: 0, page: 1, done: false };\nreturn [{ json: {\n  shop_id: String(state.shop_id || ''),\n  shop_name: state.shop_name || '',\n  item_id: String(state.item_id || ''),\n  product_name: state.product_name || ''\n}, pairedItem: { item: 0 } }];"
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "codebuildreviewsign",
+      "name": "Code - Build Review Sign",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4400,
+        240
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "function utf8Bytes(str) {\n  if (typeof TextEncoder !== 'undefined') return new TextEncoder().encode(str);\n  const out = [];\n  for (let i = 0; i < str.length; i++) {\n    let c = str.charCodeAt(i);\n    if (c < 0x80) out.push(c);\n    else if (c < 0x800) out.push(0xc0 | (c >> 6), 0x80 | (c & 0x3f));\n    else if (c >= 0xd800 && c <= 0xdbff) {\n      const c2 = str.charCodeAt(++i);\n      c = 0x10000 + ((c & 0x3ff) << 10) + (c2 & 0x3ff);\n      out.push(0xf0 | (c >> 18), 0x80 | ((c >> 12) & 0x3f), 0x80 | ((c >> 6) & 0x3f), 0x80 | (c & 0x3f));\n    } else out.push(0xe0 | (c >> 12), 0x80 | ((c >> 6) & 0x3f), 0x80 | (c & 0x3f));\n  }\n  return Uint8Array.from(out);\n}\nconst K = [\n  0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,\n  0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,\n  0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,\n  0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,\n  0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,\n  0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,\n  0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,\n  0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2\n];\nfunction rotr(x, n) { return (x >>> n) | (x << (32 - n)); }\nfunction sha256Bytes(msgBytes) {\n  const len = msgBytes.length;\n  const bitLen = len * 8;\n  const data = new Uint8Array((((len + 8) >> 6) + 1) * 64);\n  data.set(msgBytes);\n  data[len] = 0x80;\n  const dv = new DataView(data.buffer);\n  dv.setUint32(data.length - 4, bitLen >>> 0, false);\n  dv.setUint32(data.length - 8, Math.floor(bitLen / 0x100000000), false);\n  const H = [0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19];\n  const w = new Uint32Array(64);\n  for (let off = 0; off < data.length; off += 64) {\n    for (let i = 0; i < 16; i++) w[i] = dv.getUint32(off + i * 4, false);\n    for (let i = 16; i < 64; i++) {\n      const s0 = rotr(w[i-15],7) ^ rotr(w[i-15],18) ^ (w[i-15] >>> 3);\n      const s1 = rotr(w[i-2],17) ^ rotr(w[i-2],19) ^ (w[i-2] >>> 10);\n      w[i] = (w[i-16] + s0 + w[i-7] + s1) >>> 0;\n    }\n    let a=H[0],b=H[1],c=H[2],d=H[3],e=H[4],f=H[5],g=H[6],h=H[7];\n    for (let i = 0; i < 64; i++) {\n      const S1 = rotr(e,6) ^ rotr(e,11) ^ rotr(e,25);\n      const ch = (e & f) ^ (~e & g);\n      const t1 = (h + S1 + ch + K[i] + w[i]) >>> 0;\n      const S0 = rotr(a,2) ^ rotr(a,13) ^ rotr(a,22);\n      const maj = (a & b) ^ (a & c) ^ (b & c);\n      const t2 = (S0 + maj) >>> 0;\n      h = g; g = f; f = e; e = (d + t1) >>> 0; d = c; c = b; b = a; a = (t1 + t2) >>> 0;\n    }\n    H[0]=(H[0]+a)>>>0; H[1]=(H[1]+b)>>>0; H[2]=(H[2]+c)>>>0; H[3]=(H[3]+d)>>>0;\n    H[4]=(H[4]+e)>>>0; H[5]=(H[5]+f)>>>0; H[6]=(H[6]+g)>>>0; H[7]=(H[7]+h)>>>0;\n  }\n  const out = new Uint8Array(32);\n  const odv = new DataView(out.buffer);\n  H.forEach(function (v, i) { odv.setUint32(i * 4, v, false); });\n  return out;\n}\nfunction bytesToHex(b) { return Array.from(b).map(function (x) { return x.toString(16).padStart(2, '0'); }).join(''); }\nfunction hmacSha256Hex(keyStr, msgStr) {\n  let key = utf8Bytes(keyStr);\n  if (key.length > 64) key = sha256Bytes(key);\n  const ipad = new Uint8Array(64);\n  const opad = new Uint8Array(64);\n  for (let i = 0; i < 64; i++) {\n    const kb = i < key.length ? key[i] : 0;\n    ipad[i] = kb ^ 0x36;\n    opad[i] = kb ^ 0x5c;\n  }\n  const innerHash = sha256Bytes(Uint8Array.from([...ipad, ...utf8Bytes(msgStr)]));\n  return bytesToHex(sha256Bytes(Uint8Array.from([...opad, ...innerHash])));\n}\n\nconst cfg = $('Config').first().json;\nconst sd = $getWorkflowStaticData('global');\nconst cur = sd.cur || { acc: [], cursor: 0, page: 1 };\nconst path = '/api/v2/product/get_comment';\nconst timestamp = Math.floor(Date.now() / 1000);\nconst partner_id = String(cfg.SHOPEE_PARTNER_ID || '');\nconst access_token = String(cfg.SHOPEE_ACCESS_TOKEN || '');\nconst shop_id = String($json.shop_id || '');\nconst base = partner_id + path + timestamp + access_token + shop_id;\nconst sign = hmacSha256Hex(String(cfg.SHOPEE_PARTNER_KEY || ''), base);\nreturn [{ json: {\n  shop_id: shop_id,\n  shop_name: $json.shop_name || '',\n  item_id: String($json.item_id || ''),\n  product_name: $json.product_name || '',\n  _timestamp: timestamp,\n  _partner_id: partner_id,\n  _access_token: access_token,\n  _shop_id: shop_id,\n  _sign: sign,\n  _cursor: cur.cursor,\n  _page: cur.page\n}, pairedItem: { item: 0 } }];"
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "httpshopeegetcomments",
+      "name": "HTTP - Shopee Get Comments",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        4620,
+        240
+      ],
+      "parameters": {
+        "method": "GET",
+        "url": "={{ $('Config').first().json.SHOPEE_API_HOST + '/api/v2/product/get_comment' }}",
+        "options": {
+          "timeout": 30000
+        },
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "partner_id",
+              "value": "={{ $json._partner_id }}"
+            },
+            {
+              "name": "timestamp",
+              "value": "={{ String($json._timestamp) }}"
+            },
+            {
+              "name": "shop_id",
+              "value": "={{ $json._shop_id }}"
+            },
+            {
+              "name": "access_token",
+              "value": "={{ $json._access_token }}"
+            },
+            {
+              "name": "sign",
+              "value": "={{ $json._sign }}"
+            },
+            {
+              "name": "item_id",
+              "value": "={{ $json.item_id }}"
+            },
+            {
+              "name": "comment_id",
+              "value": "={{ String($json._cursor) }}"
+            },
+            {
+              "name": "page_size",
+              "value": "={{ String($('Config').first().json.REVIEW_PAGE_SIZE || 20) }}"
+            }
+          ]
+        }
+      },
+      "onError": "continueErrorOutput",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "id": "codeparsecommentspage",
+      "name": "Code - Parse Comments Page",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4840,
+        240
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const sd = $getWorkflowStaticData('global');\nconst cur = sd.cur || { acc: [], cursor: 0, page: 1 };\nconst body = $json && typeof $json === 'object' ? $json : {};\nconst err = body.error !== undefined ? body.error : (body.response ? body.response.error : undefined);\nif (err !== undefined && err !== null && err !== '' && err !== 0 && err !== '0') {\n  throw new Error('Shopee get_comment error: ' + JSON.stringify(err) + ' ' + String(body.message || ''));\n}\nlet list = body.item_comment_list !== undefined ? body.item_comment_list : ((body.response && body.response.item_comment_list) || body.comments || []);\nif (!Array.isArray(list)) throw new Error('Phan hoi get_comment khong dung dinh dang: ' + JSON.stringify(body).slice(0, 300));\nconst cfg = $('Config').first().json;\nlet state = {};\ntry { state = $('Code - Build Product State').item.json; } catch (e) { state = {}; }\nconst known = {};\n(state.existing_keys || []).forEach(function (k) { known[String(k)] = true; });\nconst maxReviews = Number(cfg.MAX_REVIEWS_PER_PRODUCT) || 50;\nconst pageSize = Number(cfg.REVIEW_PAGE_SIZE) || 20;\nconst maxPages = Number(cfg.MAX_REVIEW_PAGES) || 3;\nconst prefix = String(state.shop_id || '') + '_' + String(state.item_id || '') + '_';\nlet hitKnown = false;\nfor (let i = 0; i < list.length; i++) {\n  const c = list[i] || {};\n  const raw = c.comment_id !== undefined ? c.comment_id : (c.cid !== undefined ? c.cid : '');\n  const comment_id = String(raw).trim();\n  if (!comment_id) continue;\n  if (known[prefix + comment_id]) { hitKnown = true; continue; }\n  cur.acc.push(c);\n}\nlet nextCursor = cur.cursor;\nif (list.length > 0) {\n  const last = list[list.length - 1] || {};\n  const rawLast = last.comment_id !== undefined ? last.comment_id : (last.cid !== undefined ? last.cid : '');\n  const lastId = String(rawLast);\n  if (lastId && lastId !== 'undefined') nextCursor = lastId;\n}\ncur.cursor = nextCursor;\nconst enough = cur.acc.length >= maxReviews;\nconst morePages = list.length >= pageSize && cur.page < maxPages;\ncur.page = cur.page + 1;\nconst more = morePages && !hitKnown && !enough;\nsd.cur = cur;\nreturn [{ json: {\n  shop_id: String(state.shop_id || ''),\n  item_id: String(state.item_id || ''),\n  _more: more ? 'yes' : 'no',\n  _count: list.length,\n  _page: cur.page\n}, pairedItem: { item: 0 } }];"
+      }
+    },
+    {
+      "id": "ifmorereviewpages",
+      "name": "IF - More Review Pages",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        5060,
+        240
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "c_ifmorereviewpages",
+              "leftValue": "={{ $json._more }}",
+              "rightValue": "yes",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "codecollectapireviews",
+      "name": "Code - Collect API Reviews",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        5280,
+        140
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const sd = $getWorkflowStaticData('global');\nconst cur = sd.cur || { acc: [] };\nlet state = {};\ntry { state = $('Code - Build Product State').item.json; } catch (e) { state = $json || {}; }\nconst out = [];\nfor (let i = 0; i < cur.acc.length; i++) {\n  const c = cur.acc[i] || {};\n  const merged = {};\n  for (const k in c) { if (Object.prototype.hasOwnProperty.call(c, k)) merged[k] = c[k]; }\n  merged.__shop_id = String(state.shop_id || '');\n  merged.__shop_name = state.shop_name || '';\n  merged.__item_id = String(state.item_id || '');\n  merged.__product_name = state.product_name || '';\n  out.push({ json: merged, pairedItem: { item: 0 } });\n}\nif (out.length === 0) return [{ json: { _marker: 'no_api_reviews' }, pairedItem: { item: 0 } }];\nreturn out;"
+      }
+    },
+    {
+      "id": "codenormalizereviews",
+      "name": "Code - Normalize Reviews",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4400,
+        460
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "let state = {};\ntry { state = $('Code - Build Product State').item.json; } catch (e) { state = {}; }\nfunction normTime(v) {\n  if (v === undefined || v === null || v === '') return '';\n  const s = String(v).trim();\n  if (/^\\d{9,13}$/.test(s)) {\n    const n = Number(s);\n    const ms = n < 1e12 ? n * 1000 : n;\n    const d = new Date(ms);\n    return isNaN(d.getTime()) ? '' : d.toISOString();\n  }\n  const d = new Date(s);\n  if (!isNaN(d.getTime())) return d.toISOString();\n  return s;\n}\nconst rows = $input.all().map(function (i) { return i.json; });\nconst out = [];\nfor (let i = 0; i < rows.length; i++) {\n  const r = rows[i];\n  if (!r || r._marker) continue;\n  const rawId = r.comment_id !== undefined ? r.comment_id : (r.cid !== undefined ? r.cid : '');\n  const comment_id = String(rawId).trim();\n  if (!comment_id) continue;\n  const timeRaw = r.review_time !== undefined ? r.review_time : (r.ctime !== undefined ? r.ctime : (r.c_time !== undefined ? r.c_time : r.create_time));\n  out.push({ json: {\n    shop_id: String(r.shop_id || r.__shop_id || state.shop_id || ''),\n    shop_name: r.shop_name || r.__shop_name || state.shop_name || '',\n    item_id: String(r.item_id || r.__item_id || state.item_id || ''),\n    product_name: r.product_name || r.__product_name || state.product_name || '',\n    comment_id: comment_id,\n    rating_star: (r.rating_star !== undefined && r.rating_star !== null && r.rating_star !== '') ? Number(r.rating_star) : '',\n    comment: String(r.comment !== undefined ? r.comment : (r.content !== undefined ? r.content : '')),\n    review_time: normTime(timeRaw),\n    collected_at: new Date().toISOString()\n  }, pairedItem: { item: 0 } });\n}\nif (out.length === 0) {\n  return [{ json: { _marker: 'no_reviews', shop_id: String(state.shop_id || ''), item_id: String(state.item_id || '') }, pairedItem: { item: 0 } }];\n}\nreturn out;"
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "codededuplicatereviews",
+      "name": "Code - Deduplicate Reviews",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4620,
+        460
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const cfg = $('Config').first().json;\nlet state = {};\ntry { state = $('Code - Build Product State').item.json; } catch (e) { state = {}; }\nconst existing = {};\n(state.existing_keys || []).forEach(function (k) { existing[String(k)] = true; });\nconst rows = $input.all().map(function (i) { return i.json; }).filter(function (r) { return r && r.comment_id; });\nconst max = Number(cfg.MAX_REVIEWS_PER_PRODUCT) || 50;\nconst seen = {};\nconst out = [];\nfor (let i = 0; i < rows.length; i++) {\n  const r = rows[i];\n  const comment_id = String(r.comment_id).trim();\n  const shop_id = String(r.shop_id || state.shop_id || '');\n  const item_id = String(r.item_id || state.item_id || '');\n  if (!comment_id || !shop_id || !item_id) continue;\n  const review_key = shop_id + '_' + item_id + '_' + comment_id;\n  if (existing[review_key] || seen[review_key]) continue;\n  seen[review_key] = true;\n  out.push({ json: {\n    review_key: review_key,\n    shop_id: shop_id,\n    shop_name: r.shop_name || state.shop_name || '',\n    item_id: item_id,\n    product_name: r.product_name || state.product_name || '',\n    comment_id: comment_id,\n    rating_star: r.rating_star,\n    comment: r.comment,\n    review_time: r.review_time,\n    collected_at: r.collected_at,\n    sentiment: '',\n    issues: '',\n    summary: '',\n    urgency: '',\n    analysis_status: 'pending'\n  }, pairedItem: { item: 0 } });\n  if (out.length >= max) break;\n}\nif (out.length === 0) {\n  return [{ json: { _marker: 'no_new_reviews', shop_id: String(state.shop_id || ''), item_id: String(state.item_id || '') }, pairedItem: { item: 0 } }];\n}\nreturn out;"
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "ifnewreviews",
+      "name": "IF - New Reviews",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        4840,
+        460
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "c_ifnewreviews",
+              "leftValue": "={{ ($json.review_key !== undefined && $json.review_key !== '') ? 'yes' : 'no' }}",
+              "rightValue": "yes",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "googlesheetssavereviews",
+      "name": "Google Sheets - Save Reviews",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        5060,
+        460
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const sd = $getWorkflowStaticData('global');\nsd.sheets.Reviews = sd.sheets.Reviews || [];\nconst cols = [\"review_key\", \"shop_id\", \"shop_name\", \"item_id\", \"product_name\", \"comment_id\", \"rating_star\", \"comment\", \"review_time\", \"collected_at\", \"sentiment\", \"issues\", \"summary\", \"urgency\", \"analysis_status\"];\nconst input = $input.all();\ninput.forEach(function (item) {\n  const row = {};\n  cols.forEach(function (c) { row[c] = item.json[c] !== undefined ? item.json[c] : ''; });\n  sd.sheets.Reviews.push(row);\n});\nreturn input.map(function (item, idx) {\n  const jsonOut = {};\n  cols.forEach(function (c) { jsonOut[c] = item.json[c] !== undefined ? item.json[c] : ''; });\n  return { json: jsonOut, pairedItem: { item: idx } };\n});"
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "codebuildanalysisqueue",
+      "name": "Code - Build Analysis Queue",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        5280,
+        460
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const cfg = $('Config').first().json;\nlet state = {};\ntry { state = $('Code - Build Product State').item.json; } catch (e) { state = $json || {}; }\nconst sd = $getWorkflowStaticData('global');\nconst check = {\n  shop_id: String(state.shop_id || ''),\n  item_id: String(state.item_id || ''),\n  product_name: state.product_name || '',\n  last_review_check: new Date().toISOString(),\n  status: 'ok'\n};\nsd.productChecks = (sd.productChecks || []).filter(function (c) {\n  return String(c.shop_id) + '_' + String(c.item_id) !== check.shop_id + '_' + check.item_id;\n});\nsd.productChecks.push(check);\nconst saved = $input.all().map(function (i) { return i.json; }).filter(function (r) { return r && r.review_key; });\nsd.counts.reviews_new += saved.length;\nconst pendingOld = (state.pending || []).filter(function (r) {\n  return String(r.analysis_status || '').toLowerCase() === 'pending';\n});\nconst all = pendingOld.concat(saved);\nconst queue = [];\nconst seen = {};\nfor (let i = 0; i < all.length; i++) {\n  const r = all[i];\n  const k = String(r.review_key || '');\n  if (!k || seen[k]) continue;\n  seen[k] = true;\n  queue.push({ json: {\n    review_key: k,\n    shop_id: String(r.shop_id || state.shop_id || ''),\n    shop_name: r.shop_name || state.shop_name || '',\n    item_id: String(r.item_id || state.item_id || ''),\n    product_name: r.product_name || state.product_name || '',\n    comment_id: String(r.comment_id || ''),\n    rating_star: r.rating_star !== undefined ? r.rating_star : '',\n    comment: String(r.comment || ''),\n    review_time: r.review_time || '',\n    collected_at: r.collected_at || ''\n  }, pairedItem: { item: 0 } });\n}\nconst maxAi = Number(cfg.MAX_AI_PER_PRODUCT) || 10;\nconst finalQueue = queue.slice(0, maxAi);\nif (finalQueue.length === 0) {\n  return [{ json: { _marker: 'no_queue', shop_id: check.shop_id, item_id: check.item_id }, pairedItem: { item: 0 } }];\n}\nreturn finalQueue;"
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "ifanalysisneeded",
+      "name": "IF - Analysis Needed",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        5500,
+        340
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "c_ifanalysisneeded",
+              "leftValue": "={{ ($json.review_key !== undefined && $json.review_key !== '' && $('Config').first().json.OLLAMA_ENABLED === true) ? 'yes' : 'no' }}",
+              "rightValue": "yes",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "loopoveranalysisitems",
+      "name": "Loop Over Analysis Items",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        5720,
+        340
+      ],
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      }
+    },
+    {
+      "id": "codethrottleai",
+      "name": "Code - Throttle AI",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        5940,
+        340
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const cfg = $('Config').first().json;\nconst ms = Math.max(0, Number(cfg.AI_DELAY_MS) || 0);\nif (ms > 0) await new Promise(function (resolve) { setTimeout(resolve, Math.min(ms, 10000)); });\nreturn $input.all();"
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "codebuildollamapayload",
+      "name": "Code - Build Ollama Payload",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        6160,
+        340
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const cfg = $('Config').first().json;\nconst r = $json;\nconst system = 'Bạn là bộ phân tích đánh giá sản phẩm Shopee. Chỉ trả về MỘT đối tượng JSON hợp lệ, không kèm văn bản nào khác, đúng cấu trúc: {\"sentiment\":\"positive|neutral|negative\",\"issues\":[\"quality\"|\"packaging\"|\"delivery\"|\"price\"|\"customer_service\"|\"other\",...],\"summary\":\"...\",\"urgency\":\"low\"|\"medium\"|\"high\"}. Quy tắc: - sentiment: cảm xúc của người viết bình luận (positive, neutral hoặc negative). - issues: chỉ chọn các giá trị trong danh sách: quality, packaging, delivery, price, customer_service, other; nếu bình luận không nêu rõ vấn đề thì để mảng rỗng []. - summary: tóm tắt đúng nội dung bình luận trong 1 câu, cùng ngôn ngữ với bình luận. - urgency: low nếu chỉ khen hoặc nhận xét chung chung, medium nếu có phàn nàn, high nếu yêu cầu khiếu nại hoặc hoàn tiền. - Chỉ dùng thông tin có trong bình luận, không bịa thêm thông tin.';\nconst stars = (r.rating_star !== undefined && r.rating_star !== null && r.rating_star !== '') ? String(r.rating_star) + '/5' : 'không rõ';\nconst user = 'Điểm đánh giá: ' + stars + '\\nBình luận: ' + String(r.comment || '').slice(0, 1500);\nreturn [{ json: {\n  review_key: String(r.review_key || ''),\n  payload: {\n    model: cfg.OLLAMA_MODEL || 'qwen2.5-coder:1.5b',\n    stream: false,\n    format: 'json',\n    options: { temperature: 0.1 },\n    messages: [\n      { role: 'system', content: system },\n      { role: 'user', content: user }\n    ]\n  }\n}, pairedItem: { item: 0 } }];"
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "httpollamachat",
+      "name": "HTTP - Ollama Chat",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        6380,
+        340
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Config').first().json.OLLAMA_URL }}",
+        "options": {
+          "timeout": 120000
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.payload) }}"
+      },
+      "onError": "continueErrorOutput",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "id": "codeparseanalysis",
+      "name": "Code - Parse Analysis",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        6600,
+        260
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const ALLOWED = ['quality', 'packaging', 'delivery', 'price', 'customer_service', 'other'];\nconst sd = $getWorkflowStaticData('global');\nconst raw = String(($json && $json.message && $json.message.content) || '');\nlet parsed = null;\ntry { parsed = JSON.parse(raw); } catch (e) {\n  const m = raw.match(/\\{[\\s\\S]*\\}/);\n  if (m) { try { parsed = JSON.parse(m[0]); } catch (e2) {} }\n}\nif (!parsed || typeof parsed !== 'object') throw new Error('Ollama khong tra JSON hop le: ' + raw.slice(0, 200));\nconst sentiment = String(parsed.sentiment || '').toLowerCase().trim();\nif (['positive', 'neutral', 'negative'].indexOf(sentiment) === -1) throw new Error('Gia tri sentiment khong hop le: ' + String(parsed.sentiment));\nconst urgency = String(parsed.urgency || '').toLowerCase().trim();\nif (['low', 'medium', 'high'].indexOf(urgency) === -1) throw new Error('Gia tri urgency khong hop le: ' + String(parsed.urgency));\nlet issues = Array.isArray(parsed.issues) ? parsed.issues : [];\nissues = issues.map(function (x) {\n  const v = String(x).toLowerCase().trim();\n  return ALLOWED.indexOf(v) !== -1 ? v : 'other';\n});\nissues = issues.filter(function (v, i, a) { return a.indexOf(v) === i; });\nconst summary = String(parsed.summary || '').replace(/\\s+/g, ' ').trim().slice(0, 500);\nlet review = {};\ntry { review = $('Code - Build Ollama Payload').item.json; } catch (e) { try { review = $json; } catch (e2) {} }\nsd.counts.analyses_done += 1;\nreturn [{ json: {\n  review_key: String(review.review_key || ''),\n  sentiment: sentiment,\n  issues: JSON.stringify(issues),\n  summary: summary,\n  urgency: urgency,\n  analysis_status: 'done'\n}, pairedItem: { item: 0 } }];"
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "codemarkanalysisfailed",
+      "name": "Code - Mark Analysis Failed",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        6600,
+        480
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "function errMsg(e) {\n  if (e === undefined || e === null || e === '') return 'unknown error';\n  if (typeof e === 'string') return e;\n  if (typeof e === 'object') {\n    if (typeof e.message === 'string' && e.message) return e.message;\n    try { return JSON.stringify(e); } catch (err) { return String(e); }\n  }\n  return String(e);\n}\nconst sd = $getWorkflowStaticData('global');\nlet review = {};\ntry { review = $('Code - Build Ollama Payload').item.json; } catch (e) {\n  try { review = $('Loop Over Analysis Items').item.json; } catch (e2) { review = $json || {}; }\n}\nconst msg = errMsg($json && $json.error).slice(0, 300);\nsd.counts.analyses_failed += 1;\nsd.run_errors.push({ scope: 'analysis', key: String(review.review_key || ''), message: msg });\nreturn [{ json: {\n  review_key: String(review.review_key || ''),\n  sentiment: '',\n  issues: '',\n  summary: '',\n  urgency: '',\n  analysis_status: 'failed'\n}, pairedItem: { item: 0 } }];"
+      }
+    },
+    {
+      "id": "googlesheetsupdateanalysis",
+      "name": "Google Sheets - Update Analysis",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        6820,
+        340
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const sd = $getWorkflowStaticData('global');\nsd.sheets.Reviews = sd.sheets.Reviews || [];\nconst cols = [\"review_key\", \"sentiment\", \"issues\", \"summary\", \"urgency\", \"analysis_status\"];\nconst input = $input.all();\ninput.forEach(function (item) {\n  const r = item.json;\n  for (let i = 0; i < sd.sheets.Reviews.length; i++) {\n    if (String(sd.sheets.Reviews[i].review_key) === String(r.review_key)) {\n      cols.forEach(function (c) { sd.sheets.Reviews[i][c] = r[c] !== undefined ? r[c] : ''; });\n      break;\n    }\n  }\n});\nreturn input.map(function (item, idx) {\n  const jsonOut = {};\n  cols.forEach(function (c) { jsonOut[c] = item.json[c] !== undefined ? item.json[c] : ''; });\n  return { json: jsonOut, pairedItem: { item: idx } };\n});"
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "codeloganalysiserror",
+      "name": "Code - Log Analysis Error",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        7040,
+        520
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "function errMsg(e) {\n  if (e === undefined || e === null || e === '') return 'unknown error';\n  if (typeof e === 'string') return e;\n  if (typeof e === 'object') {\n    if (typeof e.message === 'string' && e.message) return e.message;\n    try { return JSON.stringify(e); } catch (err) { return String(e); }\n  }\n  return String(e);\n}\nconst sd = $getWorkflowStaticData('global');\nconst msg = errMsg($json && $json.error).slice(0, 300);\nsd.run_errors.push({ scope: 'sheets', key: String(($json && $json.review_key) || 'update_analysis'), message: msg });\nreturn [{ json: { _note: 'analysis update failed', error: msg }, pairedItem: { item: 0 } }];"
+      }
+    },
+    {
+      "id": "codebuildproductchecks",
+      "name": "Code - Build Product Checks",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        5940,
+        640
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const sd = $getWorkflowStaticData('global');\nconst checks = sd.productChecks || [];\nconst out = [];\nfor (let i = 0; i < checks.length; i++) {\n  const c = checks[i];\n  if (!c.shop_id || !c.item_id) continue;\n  out.push({ json: {\n    shop_id: String(c.shop_id),\n    item_id: String(c.item_id),\n    last_review_check: c.last_review_check || new Date().toISOString(),\n    status: c.status || 'ok'\n  }, pairedItem: { item: 0 } });\n}\nif (out.length === 0) return [{ json: { _marker: 'no_checks' }, pairedItem: { item: 0 } }];\nreturn out;"
+      }
+    },
+    {
+      "id": "googlesheetsupdateproductcheck",
+      "name": "Google Sheets - Update Product Check",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        6160,
+        640
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const sd = $getWorkflowStaticData('global');\nsd.sheets.Products = sd.sheets.Products || [];\nconst cols = [\"shop_id\", \"item_id\", \"last_review_check\", \"status\"];\nconst input = $input.all();\ninput.forEach(function (item) {\n  const r = item.json;\n  for (let i = 0; i < sd.sheets.Products.length; i++) {\n    const p = sd.sheets.Products[i];\n    if (String(p.shop_id) === String(r.shop_id) && String(p.item_id) === String(r.item_id)) {\n      cols.forEach(function (c) { p[c] = r[c] !== undefined ? r[c] : ''; });\n      break;\n    }\n  }\n});\nreturn input.map(function (item, idx) {\n  const jsonOut = {};\n  cols.forEach(function (c) { jsonOut[c] = item.json[c] !== undefined ? item.json[c] : ''; });\n  return { json: jsonOut, pairedItem: { item: idx } };\n});"
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "codebuildshopstatusrows",
+      "name": "Code - Build Shop Status Rows",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        6380,
+        760
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const sd = $getWorkflowStaticData('global');\nconst shops = sd.shops || [];\nconst last = {};\nconst order = [];\nfor (let i = 0; i < shops.length; i++) {\n  const s = shops[i];\n  const k = String(s.shop_id || '');\n  if (!k) continue;\n  if (!last[k]) order.push(k);\n  last[k] = s;\n}\nif (order.length === 0) return [{ json: { _marker: 'no_shops' }, pairedItem: { item: 0 } }];\nreturn order.map(function (k) {\n  const s = last[k];\n  return { json: {\n    shop_id: k,\n    last_checked_at: s.last_checked_at || new Date().toISOString(),\n    status: s.status || 'ok',\n    error_message: String(s.error_message || '').slice(0, 500)\n  }, pairedItem: { item: 0 } };\n});"
+      }
+    },
+    {
+      "id": "googlesheetsupdateshopstatus",
+      "name": "Google Sheets - Update Shop Status",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        6600,
+        760
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const sd = $getWorkflowStaticData('global');\nconst cols = [\"shop_id\", \"last_checked_at\", \"status\", \"error_message\"];\nconst input = $input.all();\ninput.forEach(function (item) {\n  const r = item.json;\n  for (let i = 0; i < (sd.fixtures.shops || []).length; i++) {\n    if (String(sd.fixtures.shops[i].shop_id) === String(r.shop_id)) {\n      cols.forEach(function (c) { sd.fixtures.shops[i][c] = r[c] !== undefined ? r[c] : ''; });\n      break;\n    }\n  }\n});\nreturn input.map(function (item, idx) {\n  const jsonOut = {};\n  cols.forEach(function (c) { jsonOut[c] = item.json[c] !== undefined ? item.json[c] : ''; });\n  return { json: jsonOut, pairedItem: { item: idx } };\n});"
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "codebuildrunlog",
+      "name": "Code - Build Run Log",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        6820,
+        760
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const sd = $getWorkflowStaticData('global');\nconst c = sd.counts || {};\nconst shops = sd.shops || [];\nlet ok = 0, failed = 0;\nfor (let i = 0; i < shops.length; i++) {\n  if (String(shops[i].status) === 'error') failed++;\n  else ok++;\n}\nconst errors = (sd.run_errors || []).slice(0, 20).map(function (e) {\n  return e.scope + ':' + e.key + ' - ' + e.message;\n});\nreturn [{ json: {\n  run_started_at: sd.run_started_at || '',\n  run_finished_at: new Date().toISOString(),\n  shops_total: shops.length,\n  shops_ok: ok,\n  shops_failed: failed,\n  products_discovered: Number(c.products) || 0,\n  reviews_new: Number(c.reviews_new) || 0,\n  analyses_done: Number(c.analyses_done) || 0,\n  analyses_failed: Number(c.analyses_failed) || 0,\n  errors: errors.join(' | ').slice(0, 4000)\n}, pairedItem: { item: 0 } }];"
+      }
+    },
+    {
+      "id": "googlesheetssaverunlog",
+      "name": "Google Sheets - Save Run Log",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        7040,
+        760
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const sd = $getWorkflowStaticData('global');\nconst cols = [\"run_started_at\", \"run_finished_at\", \"shops_total\", \"shops_ok\", \"shops_failed\", \"products_discovered\", \"reviews_new\", \"analyses_done\", \"analyses_failed\", \"errors\"];\nconst row = {};\ncols.forEach(function (c) { row[c] = $json[c] !== undefined ? $json[c] : ''; });\nsd.sheets.RunLog.push(row);\nconst out = Object.assign({}, row, {\n  __debug_products: JSON.stringify(sd.sheets.Products),\n  __debug_reviews: JSON.stringify(sd.sheets.Reviews),\n  __debug_shops: JSON.stringify(sd.fixtures.shops),\n});\nreturn [{ json: out, pairedItem: { item: 0 } }];"
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "codeproducterror",
+      "name": "Code - Product Error",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3520,
+        700
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "function errMsg(e) {\n  if (e === undefined || e === null || e === '') return 'unknown error';\n  if (typeof e === 'string') return e;\n  if (typeof e === 'object') {\n    if (typeof e.message === 'string' && e.message) return e.message;\n    try { return JSON.stringify(e); } catch (err) { return String(e); }\n  }\n  return String(e);\n}\nconst sd = $getWorkflowStaticData('global');\nlet product = {};\ntry { product = $('Loop Over Products').item.json; } catch (e) { product = $json || {}; }\nconst msg = errMsg($json && $json.error).slice(0, 500);\nconst shop_id = String(product.shop_id || '');\nconst item_id = String(product.item_id || '');\nsd.run_errors.push({ scope: 'product', key: shop_id + '_' + item_id, message: msg });\nif (shop_id && item_id) {\n  sd.productChecks = (sd.productChecks || []).filter(function (c) {\n    return String(c.shop_id) + '_' + String(c.item_id) !== shop_id + '_' + item_id;\n  });\n  sd.productChecks.push({\n    shop_id: shop_id,\n    item_id: item_id,\n    product_name: product.product_name || '',\n    last_review_check: new Date().toISOString(),\n    status: 'error'\n  });\n}\nreturn [{ json: { shop_id: shop_id, item_id: item_id, status: 'error', error_message: msg }, pairedItem: { item: 0 } }];"
+      }
+    }
+  ],
+  "connections": {
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Config": {
+      "main": [
+        [
+          {
+            "node": "Init Run Stats",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Init Run Stats": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets - Read Shops",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets - Read Shops": {
+      "main": [
+        [
+          {
+            "node": "Code - Filter Enabled Shops",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code - Filter Enabled Shops": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Shops",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Shops": {
+      "main": [
+        [
+          {
+            "node": "Code - Collect Discovered Products",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "IF - Product Source",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF - Product Source": {
+      "main": [
+        [
+          {
+            "node": "Code - Build Product Sign",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Google Sheets - Read Product Imports",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code - Build Product Sign": {
+      "main": [
+        [
+          {
+            "node": "HTTP - Shopee Get Item List",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code - Shop Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP - Shopee Get Item List": {
+      "main": [
+        [
+          {
+            "node": "Code - Map API Products",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code - Shop Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code - Map API Products": {
+      "main": [
+        [
+          {
+            "node": "Code - Normalize Products",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code - Shop Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets - Read Product Imports": {
+      "main": [
+        [
+          {
+            "node": "Code - Normalize Products",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code - Shop Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code - Normalize Products": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Shops",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code - Shop Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code - Shop Error": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Shops",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code - Collect Discovered Products": {
+      "main": [
+        [
+          {
+            "node": "IF - Any Products",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF - Any Products": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets - Upsert Products",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code - Build Shop Status Rows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets - Upsert Products": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Products",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code - Build Shop Status Rows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Products": {
+      "main": [
+        [
+          {
+            "node": "IF - Analysis Needed",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code - Throttle",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code - Throttle": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets - Read Product Reviews",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code - Product Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets - Read Product Reviews": {
+      "main": [
+        [
+          {
+            "node": "Code - Build Product State",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code - Product Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code - Build Product State": {
+      "main": [
+        [
+          {
+            "node": "IF - Review Source",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code - Product Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF - Review Source": {
+      "main": [
+        [
+          {
+            "node": "Code - Init Review Fetch",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Google Sheets - Read Review Imports",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets - Read Review Imports": {
+      "main": [
+        [
+          {
+            "node": "Code - Normalize Reviews",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code - Product Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code - Init Review Fetch": {
+      "main": [
+        [
+          {
+            "node": "Code - Build Review Sign",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code - Product Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code - Build Review Sign": {
+      "main": [
+        [
+          {
+            "node": "HTTP - Shopee Get Comments",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code - Product Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP - Shopee Get Comments": {
+      "main": [
+        [
+          {
+            "node": "Code - Parse Comments Page",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code - Product Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code - Parse Comments Page": {
+      "main": [
+        [
+          {
+            "node": "IF - More Review Pages",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code - Product Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF - More Review Pages": {
+      "main": [
+        [
+          {
+            "node": "Code - Build Review Sign",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code - Collect API Reviews",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code - Collect API Reviews": {
+      "main": [
+        [
+          {
+            "node": "Code - Normalize Reviews",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code - Normalize Reviews": {
+      "main": [
+        [
+          {
+            "node": "Code - Deduplicate Reviews",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code - Product Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code - Deduplicate Reviews": {
+      "main": [
+        [
+          {
+            "node": "IF - New Reviews",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code - Product Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF - New Reviews": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets - Save Reviews",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code - Build Analysis Queue",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets - Save Reviews": {
+      "main": [
+        [
+          {
+            "node": "Code - Build Analysis Queue",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code - Product Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code - Build Analysis Queue": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Products",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code - Product Error": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Products",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF - Analysis Needed": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Analysis Items",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code - Build Product Checks",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Analysis Items": {
+      "main": [
+        [
+          {
+            "node": "Code - Build Product Checks",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code - Throttle AI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code - Throttle AI": {
+      "main": [
+        [
+          {
+            "node": "Code - Build Ollama Payload",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code - Mark Analysis Failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code - Build Ollama Payload": {
+      "main": [
+        [
+          {
+            "node": "HTTP - Ollama Chat",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code - Mark Analysis Failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP - Ollama Chat": {
+      "main": [
+        [
+          {
+            "node": "Code - Parse Analysis",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code - Mark Analysis Failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code - Parse Analysis": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets - Update Analysis",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code - Mark Analysis Failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code - Mark Analysis Failed": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets - Update Analysis",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets - Update Analysis": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Analysis Items",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code - Log Analysis Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code - Log Analysis Error": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Analysis Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code - Build Product Checks": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets - Update Product Check",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets - Update Product Check": {
+      "main": [
+        [
+          {
+            "node": "Code - Build Shop Status Rows",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code - Build Shop Status Rows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code - Build Shop Status Rows": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets - Update Shop Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets - Update Shop Status": {
+      "main": [
+        [
+          {
+            "node": "Code - Build Run Log",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code - Build Run Log",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code - Build Run Log": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets - Save Run Log",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "active": false,
+  "tags": []
+}

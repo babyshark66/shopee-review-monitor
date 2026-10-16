@@ -1,0 +1,214 @@
+{
+  "name": "z_test_ctx_ollama",
+  "nodes": [
+    {
+      "id": "n1",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "n2",
+      "name": "Make Shops",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        220,
+        0
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "return [\n  { json: { shop_id: '111', shop_name: 'ShopA', OLLAMA_URL: 'http://172.24.0.1:11434/api/chat' } },\n  { json: { shop_id: '222', shop_name: 'ShopB', OLLAMA_URL: 'http://172.24.0.1:11434/api/chat' } },\n];"
+      }
+    },
+    {
+      "id": "n3",
+      "name": "Loop Over Shops",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        440,
+        0
+      ],
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      }
+    },
+    {
+      "id": "n4",
+      "name": "Simulate Sheets Read",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        660,
+        0
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const out = [];\nfor (const item of $input.all()) {\n  out.push({ json: { import_row: 'r1' }, pairedItem: { item: 0 } });\n  out.push({ json: { import_row: 'r2' }, pairedItem: { item: 0 } });\n}\nreturn out;"
+      }
+    },
+    {
+      "id": "n5",
+      "name": "CtxRef",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        880,
+        0
+      ],
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const out = { import_row: $json.import_row };\ntry { out.shop_from_loop = $('Loop Over Shops').item.json.shop_name; } catch (e) { out.shop_from_loop = 'ERR:' + e.message; }\ntry { out.shop_id_from_source = $('Make Shops').item.json.shop_id; } catch (e) { out.shop_id_from_source = 'ERR:' + e.message; }\ntry { out.shop_first = $('Loop Over Shops').first().json.shop_name; } catch (e) { out.shop_first = 'ERR:' + e.message; }\nreturn { json: out };"
+      }
+    },
+    {
+      "id": "n6",
+      "name": "Build Payload",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        440,
+        220
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "let shop = 'unknown';\ntry { shop = $('Loop Over Shops').first().json.shop_name; } catch (e) { shop = 'ERR'; }\nreturn [{ json: { shop, payload: {\n  model: 'qwen2.5-coder:1.5b',\n  stream: false,\n  format: 'json',\n  messages: [\n    { role: 'system', content: 'Ban chi tra ve JSON hop le theo schema: {sentiment: positive|neutral|negative, issues: string[], summary: string, urgency: low|medium|high}. Chi su dung noi dung trong binh luan.' },\n    { role: 'user', content: 'San pham tot, giao hang nhanh nhung do bi vo khi nhan. Shop: ' + shop }\n  ]\n} } }];"
+      }
+    },
+    {
+      "id": "n7",
+      "name": "Ollama Chat",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        660,
+        220
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "http://172.24.0.1:11434/api/chat",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.payload) }}",
+        "options": {
+          "timeout": 90000
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 3000
+    },
+    {
+      "id": "n8",
+      "name": "Parse Analysis",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        880,
+        220
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const raw = $input.first().json.message?.content ?? '';\nlet parsed = null;\ntry { parsed = JSON.parse(raw); } catch (e) {\n  const m = raw.match(/\\{[\\s\\S]*\\}/);\n  if (m) { try { parsed = JSON.parse(m[0]); } catch (e2) {} }\n}\nif (!parsed) throw new Error('Ollama did not return valid JSON: ' + raw.slice(0, 200));\nreturn [{ json: parsed }];"
+      }
+    }
+  ],
+  "connections": {
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "Make Shops",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Make Shops": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Shops",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Shops": {
+      "main": [
+        [
+          {
+            "node": "Build Payload",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Simulate Sheets Read",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simulate Sheets Read": {
+      "main": [
+        [
+          {
+            "node": "CtxRef",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CtxRef": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Shops",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Payload": {
+      "main": [
+        [
+          {
+            "node": "Ollama Chat",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ollama Chat": {
+      "main": [
+        [
+          {
+            "node": "Parse Analysis",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "active": false,
+  "id": "ztestctxollama1"
+}

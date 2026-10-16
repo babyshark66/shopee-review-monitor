@@ -1,0 +1,58 @@
+{
+  "id": "ztestcodecrypto1",
+  "name": "z_test_code_crypto",
+  "nodes": [
+    {
+      "id": "c1",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [0, 0],
+      "parameters": {}
+    },
+    {
+      "id": "c2",
+      "name": "Env Test",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [220, 0],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const out = {};\ntry { const c = require('crypto'); out.require_crypto = typeof c.createHmac; } catch (e) { out.require_crypto = 'ERR:' + e.message.slice(0, 80); }\ntry { out.subtle = typeof globalThis.crypto?.subtle; } catch (e) { out.subtle = 'ERR'; }\ntry { out.Buffer = typeof Buffer; } catch (e) { out.Buffer = 'ERR'; }\ntry { await new Promise(r => setTimeout(r, 150)); out.sleep = 'ok'; } catch (e) { out.sleep = 'ERR:' + e.message.slice(0, 80); }\ntry {\n  const key = await crypto.subtle.importKey('raw', new TextEncoder().encode('partnerkey'), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);\n  const sig = await crypto.subtle.sign('HMAC', key, new TextEncoder().encode('123/api/v2/product/get_comment1700000000token456'));\n  out.hmac_hex = Buffer.from(sig).toString('hex');\n} catch (e) { out.hmac_hex = 'ERR:' + e.message.slice(0, 120); }\ntry {\n  if (typeof require_crypto !== 'undefined') {}\n  const nodeCrypto = require('crypto');\n  out.hmac_create = nodeCrypto.createHmac('sha256', 'partnerkey').update('123/api/v2/product/get_comment1700000000token456').digest('hex');\n} catch (e) { out.hmac_create = 'ERR:' + e.message.slice(0, 80); }\nreturn [{ json: out }];"
+      }
+    },
+    {
+      "id": "c3",
+      "name": "Http Echo",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [440, 0],
+      "parameters": {
+        "method": "POST",
+        "url": "http://172.24.0.1:11434/api/chat",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ model: 'qwen2.5-coder:1.5b', stream: false, format: 'json', messages: [{ role: 'user', content: 'tra ve {ok:true}' }] }) }}",
+        "options": { "timeout": 60000 }
+      }
+    },
+    {
+      "id": "c4",
+      "name": "Check Pairing",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [660, 0],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const item = $input.first();\nconst out = { paired: JSON.stringify(item.pairedItem ?? null), resp_ok: !!item.json.message };\ntry { out.env_via_item = $('Env Test').item.json.hmac_hex.slice(0, 16); } catch (e) { out.env_via_item = 'ERR:' + e.message.slice(0, 100); }\ntry { out.env_via_first = $('Env Test').first().json.sleep; } catch (e) { out.env_via_first = 'ERR'; }\nreturn [{ json: out }];"
+      }
+    }
+  ],
+  "connections": {
+    "Manual Trigger": { "main": [[{ "node": "Env Test", "type": "main", "index": 0 }]] },
+    "Env Test": { "main": [[{ "node": "Http Echo", "type": "main", "index": 0 }]] },
+    "Http Echo": { "main": [[{ "node": "Check Pairing", "type": "main", "index": 0 }]] }
+  },
+  "settings": { "executionOrder": "v1" },
+  "active": false
+}

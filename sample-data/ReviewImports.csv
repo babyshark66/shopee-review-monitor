@@ -1,0 +1,5 @@
+shop_id,item_id,comment_id,rating_star,comment,review_time
+111,501,R2,2,"Giao hàng chậm, hộp bị móp, son bị gãy",2026-10-10T09:15:00Z
+111,501,R3,4,"Màu đẹp nhưng hơi khô môi",1760100000
+111,502,R10,1,"Kem không giống mô tả, dịch vụ kém",2026-10-11T14:00:00+07:00
+222,601,R20,5,"Túi đẹp, giao hàng nhanh, đóng gói cẩn thận",2026-10-12

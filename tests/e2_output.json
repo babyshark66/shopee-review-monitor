@@ -1,0 +1,4584 @@
+n8n Task Broker ready on 127.0.0.1, port 5679
+Failed to start Python task runner in internal mode. because Python 3 is missing from this system. Launching a Python runner in internal mode is intended only for debugging and is not recommended for production. Users are encouraged to deploy in external mode. See: https://docs.n8n.io/hosting/configuration/task-runners/#setting-up-external-mode
+[license SDK] Skipping renewal on init: renewOnInit is disabled in config
+[license SDK] Skipping renewal on init: license cert is not initialized
+[runner:js] (node:19) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Registered runner "JS Task Runner" (KxP_uCuDIFmuuygjM6wIr) 
+{
+  "data": {
+    "version": 1,
+    "startData": {},
+    "resultData": {
+      "runData": {
+        "Manual Trigger": [
+          {
+            "startTime": 1792063111345,
+            "executionIndex": 0,
+            "source": [],
+            "hints": [],
+            "executionTime": 3,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {},
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Config": [
+          {
+            "startTime": 1792063111349,
+            "executionIndex": 1,
+            "source": [
+              {
+                "previousNode": "Manual Trigger",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 10,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "DATA_SOURCE": "import",
+                      "OLLAMA_ENABLED": true,
+                      "OLLAMA_URL": "http://127.0.0.1:9/api/chat",
+                      "OLLAMA_MODEL": "qwen2.5-coder:1.5b",
+                      "MAX_SHOPS": 10,
+                      "MAX_PRODUCTS_PER_SHOP": 20,
+                      "MAX_REVIEWS_PER_PRODUCT": 50,
+                      "MAX_REVIEW_PAGES": 3,
+                      "REVIEW_PAGE_SIZE": 20,
+                      "MAX_AI_PER_PRODUCT": 10,
+                      "REQUEST_DELAY_MS": 100,
+                      "AI_DELAY_MS": 100,
+                      "SHOPEE_API_HOST": "https://partner.shopeemobile.com",
+                      "SHOPEE_PARTNER_ID": "",
+                      "SHOPEE_ACCESS_TOKEN": "",
+                      "SHOPEE_PARTNER_KEY": ""
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Init Run Stats": [
+          {
+            "startTime": 1792063111359,
+            "executionIndex": 2,
+            "source": [
+              {
+                "previousNode": "Config",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 1263,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "started_at": "2026-10-15T11:18:32.619Z"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Google Sheets - Read Shops": [
+          {
+            "startTime": 1792063112623,
+            "executionIndex": 3,
+            "source": [
+              {
+                "previousNode": "Init Run Stats",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 26,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "shop_id": "111",
+                      "shop_name": "Shop Ánh Dương",
+                      "shop_url": "https://shopee.vn/shop.111",
+                      "enabled": "TRUE",
+                      "last_checked_at": "",
+                      "status": "",
+                      "error_message": ""
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "shop_id": "222",
+                      "shop_name": "Shop Bốn Mùa",
+                      "shop_url": "https://shopee.vn/shop.222",
+                      "enabled": "true",
+                      "last_checked_at": "",
+                      "status": "",
+                      "error_message": ""
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "shop_id": "333",
+                      "shop_name": "Shop Tắt (disabled)",
+                      "shop_url": "https://shopee.vn/shop.333",
+                      "enabled": "FALSE",
+                      "last_checked_at": "",
+                      "status": "",
+                      "error_message": ""
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ],
+                []
+              ]
+            }
+          }
+        ],
+        "Code - Filter Enabled Shops": [
+          {
+            "startTime": 1792063112649,
+            "executionIndex": 4,
+            "source": [
+              {
+                "previousNode": "Google Sheets - Read Shops",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 30,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "shop_id": "111",
+                      "shop_name": "Shop Ánh Dương",
+                      "shop_url": "https://shopee.vn/shop.111",
+                      "enabled": "true",
+                      "last_checked_at": "",
+                      "status": "pending",
+                      "error_message": ""
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "shop_id": "222",
+                      "shop_name": "Shop Bốn Mùa",
+                      "shop_url": "https://shopee.vn/shop.222",
+                      "enabled": "true",
+                      "last_checked_at": "",
+                      "status": "pending",
+                      "error_message": ""
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Loop Over Shops": [
+          {
+            "startTime": 1792063112679,
+            "executionIndex": 5,
+            "source": [
+              {
+                "previousNode": "Code - Filter Enabled Shops",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 1,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [],
+                [
+                  {
+                    "json": {
+                      "shop_id": "111",
+                      "shop_name": "Shop Ánh Dương",
+                      "shop_url": "https://shopee.vn/shop.111",
+                      "enabled": "true",
+                      "last_checked_at": "",
+                      "status": "pending",
+                      "error_message": ""
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          },
+          {
+            "startTime": 1792063112806,
+            "executionIndex": 9,
+            "source": [
+              {
+                "previousNode": "Code - Normalize Products",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 1,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [],
+                [
+                  {
+                    "json": {
+                      "shop_id": "222",
+                      "shop_name": "Shop Bốn Mùa",
+                      "shop_url": "https://shopee.vn/shop.222",
+                      "enabled": "true",
+                      "last_checked_at": "",
+                      "status": "pending",
+                      "error_message": ""
+                    },
+                    "pairedItem": {
+                      "item": 1,
+                      "sourceOverwrite": {
+                        "previousNode": "Code - Filter Enabled Shops",
+                        "previousNodeOutput": 0,
+                        "previousNodeRun": 0
+                      }
+                    }
+                  }
+                ]
+              ]
+            }
+          },
+          {
+            "startTime": 1792063112855,
+            "executionIndex": 13,
+            "source": [
+              {
+                "previousNode": "Code - Normalize Products",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 1
+              }
+            ],
+            "hints": [],
+            "executionTime": 0,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "shop_id": "111",
+                      "shop_name": "Shop Ánh Dương",
+                      "item_id": "501",
+                      "product_name": "Son môi Velvet Red",
+                      "product_url": "https://shopee.vn/product/111/501",
+                      "last_review_check": "",
+                      "status": "pending"
+                    },
+                    "pairedItem": {
+                      "sourceOverwrite": {
+                        "previousNode": "Code - Normalize Products",
+                        "previousNodeOutput": 0,
+                        "previousNodeRun": 0
+                      },
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "shop_id": "111",
+                      "shop_name": "Shop Ánh Dương",
+                      "item_id": "502",
+                      "product_name": "Kem dưỡng ẩm Aloe",
+                      "product_url": "https://shopee.vn/product/111/502",
+                      "last_review_check": "",
+                      "status": "pending"
+                    },
+                    "pairedItem": {
+                      "sourceOverwrite": {
+                        "previousNode": "Code - Normalize Products",
+                        "previousNodeOutput": 0,
+                        "previousNodeRun": 0
+                      },
+                      "item": 1
+                    }
+                  },
+                  {
+                    "json": {
+                      "shop_id": "222",
+                      "shop_name": "Shop Bốn Mùa",
+                      "item_id": "601",
+                      "product_name": "Túi xách da mềm",
+                      "product_url": "https://shopee.vn/product/222/601",
+                      "last_review_check": "",
+                      "status": "pending"
+                    },
+                    "pairedItem": {
+                      "sourceOverwrite": {
+                        "previousNode": "Code - Normalize Products",
+                        "previousNodeOutput": 0,
+                        "previousNodeRun": 1
+                      },
+                      "item": 0
+                    }
+                  }
+                ],
+                []
+              ]
+            }
+          }
+        ],
+        "IF - Product Source": [
+          {
+            "startTime": 1792063112680,
+            "executionIndex": 6,
+            "source": [
+              {
+                "previousNode": "Loop Over Shops",
+                "previousNodeOutput": 1,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 67,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [],
+                [
+                  {
+                    "json": {
+                      "shop_id": "111",
+                      "shop_name": "Shop Ánh Dương",
+                      "shop_url": "https://shopee.vn/shop.111",
+                      "enabled": "true",
+                      "last_checked_at": "",
+                      "status": "pending",
+                      "error_message": ""
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          },
+          {
+            "startTime": 1792063112807,
+            "executionIndex": 10,
+            "source": [
+              {
+                "previousNode": "Loop Over Shops",
+                "previousNodeOutput": 1,
+                "previousNodeRun": 1
+              }
+            ],
+            "hints": [],
+            "executionTime": 3,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [],
+                [
+                  {
+                    "json": {
+                      "shop_id": "222",
+                      "shop_name": "Shop Bốn Mùa",
+                      "shop_url": "https://shopee.vn/shop.222",
+                      "enabled": "true",
+                      "last_checked_at": "",
+                      "status": "pending",
+                      "error_message": ""
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Google Sheets - Read Product Imports": [
+          {
+            "startTime": 1792063112747,
+            "executionIndex": 7,
+            "source": [
+              {
+                "previousNode": "IF - Product Source",
+                "previousNodeOutput": 1,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 36,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "shop_id": "111",
+                      "item_id": "501",
+                      "product_name": "Son môi Velvet Red"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "shop_id": "111",
+                      "item_id": "502",
+                      "product_name": "Kem dưỡng ẩm Aloe"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "shop_id": "111",
+                      "item_id": "501",
+                      "product_name": "Son môi Velvet Red (trung)"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ],
+                []
+              ]
+            }
+          },
+          {
+            "startTime": 1792063112810,
+            "executionIndex": 11,
+            "source": [
+              {
+                "previousNode": "IF - Product Source",
+                "previousNodeOutput": 1,
+                "previousNodeRun": 1
+              }
+            ],
+            "hints": [],
+            "executionTime": 18,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "shop_id": "222",
+                      "item_id": "601",
+                      "product_name": "Túi xách da mềm"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ],
+                []
+              ]
+            }
+          }
+        ],
+        "Code - Normalize Products": [
+          {
+            "startTime": 1792063112783,
+            "executionIndex": 8,
+            "source": [
+              {
+                "previousNode": "Google Sheets - Read Product Imports",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 23,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "shop_id": "111",
+                      "shop_name": "Shop Ánh Dương",
+                      "item_id": "501",
+                      "product_name": "Son môi Velvet Red",
+                      "product_url": "https://shopee.vn/product/111/501",
+                      "last_review_check": "",
+                      "status": "pending"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "shop_id": "111",
+                      "shop_name": "Shop Ánh Dương",
+                      "item_id": "502",
+                      "product_name": "Kem dưỡng ẩm Aloe",
+                      "product_url": "https://shopee.vn/product/111/502",
+                      "last_review_check": "",
+                      "status": "pending"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ],
+                []
+              ]
+            }
+          },
+          {
+            "startTime": 1792063112829,
+            "executionIndex": 12,
+            "source": [
+              {
+                "previousNode": "Google Sheets - Read Product Imports",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 1
+              }
+            ],
+            "hints": [],
+            "executionTime": 26,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "shop_id": "222",
+                      "shop_name": "Shop Bốn Mùa",
+                      "item_id": "601",
+                      "product_name": "Túi xách da mềm",
+                      "product_url": "https://shopee.vn/product/222/601",
+                      "last_review_check": "",
+                      "status": "pending"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ],
+                []
+              ]
+            }
+          }
+        ],
+        "Code - Collect Discovered Products": [
+          {
+            "startTime": 1792063112855,
+            "executionIndex": 14,
+            "source": [
+              {
+                "previousNode": "Loop Over Shops",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 2
+              }
+            ],
+            "hints": [],
+            "executionTime": 19,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "shop_id": "111",
+                      "shop_name": "Shop Ánh Dương",
+                      "item_id": "501",
+                      "product_name": "Son môi Velvet Red",
+                      "product_url": "https://shopee.vn/product/111/501",
+                      "last_review_check": "",
+                      "status": "pending"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "shop_id": "111",
+                      "shop_name": "Shop Ánh Dương",
+                      "item_id": "502",
+                      "product_name": "Kem dưỡng ẩm Aloe",
+                      "product_url": "https://shopee.vn/product/111/502",
+                      "last_review_check": "",
+                      "status": "pending"
+                    },
+                    "pairedItem": {
+                      "item": 1
+                    }
+                  },
+                  {
+                    "json": {
+                      "shop_id": "222",
+                      "shop_name": "Shop Bốn Mùa",
+                      "item_id": "601",
+                      "product_name": "Túi xách da mềm",
+                      "product_url": "https://shopee.vn/product/222/601",
+                      "last_review_check": "",
+                      "status": "pending"
+                    },
+                    "pairedItem": {
+                      "item": 2
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "IF - Any Products": [
+          {
+            "startTime": 1792063112874,
+            "executionIndex": 15,
+            "source": [
+              {
+                "previousNode": "Code - Collect Discovered Products",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 20,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "shop_id": "111",
+                      "shop_name": "Shop Ánh Dương",
+                      "item_id": "501",
+                      "product_name": "Son môi Velvet Red",
+                      "product_url": "https://shopee.vn/product/111/501",
+                      "last_review_check": "",
+                      "status": "pending"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "shop_id": "111",
+                      "shop_name": "Shop Ánh Dương",
+                      "item_id": "502",
+                      "product_name": "Kem dưỡng ẩm Aloe",
+                      "product_url": "https://shopee.vn/product/111/502",
+                      "last_review_check": "",
+                      "status": "pending"
+                    },
+                    "pairedItem": {
+                      "item": 1
+                    }
+                  },
+                  {
+                    "json": {
+                      "shop_id": "222",
+                      "shop_name": "Shop Bốn Mùa",
+                      "item_id": "601",
+                      "product_name": "Túi xách da mềm",
+                      "product_url": "https://shopee.vn/product/222/601",
+                      "last_review_check": "",
+                      "status": "pending"
+                    },
+                    "pairedItem": {
+                      "item": 2
+                    }
+                  }
+                ],
+                []
+              ]
+            }
+          }
+        ],
+        "Google Sheets - Upsert Products": [
+          {
+            "startTime": 1792063112894,
+            "executionIndex": 16,
+            "source": [
+              {
+                "previousNode": "IF - Any Products",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 19,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "shop_id": "111",
+                      "shop_name": "Shop Ánh Dương",
+                      "item_id": "501",
+                      "product_name": "Son môi Velvet Red",
+                      "product_url": "https://shopee.vn/product/111/501",
+                      "last_review_check": "",
+                      "status": "pending"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "shop_id": "111",
+                      "shop_name": "Shop Ánh Dương",
+                      "item_id": "502",
+                      "product_name": "Kem dưỡng ẩm Aloe",
+                      "product_url": "https://shopee.vn/product/111/502",
+                      "last_review_check": "",
+                      "status": "pending"
+                    },
+                    "pairedItem": {
+                      "item": 1
+                    }
+                  },
+                  {
+                    "json": {
+                      "shop_id": "222",
+                      "shop_name": "Shop Bốn Mùa",
+                      "item_id": "601",
+                      "product_name": "Túi xách da mềm",
+                      "product_url": "https://shopee.vn/product/222/601",
+                      "last_review_check": "",
+                      "status": "pending"
+                    },
+                    "pairedItem": {
+                      "item": 2
+                    }
+                  }
+                ],
+                []
+              ]
+            }
+          }
+        ],
+        "Loop Over Products": [
+          {
+            "startTime": 1792063112913,
+            "executionIndex": 17,
+            "source": [
+              {
+                "previousNode": "Google Sheets - Upsert Products",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 1,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [],
+                [
+                  {
+                    "json": {
+                      "shop_id": "111",
+                      "shop_name": "Shop Ánh Dương",
+                      "item_id": "501",
+                      "product_name": "Son môi Velvet Red",
+                      "product_url": "https://shopee.vn/product/111/501",
+                      "last_review_check": "",
+                      "status": "pending"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          },
+          {
+            "startTime": 1792063113252,
+            "executionIndex": 28,
+            "source": [
+              {
+                "previousNode": "Code - Build Analysis Queue",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 1,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [],
+                [
+                  {
+                    "json": {
+                      "shop_id": "111",
+                      "shop_name": "Shop Ánh Dương",
+                      "item_id": "502",
+                      "product_name": "Kem dưỡng ẩm Aloe",
+                      "product_url": "https://shopee.vn/product/111/502",
+                      "last_review_check": "",
+                      "status": "pending"
+                    },
+                    "pairedItem": {
+                      "item": 1,
+                      "sourceOverwrite": {
+                        "previousNode": "Google Sheets - Upsert Products",
+                        "previousNodeOutput": 0,
+                        "previousNodeRun": 0
+                      }
+                    }
+                  }
+                ]
+              ]
+            }
+          },
+          {
+            "startTime": 1792063113604,
+            "executionIndex": 39,
+            "source": [
+              {
+                "previousNode": "Code - Build Analysis Queue",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 1
+              }
+            ],
+            "hints": [],
+            "executionTime": 0,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [],
+                [
+                  {
+                    "json": {
+                      "shop_id": "222",
+                      "shop_name": "Shop Bốn Mùa",
+                      "item_id": "601",
+                      "product_name": "Túi xách da mềm",
+                      "product_url": "https://shopee.vn/product/222/601",
+                      "last_review_check": "",
+                      "status": "pending"
+                    },
+                    "pairedItem": {
+                      "item": 2,
+                      "sourceOverwrite": {
+                        "previousNode": "Google Sheets - Upsert Products",
+                        "previousNodeOutput": 0,
+                        "previousNodeRun": 0
+                      }
+                    }
+                  }
+                ]
+              ]
+            }
+          },
+          {
+            "startTime": 1792063114057,
+            "executionIndex": 50,
+            "source": [
+              {
+                "previousNode": "Code - Build Analysis Queue",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 2
+              }
+            ],
+            "hints": [],
+            "executionTime": 1,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "review_key": "111_501_R9",
+                      "shop_id": "111",
+                      "shop_name": "Shop Ánh Dương",
+                      "item_id": "501",
+                      "product_name": "Son môi Velvet Red",
+                      "comment_id": "R9",
+                      "rating_star": 1,
+                      "comment": "Cham giao hang qua, dong goi cau tat",
+                      "review_time": "2026-09-30T01:00:00.000Z",
+                      "collected_at": "2026-10-01T00:00:00.000Z"
+                    },
+                    "pairedItem": {
+                      "sourceOverwrite": {
+                        "previousNode": "Code - Build Analysis Queue",
+                        "previousNodeOutput": 0,
+                        "previousNodeRun": 0
+                      },
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "review_key": "111_501_R2",
+                      "shop_id": "111",
+                      "shop_name": "Shop Ánh Dương",
+                      "item_id": "501",
+                      "product_name": "Son môi Velvet Red",
+                      "comment_id": "R2",
+                      "rating_star": 2,
+                      "comment": "Giao hang cham, hang bi loi son",
+                      "review_time": "2025-10-09T08:53:20.000Z",
+                      "collected_at": "2026-10-15T11:18:33.174Z"
+                    },
+                    "pairedItem": {
+                      "sourceOverwrite": {
+                        "previousNode": "Code - Build Analysis Queue",
+                        "previousNodeOutput": 0,
+                        "previousNodeRun": 0
+                      },
+                      "item": 1
+                    }
+                  },
+                  {
+                    "json": {
+                      "review_key": "111_501_R3",
+                      "shop_id": "111",
+                      "shop_name": "Shop Ánh Dương",
+                      "item_id": "501",
+                      "product_name": "Son môi Velvet Red",
+                      "comment_id": "R3",
+                      "rating_star": 4,
+                      "comment": "Dep nhung mau chot hoi nhạt",
+                      "review_time": "2026-01-10T10:30:00.000Z",
+                      "collected_at": "2026-10-15T11:18:33.174Z"
+                    },
+                    "pairedItem": {
+                      "sourceOverwrite": {
+                        "previousNode": "Code - Build Analysis Queue",
+                        "previousNodeOutput": 0,
+                        "previousNodeRun": 0
+                      },
+                      "item": 2
+                    }
+                  },
+                  {
+                    "json": {
+                      "review_key": "111_502_R10",
+                      "shop_id": "111",
+                      "shop_name": "Shop Ánh Dương",
+                      "item_id": "502",
+                      "product_name": "Kem dưỡng ẩm Aloe",
+                      "comment_id": "R10",
+                      "rating_star": 1,
+                      "comment": "Kem dich vu, khong giong mo ta",
+                      "review_time": "2026-10-02T08:00:00.000Z",
+                      "collected_at": "2026-10-15T11:18:33.520Z"
+                    },
+                    "pairedItem": {
+                      "sourceOverwrite": {
+                        "previousNode": "Code - Build Analysis Queue",
+                        "previousNodeOutput": 0,
+                        "previousNodeRun": 1
+                      },
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "review_key": "222_601_R20",
+                      "shop_id": "222",
+                      "shop_name": "Shop Bốn Mùa",
+                      "item_id": "601",
+                      "product_name": "Túi xách da mềm",
+                      "comment_id": "R20",
+                      "rating_star": 5,
+                      "comment": "Tui dep, giao nhanh",
+                      "review_time": "2026-10-03T00:00:00.000Z",
+                      "collected_at": "2026-10-15T11:18:33.901Z"
+                    },
+                    "pairedItem": {
+                      "sourceOverwrite": {
+                        "previousNode": "Code - Build Analysis Queue",
+                        "previousNodeOutput": 0,
+                        "previousNodeRun": 2
+                      },
+                      "item": 0
+                    }
+                  }
+                ],
+                []
+              ]
+            }
+          }
+        ],
+        "Code - Throttle": [
+          {
+            "startTime": 1792063112914,
+            "executionIndex": 18,
+            "source": [
+              {
+                "previousNode": "Loop Over Products",
+                "previousNodeOutput": 1,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 118,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "shop_id": "111",
+                      "shop_name": "Shop Ánh Dương",
+                      "item_id": "501",
+                      "product_name": "Son môi Velvet Red",
+                      "product_url": "https://shopee.vn/product/111/501",
+                      "last_review_check": "",
+                      "status": "pending"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ],
+                []
+              ]
+            }
+          },
+          {
+            "startTime": 1792063113253,
+            "executionIndex": 29,
+            "source": [
+              {
+                "previousNode": "Loop Over Products",
+                "previousNodeOutput": 1,
+                "previousNodeRun": 1
+              }
+            ],
+            "hints": [],
+            "executionTime": 122,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "shop_id": "111",
+                      "shop_name": "Shop Ánh Dương",
+                      "item_id": "502",
+                      "product_name": "Kem dưỡng ẩm Aloe",
+                      "product_url": "https://shopee.vn/product/111/502",
+                      "last_review_check": "",
+                      "status": "pending"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ],
+                []
+              ]
+            }
+          },
+          {
+            "startTime": 1792063113604,
+            "executionIndex": 40,
+            "source": [
+              {
+                "previousNode": "Loop Over Products",
+                "previousNodeOutput": 1,
+                "previousNodeRun": 2
+              }
+            ],
+            "hints": [],
+            "executionTime": 119,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "shop_id": "222",
+                      "shop_name": "Shop Bốn Mùa",
+                      "item_id": "601",
+                      "product_name": "Túi xách da mềm",
+                      "product_url": "https://shopee.vn/product/222/601",
+                      "last_review_check": "",
+                      "status": "pending"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ],
+                []
+              ]
+            }
+          }
+        ],
+        "Google Sheets - Read Product Reviews": [
+          {
+            "startTime": 1792063113032,
+            "executionIndex": 19,
+            "source": [
+              {
+                "previousNode": "Code - Throttle",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 40,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "review_key": "111_501_R1",
+                      "shop_id": "111",
+                      "shop_name": "Shop Ánh Dương",
+                      "item_id": "501",
+                      "product_name": "Son môi Velvet Red",
+                      "comment_id": "R1",
+                      "rating_star": 5,
+                      "comment": "San pham rat tot",
+                      "review_time": "2026-09-30T00:00:00.000Z",
+                      "collected_at": "2026-10-01T00:00:00.000Z",
+                      "sentiment": "positive",
+                      "issues": "[]",
+                      "summary": "Khen sản phẩm",
+                      "urgency": "low",
+                      "analysis_status": "done"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "review_key": "111_501_R9",
+                      "shop_id": "111",
+                      "shop_name": "Shop Ánh Dương",
+                      "item_id": "501",
+                      "product_name": "Son môi Velvet Red",
+                      "comment_id": "R9",
+                      "rating_star": 1,
+                      "comment": "Cham giao hang qua, dong goi cau tat",
+                      "review_time": "2026-09-30T01:00:00.000Z",
+                      "collected_at": "2026-10-01T00:00:00.000Z",
+                      "sentiment": "",
+                      "issues": "",
+                      "summary": "",
+                      "urgency": "",
+                      "analysis_status": "pending"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ],
+                []
+              ]
+            }
+          },
+          {
+            "startTime": 1792063113375,
+            "executionIndex": 30,
+            "source": [
+              {
+                "previousNode": "Code - Throttle",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 1
+              }
+            ],
+            "hints": [],
+            "executionTime": 29,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {},
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ],
+                []
+              ]
+            }
+          },
+          {
+            "startTime": 1792063113723,
+            "executionIndex": 41,
+            "source": [
+              {
+                "previousNode": "Code - Throttle",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 2
+              }
+            ],
+            "hints": [],
+            "executionTime": 36,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {},
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ],
+                []
+              ]
+            }
+          }
+        ],
+        "Code - Build Product State": [
+          {
+            "startTime": 1792063113072,
+            "executionIndex": 20,
+            "source": [
+              {
+                "previousNode": "Google Sheets - Read Product Reviews",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 49,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "shop_id": "111",
+                      "shop_name": "Shop Ánh Dương",
+                      "item_id": "501",
+                      "product_name": "Son môi Velvet Red",
+                      "existing_keys": [
+                        "111_501_R1",
+                        "111_501_R9"
+                      ],
+                      "pending": [
+                        {
+                          "review_key": "111_501_R9",
+                          "shop_id": "111",
+                          "shop_name": "Shop Ánh Dương",
+                          "item_id": "501",
+                          "product_name": "Son môi Velvet Red",
+                          "comment_id": "R9",
+                          "rating_star": 1,
+                          "comment": "Cham giao hang qua, dong goi cau tat",
+                          "review_time": "2026-09-30T01:00:00.000Z",
+                          "collected_at": "2026-10-01T00:00:00.000Z",
+                          "sentiment": "",
+                          "issues": "",
+                          "summary": "",
+                          "urgency": "",
+                          "analysis_status": "pending"
+                        }
+                      ]
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ],
+                []
+              ]
+            }
+          },
+          {
+            "startTime": 1792063113404,
+            "executionIndex": 31,
+            "source": [
+              {
+                "previousNode": "Google Sheets - Read Product Reviews",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 1
+              }
+            ],
+            "hints": [],
+            "executionTime": 40,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "shop_id": "111",
+                      "shop_name": "Shop Ánh Dương",
+                      "item_id": "502",
+                      "product_name": "Kem dưỡng ẩm Aloe",
+                      "existing_keys": [],
+                      "pending": []
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ],
+                []
+              ]
+            }
+          },
+          {
+            "startTime": 1792063113759,
+            "executionIndex": 42,
+            "source": [
+              {
+                "previousNode": "Google Sheets - Read Product Reviews",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 2
+              }
+            ],
+            "hints": [],
+            "executionTime": 47,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "shop_id": "222",
+                      "shop_name": "Shop Bốn Mùa",
+                      "item_id": "601",
+                      "product_name": "Túi xách da mềm",
+                      "existing_keys": [],
+                      "pending": []
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ],
+                []
+              ]
+            }
+          }
+        ],
+        "IF - Review Source": [
+          {
+            "startTime": 1792063113121,
+            "executionIndex": 21,
+            "source": [
+              {
+                "previousNode": "Code - Build Product State",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 5,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [],
+                [
+                  {
+                    "json": {
+                      "shop_id": "111",
+                      "shop_name": "Shop Ánh Dương",
+                      "item_id": "501",
+                      "product_name": "Son môi Velvet Red",
+                      "existing_keys": [
+                        "111_501_R1",
+                        "111_501_R9"
+                      ],
+                      "pending": [
+                        {
+                          "review_key": "111_501_R9",
+                          "shop_id": "111",
+                          "shop_name": "Shop Ánh Dương",
+                          "item_id": "501",
+                          "product_name": "Son môi Velvet Red",
+                          "comment_id": "R9",
+                          "rating_star": 1,
+                          "comment": "Cham giao hang qua, dong goi cau tat",
+                          "review_time": "2026-09-30T01:00:00.000Z",
+                          "collected_at": "2026-10-01T00:00:00.000Z",
+                          "sentiment": "",
+                          "issues": "",
+                          "summary": "",
+                          "urgency": "",
+                          "analysis_status": "pending"
+                        }
+                      ]
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          },
+          {
+            "startTime": 1792063113444,
+            "executionIndex": 32,
+            "source": [
+              {
+                "previousNode": "Code - Build Product State",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 1
+              }
+            ],
+            "hints": [],
+            "executionTime": 5,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [],
+                [
+                  {
+                    "json": {
+                      "shop_id": "111",
+                      "shop_name": "Shop Ánh Dương",
+                      "item_id": "502",
+                      "product_name": "Kem dưỡng ẩm Aloe",
+                      "existing_keys": [],
+                      "pending": []
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          },
+          {
+            "startTime": 1792063113806,
+            "executionIndex": 43,
+            "source": [
+              {
+                "previousNode": "Code - Build Product State",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 2
+              }
+            ],
+            "hints": [],
+            "executionTime": 5,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [],
+                [
+                  {
+                    "json": {
+                      "shop_id": "222",
+                      "shop_name": "Shop Bốn Mùa",
+                      "item_id": "601",
+                      "product_name": "Túi xách da mềm",
+                      "existing_keys": [],
+                      "pending": []
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Google Sheets - Read Review Imports": [
+          {
+            "startTime": 1792063113126,
+            "executionIndex": 22,
+            "source": [
+              {
+                "previousNode": "IF - Review Source",
+                "previousNodeOutput": 1,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 23,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "shop_id": "111",
+                      "item_id": "501",
+                      "comment_id": "R1",
+                      "rating_star": 5,
+                      "comment": "San pham tot (dup cua seed)",
+                      "review_time": "2026-10-01T10:00:00.000Z"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "shop_id": "111",
+                      "item_id": "501",
+                      "comment_id": "R2",
+                      "rating_star": 2,
+                      "comment": "Giao hang cham, hang bi loi son",
+                      "review_time": "1760000000"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "shop_id": "111",
+                      "item_id": "501",
+                      "comment_id": "R2",
+                      "rating_star": 2,
+                      "comment": "Giao hang cham (trung trong batch)",
+                      "review_time": "1760000000"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "shop_id": "111",
+                      "item_id": "501",
+                      "comment_id": "R3",
+                      "rating_star": 4,
+                      "comment": "Dep nhung mau chot hoi nhạt",
+                      "review_time": "01/10/2026 10:30"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ],
+                []
+              ]
+            }
+          },
+          {
+            "startTime": 1792063113450,
+            "executionIndex": 33,
+            "source": [
+              {
+                "previousNode": "IF - Review Source",
+                "previousNodeOutput": 1,
+                "previousNodeRun": 1
+              }
+            ],
+            "hints": [],
+            "executionTime": 31,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "shop_id": "111",
+                      "item_id": "502",
+                      "comment_id": "R10",
+                      "rating_star": 1,
+                      "comment": "Kem dich vu, khong giong mo ta",
+                      "review_time": "2026-10-02T08:00:00Z"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ],
+                []
+              ]
+            }
+          },
+          {
+            "startTime": 1792063113812,
+            "executionIndex": 44,
+            "source": [
+              {
+                "previousNode": "IF - Review Source",
+                "previousNodeOutput": 1,
+                "previousNodeRun": 2
+              }
+            ],
+            "hints": [],
+            "executionTime": 33,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "shop_id": "222",
+                      "item_id": "601",
+                      "comment_id": "R20",
+                      "rating_star": 5,
+                      "comment": "Tui dep, giao nhanh",
+                      "review_time": "2026-10-03"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "shop_id": "222",
+                      "item_id": "601",
+                      "comment_id": "",
+                      "rating_star": 3,
+                      "comment": "Thieu comment_id se bi bo qua",
+                      "review_time": "2026-10-03"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ],
+                []
+              ]
+            }
+          }
+        ],
+        "Code - Normalize Reviews": [
+          {
+            "startTime": 1792063113149,
+            "executionIndex": 23,
+            "source": [
+              {
+                "previousNode": "Google Sheets - Read Review Imports",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 27,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "shop_id": "111",
+                      "shop_name": "Shop Ánh Dương",
+                      "item_id": "501",
+                      "product_name": "Son môi Velvet Red",
+                      "comment_id": "R1",
+                      "rating_star": 5,
+                      "comment": "San pham tot (dup cua seed)",
+                      "review_time": "2026-10-01T10:00:00.000Z",
+                      "collected_at": "2026-10-15T11:18:33.174Z"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "shop_id": "111",
+                      "shop_name": "Shop Ánh Dương",
+                      "item_id": "501",
+                      "product_name": "Son môi Velvet Red",
+                      "comment_id": "R2",
+                      "rating_star": 2,
+                      "comment": "Giao hang cham, hang bi loi son",
+                      "review_time": "2025-10-09T08:53:20.000Z",
+                      "collected_at": "2026-10-15T11:18:33.174Z"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "shop_id": "111",
+                      "shop_name": "Shop Ánh Dương",
+                      "item_id": "501",
+                      "product_name": "Son môi Velvet Red",
+                      "comment_id": "R2",
+                      "rating_star": 2,
+                      "comment": "Giao hang cham (trung trong batch)",
+                      "review_time": "2025-10-09T08:53:20.000Z",
+                      "collected_at": "2026-10-15T11:18:33.174Z"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "shop_id": "111",
+                      "shop_name": "Shop Ánh Dương",
+                      "item_id": "501",
+                      "product_name": "Son môi Velvet Red",
+                      "comment_id": "R3",
+                      "rating_star": 4,
+                      "comment": "Dep nhung mau chot hoi nhạt",
+                      "review_time": "2026-01-10T10:30:00.000Z",
+                      "collected_at": "2026-10-15T11:18:33.174Z"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ],
+                []
+              ]
+            }
+          },
+          {
+            "startTime": 1792063113481,
+            "executionIndex": 34,
+            "source": [
+              {
+                "previousNode": "Google Sheets - Read Review Imports",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 1
+              }
+            ],
+            "hints": [],
+            "executionTime": 42,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "shop_id": "111",
+                      "shop_name": "Shop Ánh Dương",
+                      "item_id": "502",
+                      "product_name": "Kem dưỡng ẩm Aloe",
+                      "comment_id": "R10",
+                      "rating_star": 1,
+                      "comment": "Kem dich vu, khong giong mo ta",
+                      "review_time": "2026-10-02T08:00:00.000Z",
+                      "collected_at": "2026-10-15T11:18:33.520Z"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ],
+                []
+              ]
+            }
+          },
+          {
+            "startTime": 1792063113845,
+            "executionIndex": 45,
+            "source": [
+              {
+                "previousNode": "Google Sheets - Read Review Imports",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 2
+              }
+            ],
+            "hints": [],
+            "executionTime": 59,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "shop_id": "222",
+                      "shop_name": "Shop Bốn Mùa",
+                      "item_id": "601",
+                      "product_name": "Túi xách da mềm",
+                      "comment_id": "R20",
+                      "rating_star": 5,
+                      "comment": "Tui dep, giao nhanh",
+                      "review_time": "2026-10-03T00:00:00.000Z",
+                      "collected_at": "2026-10-15T11:18:33.901Z"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ],
+                []
+              ]
+            }
+          }
+        ],
+        "Code - Deduplicate Reviews": [
+          {
+            "startTime": 1792063113176,
+            "executionIndex": 24,
+            "source": [
+              {
+                "previousNode": "Code - Normalize Reviews",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 22,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "review_key": "111_501_R2",
+                      "shop_id": "111",
+                      "shop_name": "Shop Ánh Dương",
+                      "item_id": "501",
+                      "product_name": "Son môi Velvet Red",
+                      "comment_id": "R2",
+                      "rating_star": 2,
+                      "comment": "Giao hang cham, hang bi loi son",
+                      "review_time": "2025-10-09T08:53:20.000Z",
+                      "collected_at": "2026-10-15T11:18:33.174Z",
+                      "sentiment": "",
+                      "issues": "",
+                      "summary": "",
+                      "urgency": "",
+                      "analysis_status": "pending"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "review_key": "111_501_R3",
+                      "shop_id": "111",
+                      "shop_name": "Shop Ánh Dương",
+                      "item_id": "501",
+                      "product_name": "Son môi Velvet Red",
+                      "comment_id": "R3",
+                      "rating_star": 4,
+                      "comment": "Dep nhung mau chot hoi nhạt",
+                      "review_time": "2026-01-10T10:30:00.000Z",
+                      "collected_at": "2026-10-15T11:18:33.174Z",
+                      "sentiment": "",
+                      "issues": "",
+                      "summary": "",
+                      "urgency": "",
+                      "analysis_status": "pending"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ],
+                []
+              ]
+            }
+          },
+          {
+            "startTime": 1792063113523,
+            "executionIndex": 35,
+            "source": [
+              {
+                "previousNode": "Code - Normalize Reviews",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 1
+              }
+            ],
+            "hints": [],
+            "executionTime": 35,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "review_key": "111_502_R10",
+                      "shop_id": "111",
+                      "shop_name": "Shop Ánh Dương",
+                      "item_id": "502",
+                      "product_name": "Kem dưỡng ẩm Aloe",
+                      "comment_id": "R10",
+                      "rating_star": 1,
+                      "comment": "Kem dich vu, khong giong mo ta",
+                      "review_time": "2026-10-02T08:00:00.000Z",
+                      "collected_at": "2026-10-15T11:18:33.520Z",
+                      "sentiment": "",
+                      "issues": "",
+                      "summary": "",
+                      "urgency": "",
+                      "analysis_status": "pending"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ],
+                []
+              ]
+            }
+          },
+          {
+            "startTime": 1792063113904,
+            "executionIndex": 46,
+            "source": [
+              {
+                "previousNode": "Code - Normalize Reviews",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 2
+              }
+            ],
+            "hints": [],
+            "executionTime": 50,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "review_key": "222_601_R20",
+                      "shop_id": "222",
+                      "shop_name": "Shop Bốn Mùa",
+                      "item_id": "601",
+                      "product_name": "Túi xách da mềm",
+                      "comment_id": "R20",
+                      "rating_star": 5,
+                      "comment": "Tui dep, giao nhanh",
+                      "review_time": "2026-10-03T00:00:00.000Z",
+                      "collected_at": "2026-10-15T11:18:33.901Z",
+                      "sentiment": "",
+                      "issues": "",
+                      "summary": "",
+                      "urgency": "",
+                      "analysis_status": "pending"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ],
+                []
+              ]
+            }
+          }
+        ],
+        "IF - New Reviews": [
+          {
+            "startTime": 1792063113198,
+            "executionIndex": 25,
+            "source": [
+              {
+                "previousNode": "Code - Deduplicate Reviews",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 12,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "review_key": "111_501_R2",
+                      "shop_id": "111",
+                      "shop_name": "Shop Ánh Dương",
+                      "item_id": "501",
+                      "product_name": "Son môi Velvet Red",
+                      "comment_id": "R2",
+                      "rating_star": 2,
+                      "comment": "Giao hang cham, hang bi loi son",
+                      "review_time": "2025-10-09T08:53:20.000Z",
+                      "collected_at": "2026-10-15T11:18:33.174Z",
+                      "sentiment": "",
+                      "issues": "",
+                      "summary": "",
+                      "urgency": "",
+                      "analysis_status": "pending"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "review_key": "111_501_R3",
+                      "shop_id": "111",
+                      "shop_name": "Shop Ánh Dương",
+                      "item_id": "501",
+                      "product_name": "Son môi Velvet Red",
+                      "comment_id": "R3",
+                      "rating_star": 4,
+                      "comment": "Dep nhung mau chot hoi nhạt",
+                      "review_time": "2026-01-10T10:30:00.000Z",
+                      "collected_at": "2026-10-15T11:18:33.174Z",
+                      "sentiment": "",
+                      "issues": "",
+                      "summary": "",
+                      "urgency": "",
+                      "analysis_status": "pending"
+                    },
+                    "pairedItem": {
+                      "item": 1
+                    }
+                  }
+                ],
+                []
+              ]
+            }
+          },
+          {
+            "startTime": 1792063113558,
+            "executionIndex": 36,
+            "source": [
+              {
+                "previousNode": "Code - Deduplicate Reviews",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 1
+              }
+            ],
+            "hints": [],
+            "executionTime": 2,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "review_key": "111_502_R10",
+                      "shop_id": "111",
+                      "shop_name": "Shop Ánh Dương",
+                      "item_id": "502",
+                      "product_name": "Kem dưỡng ẩm Aloe",
+                      "comment_id": "R10",
+                      "rating_star": 1,
+                      "comment": "Kem dich vu, khong giong mo ta",
+                      "review_time": "2026-10-02T08:00:00.000Z",
+                      "collected_at": "2026-10-15T11:18:33.520Z",
+                      "sentiment": "",
+                      "issues": "",
+                      "summary": "",
+                      "urgency": "",
+                      "analysis_status": "pending"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ],
+                []
+              ]
+            }
+          },
+          {
+            "startTime": 1792063113955,
+            "executionIndex": 47,
+            "source": [
+              {
+                "previousNode": "Code - Deduplicate Reviews",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 2
+              }
+            ],
+            "hints": [],
+            "executionTime": 4,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "review_key": "222_601_R20",
+                      "shop_id": "222",
+                      "shop_name": "Shop Bốn Mùa",
+                      "item_id": "601",
+                      "product_name": "Túi xách da mềm",
+                      "comment_id": "R20",
+                      "rating_star": 5,
+                      "comment": "Tui dep, giao nhanh",
+                      "review_time": "2026-10-03T00:00:00.000Z",
+                      "collected_at": "2026-10-15T11:18:33.901Z",
+                      "sentiment": "",
+                      "issues": "",
+                      "summary": "",
+                      "urgency": "",
+                      "analysis_status": "pending"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ],
+                []
+              ]
+            }
+          }
+        ],
+        "Google Sheets - Save Reviews": [
+          {
+            "startTime": 1792063113210,
+            "executionIndex": 26,
+            "source": [
+              {
+                "previousNode": "IF - New Reviews",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 18,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "review_key": "111_501_R2",
+                      "shop_id": "111",
+                      "shop_name": "Shop Ánh Dương",
+                      "item_id": "501",
+                      "product_name": "Son môi Velvet Red",
+                      "comment_id": "R2",
+                      "rating_star": 2,
+                      "comment": "Giao hang cham, hang bi loi son",
+                      "review_time": "2025-10-09T08:53:20.000Z",
+                      "collected_at": "2026-10-15T11:18:33.174Z",
+                      "sentiment": "",
+                      "issues": "",
+                      "summary": "",
+                      "urgency": "",
+                      "analysis_status": "pending"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "review_key": "111_501_R3",
+                      "shop_id": "111",
+                      "shop_name": "Shop Ánh Dương",
+                      "item_id": "501",
+                      "product_name": "Son môi Velvet Red",
+                      "comment_id": "R3",
+                      "rating_star": 4,
+                      "comment": "Dep nhung mau chot hoi nhạt",
+                      "review_time": "2026-01-10T10:30:00.000Z",
+                      "collected_at": "2026-10-15T11:18:33.174Z",
+                      "sentiment": "",
+                      "issues": "",
+                      "summary": "",
+                      "urgency": "",
+                      "analysis_status": "pending"
+                    },
+                    "pairedItem": {
+                      "item": 1
+                    }
+                  }
+                ],
+                []
+              ]
+            }
+          },
+          {
+            "startTime": 1792063113560,
+            "executionIndex": 37,
+            "source": [
+              {
+                "previousNode": "IF - New Reviews",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 1
+              }
+            ],
+            "hints": [],
+            "executionTime": 19,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "review_key": "111_502_R10",
+                      "shop_id": "111",
+                      "shop_name": "Shop Ánh Dương",
+                      "item_id": "502",
+                      "product_name": "Kem dưỡng ẩm Aloe",
+                      "comment_id": "R10",
+                      "rating_star": 1,
+                      "comment": "Kem dich vu, khong giong mo ta",
+                      "review_time": "2026-10-02T08:00:00.000Z",
+                      "collected_at": "2026-10-15T11:18:33.520Z",
+                      "sentiment": "",
+                      "issues": "",
+                      "summary": "",
+                      "urgency": "",
+                      "analysis_status": "pending"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ],
+                []
+              ]
+            }
+          },
+          {
+            "startTime": 1792063113959,
+            "executionIndex": 48,
+            "source": [
+              {
+                "previousNode": "IF - New Reviews",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 2
+              }
+            ],
+            "hints": [],
+            "executionTime": 39,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "review_key": "222_601_R20",
+                      "shop_id": "222",
+                      "shop_name": "Shop Bốn Mùa",
+                      "item_id": "601",
+                      "product_name": "Túi xách da mềm",
+                      "comment_id": "R20",
+                      "rating_star": 5,
+                      "comment": "Tui dep, giao nhanh",
+                      "review_time": "2026-10-03T00:00:00.000Z",
+                      "collected_at": "2026-10-15T11:18:33.901Z",
+                      "sentiment": "",
+                      "issues": "",
+                      "summary": "",
+                      "urgency": "",
+                      "analysis_status": "pending"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ],
+                []
+              ]
+            }
+          }
+        ],
+        "Code - Build Analysis Queue": [
+          {
+            "startTime": 1792063113228,
+            "executionIndex": 27,
+            "source": [
+              {
+                "previousNode": "Google Sheets - Save Reviews",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 24,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "review_key": "111_501_R9",
+                      "shop_id": "111",
+                      "shop_name": "Shop Ánh Dương",
+                      "item_id": "501",
+                      "product_name": "Son môi Velvet Red",
+                      "comment_id": "R9",
+                      "rating_star": 1,
+                      "comment": "Cham giao hang qua, dong goi cau tat",
+                      "review_time": "2026-09-30T01:00:00.000Z",
+                      "collected_at": "2026-10-01T00:00:00.000Z"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "review_key": "111_501_R2",
+                      "shop_id": "111",
+                      "shop_name": "Shop Ánh Dương",
+                      "item_id": "501",
+                      "product_name": "Son môi Velvet Red",
+                      "comment_id": "R2",
+                      "rating_star": 2,
+                      "comment": "Giao hang cham, hang bi loi son",
+                      "review_time": "2025-10-09T08:53:20.000Z",
+                      "collected_at": "2026-10-15T11:18:33.174Z"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "review_key": "111_501_R3",
+                      "shop_id": "111",
+                      "shop_name": "Shop Ánh Dương",
+                      "item_id": "501",
+                      "product_name": "Son môi Velvet Red",
+                      "comment_id": "R3",
+                      "rating_star": 4,
+                      "comment": "Dep nhung mau chot hoi nhạt",
+                      "review_time": "2026-01-10T10:30:00.000Z",
+                      "collected_at": "2026-10-15T11:18:33.174Z"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ],
+                []
+              ]
+            }
+          },
+          {
+            "startTime": 1792063113579,
+            "executionIndex": 38,
+            "source": [
+              {
+                "previousNode": "Google Sheets - Save Reviews",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 1
+              }
+            ],
+            "hints": [],
+            "executionTime": 25,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "review_key": "111_502_R10",
+                      "shop_id": "111",
+                      "shop_name": "Shop Ánh Dương",
+                      "item_id": "502",
+                      "product_name": "Kem dưỡng ẩm Aloe",
+                      "comment_id": "R10",
+                      "rating_star": 1,
+                      "comment": "Kem dich vu, khong giong mo ta",
+                      "review_time": "2026-10-02T08:00:00.000Z",
+                      "collected_at": "2026-10-15T11:18:33.520Z"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ],
+                []
+              ]
+            }
+          },
+          {
+            "startTime": 1792063113998,
+            "executionIndex": 49,
+            "source": [
+              {
+                "previousNode": "Google Sheets - Save Reviews",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 2
+              }
+            ],
+            "hints": [],
+            "executionTime": 59,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "review_key": "222_601_R20",
+                      "shop_id": "222",
+                      "shop_name": "Shop Bốn Mùa",
+                      "item_id": "601",
+                      "product_name": "Túi xách da mềm",
+                      "comment_id": "R20",
+                      "rating_star": 5,
+                      "comment": "Tui dep, giao nhanh",
+                      "review_time": "2026-10-03T00:00:00.000Z",
+                      "collected_at": "2026-10-15T11:18:33.901Z"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ],
+                []
+              ]
+            }
+          }
+        ],
+        "IF - Analysis Needed": [
+          {
+            "startTime": 1792063114058,
+            "executionIndex": 51,
+            "source": [
+              {
+                "previousNode": "Loop Over Products",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 3
+              }
+            ],
+            "hints": [],
+            "executionTime": 62,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "review_key": "111_501_R9",
+                      "shop_id": "111",
+                      "shop_name": "Shop Ánh Dương",
+                      "item_id": "501",
+                      "product_name": "Son môi Velvet Red",
+                      "comment_id": "R9",
+                      "rating_star": 1,
+                      "comment": "Cham giao hang qua, dong goi cau tat",
+                      "review_time": "2026-09-30T01:00:00.000Z",
+                      "collected_at": "2026-10-01T00:00:00.000Z"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "review_key": "111_501_R2",
+                      "shop_id": "111",
+                      "shop_name": "Shop Ánh Dương",
+                      "item_id": "501",
+                      "product_name": "Son môi Velvet Red",
+                      "comment_id": "R2",
+                      "rating_star": 2,
+                      "comment": "Giao hang cham, hang bi loi son",
+                      "review_time": "2025-10-09T08:53:20.000Z",
+                      "collected_at": "2026-10-15T11:18:33.174Z"
+                    },
+                    "pairedItem": {
+                      "item": 1
+                    }
+                  },
+                  {
+                    "json": {
+                      "review_key": "111_501_R3",
+                      "shop_id": "111",
+                      "shop_name": "Shop Ánh Dương",
+                      "item_id": "501",
+                      "product_name": "Son môi Velvet Red",
+                      "comment_id": "R3",
+                      "rating_star": 4,
+                      "comment": "Dep nhung mau chot hoi nhạt",
+                      "review_time": "2026-01-10T10:30:00.000Z",
+                      "collected_at": "2026-10-15T11:18:33.174Z"
+                    },
+                    "pairedItem": {
+                      "item": 2
+                    }
+                  },
+                  {
+                    "json": {
+                      "review_key": "111_502_R10",
+                      "shop_id": "111",
+                      "shop_name": "Shop Ánh Dương",
+                      "item_id": "502",
+                      "product_name": "Kem dưỡng ẩm Aloe",
+                      "comment_id": "R10",
+                      "rating_star": 1,
+                      "comment": "Kem dich vu, khong giong mo ta",
+                      "review_time": "2026-10-02T08:00:00.000Z",
+                      "collected_at": "2026-10-15T11:18:33.520Z"
+                    },
+                    "pairedItem": {
+                      "item": 3
+                    }
+                  },
+                  {
+                    "json": {
+                      "review_key": "222_601_R20",
+                      "shop_id": "222",
+                      "shop_name": "Shop Bốn Mùa",
+                      "item_id": "601",
+                      "product_name": "Túi xách da mềm",
+                      "comment_id": "R20",
+                      "rating_star": 5,
+                      "comment": "Tui dep, giao nhanh",
+                      "review_time": "2026-10-03T00:00:00.000Z",
+                      "collected_at": "2026-10-15T11:18:33.901Z"
+                    },
+                    "pairedItem": {
+                      "item": 4
+                    }
+                  }
+                ],
+                []
+              ]
+            }
+          }
+        ],
+        "Loop Over Analysis Items": [
+          {
+            "startTime": 1792063114120,
+            "executionIndex": 52,
+            "source": [
+              {
+                "previousNode": "IF - Analysis Needed",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 1,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [],
+                [
+                  {
+                    "json": {
+                      "review_key": "111_501_R9",
+                      "shop_id": "111",
+                      "shop_name": "Shop Ánh Dương",
+                      "item_id": "501",
+                      "product_name": "Son môi Velvet Red",
+                      "comment_id": "R9",
+                      "rating_star": 1,
+                      "comment": "Cham giao hang qua, dong goi cau tat",
+                      "review_time": "2026-09-30T01:00:00.000Z",
+                      "collected_at": "2026-10-01T00:00:00.000Z"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          },
+          {
+            "startTime": 1792063124535,
+            "executionIndex": 58,
+            "source": [
+              {
+                "previousNode": "Google Sheets - Update Analysis",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 1,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [],
+                [
+                  {
+                    "json": {
+                      "review_key": "111_501_R2",
+                      "shop_id": "111",
+                      "shop_name": "Shop Ánh Dương",
+                      "item_id": "501",
+                      "product_name": "Son môi Velvet Red",
+                      "comment_id": "R2",
+                      "rating_star": 2,
+                      "comment": "Giao hang cham, hang bi loi son",
+                      "review_time": "2025-10-09T08:53:20.000Z",
+                      "collected_at": "2026-10-15T11:18:33.174Z"
+                    },
+                    "pairedItem": {
+                      "item": 1,
+                      "sourceOverwrite": {
+                        "previousNode": "IF - Analysis Needed",
+                        "previousNodeOutput": 0,
+                        "previousNodeRun": 0
+                      }
+                    }
+                  }
+                ]
+              ]
+            }
+          },
+          {
+            "startTime": 1792063134811,
+            "executionIndex": 64,
+            "source": [
+              {
+                "previousNode": "Google Sheets - Update Analysis",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 1
+              }
+            ],
+            "hints": [],
+            "executionTime": 0,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [],
+                [
+                  {
+                    "json": {
+                      "review_key": "111_501_R3",
+                      "shop_id": "111",
+                      "shop_name": "Shop Ánh Dương",
+                      "item_id": "501",
+                      "product_name": "Son môi Velvet Red",
+                      "comment_id": "R3",
+                      "rating_star": 4,
+                      "comment": "Dep nhung mau chot hoi nhạt",
+                      "review_time": "2026-01-10T10:30:00.000Z",
+                      "collected_at": "2026-10-15T11:18:33.174Z"
+                    },
+                    "pairedItem": {
+                      "item": 2,
+                      "sourceOverwrite": {
+                        "previousNode": "IF - Analysis Needed",
+                        "previousNodeOutput": 0,
+                        "previousNodeRun": 0
+                      }
+                    }
+                  }
+                ]
+              ]
+            }
+          },
+          {
+            "startTime": 1792063145177,
+            "executionIndex": 70,
+            "source": [
+              {
+                "previousNode": "Google Sheets - Update Analysis",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 2
+              }
+            ],
+            "hints": [],
+            "executionTime": 1,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [],
+                [
+                  {
+                    "json": {
+                      "review_key": "111_502_R10",
+                      "shop_id": "111",
+                      "shop_name": "Shop Ánh Dương",
+                      "item_id": "502",
+                      "product_name": "Kem dưỡng ẩm Aloe",
+                      "comment_id": "R10",
+                      "rating_star": 1,
+                      "comment": "Kem dich vu, khong giong mo ta",
+                      "review_time": "2026-10-02T08:00:00.000Z",
+                      "collected_at": "2026-10-15T11:18:33.520Z"
+                    },
+                    "pairedItem": {
+                      "item": 3,
+                      "sourceOverwrite": {
+                        "previousNode": "IF - Analysis Needed",
+                        "previousNodeOutput": 0,
+                        "previousNodeRun": 0
+                      }
+                    }
+                  }
+                ]
+              ]
+            }
+          },
+          {
+            "startTime": 1792063155542,
+            "executionIndex": 76,
+            "source": [
+              {
+                "previousNode": "Google Sheets - Update Analysis",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 3
+              }
+            ],
+            "hints": [],
+            "executionTime": 1,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [],
+                [
+                  {
+                    "json": {
+                      "review_key": "222_601_R20",
+                      "shop_id": "222",
+                      "shop_name": "Shop Bốn Mùa",
+                      "item_id": "601",
+                      "product_name": "Túi xách da mềm",
+                      "comment_id": "R20",
+                      "rating_star": 5,
+                      "comment": "Tui dep, giao nhanh",
+                      "review_time": "2026-10-03T00:00:00.000Z",
+                      "collected_at": "2026-10-15T11:18:33.901Z"
+                    },
+                    "pairedItem": {
+                      "item": 4,
+                      "sourceOverwrite": {
+                        "previousNode": "IF - Analysis Needed",
+                        "previousNodeOutput": 0,
+                        "previousNodeRun": 0
+                      }
+                    }
+                  }
+                ]
+              ]
+            }
+          },
+          {
+            "startTime": 1792063165894,
+            "executionIndex": 82,
+            "source": [
+              {
+                "previousNode": "Google Sheets - Update Analysis",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 4
+              }
+            ],
+            "hints": [],
+            "executionTime": 0,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "review_key": "111_501_R9",
+                      "sentiment": "",
+                      "issues": "",
+                      "summary": "",
+                      "urgency": "",
+                      "analysis_status": "failed"
+                    },
+                    "pairedItem": {
+                      "sourceOverwrite": {
+                        "previousNode": "Google Sheets - Update Analysis",
+                        "previousNodeOutput": 0,
+                        "previousNodeRun": 0
+                      },
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "review_key": "111_501_R2",
+                      "sentiment": "",
+                      "issues": "",
+                      "summary": "",
+                      "urgency": "",
+                      "analysis_status": "failed"
+                    },
+                    "pairedItem": {
+                      "sourceOverwrite": {
+                        "previousNode": "Google Sheets - Update Analysis",
+                        "previousNodeOutput": 0,
+                        "previousNodeRun": 1
+                      },
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "review_key": "111_501_R3",
+                      "sentiment": "",
+                      "issues": "",
+                      "summary": "",
+                      "urgency": "",
+                      "analysis_status": "failed"
+                    },
+                    "pairedItem": {
+                      "sourceOverwrite": {
+                        "previousNode": "Google Sheets - Update Analysis",
+                        "previousNodeOutput": 0,
+                        "previousNodeRun": 2
+                      },
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "review_key": "111_502_R10",
+                      "sentiment": "",
+                      "issues": "",
+                      "summary": "",
+                      "urgency": "",
+                      "analysis_status": "failed"
+                    },
+                    "pairedItem": {
+                      "sourceOverwrite": {
+                        "previousNode": "Google Sheets - Update Analysis",
+                        "previousNodeOutput": 0,
+                        "previousNodeRun": 3
+                      },
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "review_key": "222_601_R20",
+                      "sentiment": "",
+                      "issues": "",
+                      "summary": "",
+                      "urgency": "",
+                      "analysis_status": "failed"
+                    },
+                    "pairedItem": {
+                      "sourceOverwrite": {
+                        "previousNode": "Google Sheets - Update Analysis",
+                        "previousNodeOutput": 0,
+                        "previousNodeRun": 4
+                      },
+                      "item": 0
+                    }
+                  }
+                ],
+                []
+              ]
+            }
+          }
+        ],
+        "Code - Throttle AI": [
+          {
+            "startTime": 1792063114121,
+            "executionIndex": 53,
+            "source": [
+              {
+                "previousNode": "Loop Over Analysis Items",
+                "previousNodeOutput": 1,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 151,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "review_key": "111_501_R9",
+                      "shop_id": "111",
+                      "shop_name": "Shop Ánh Dương",
+                      "item_id": "501",
+                      "product_name": "Son môi Velvet Red",
+                      "comment_id": "R9",
+                      "rating_star": 1,
+                      "comment": "Cham giao hang qua, dong goi cau tat",
+                      "review_time": "2026-09-30T01:00:00.000Z",
+                      "collected_at": "2026-10-01T00:00:00.000Z"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ],
+                []
+              ]
+            }
+          },
+          {
+            "startTime": 1792063124536,
+            "executionIndex": 59,
+            "source": [
+              {
+                "previousNode": "Loop Over Analysis Items",
+                "previousNodeOutput": 1,
+                "previousNodeRun": 1
+              }
+            ],
+            "hints": [],
+            "executionTime": 120,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "review_key": "111_501_R2",
+                      "shop_id": "111",
+                      "shop_name": "Shop Ánh Dương",
+                      "item_id": "501",
+                      "product_name": "Son môi Velvet Red",
+                      "comment_id": "R2",
+                      "rating_star": 2,
+                      "comment": "Giao hang cham, hang bi loi son",
+                      "review_time": "2025-10-09T08:53:20.000Z",
+                      "collected_at": "2026-10-15T11:18:33.174Z"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ],
+                []
+              ]
+            }
+          },
+          {
+            "startTime": 1792063134811,
+            "executionIndex": 65,
+            "source": [
+              {
+                "previousNode": "Loop Over Analysis Items",
+                "previousNodeOutput": 1,
+                "previousNodeRun": 2
+              }
+            ],
+            "hints": [],
+            "executionTime": 119,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "review_key": "111_501_R3",
+                      "shop_id": "111",
+                      "shop_name": "Shop Ánh Dương",
+                      "item_id": "501",
+                      "product_name": "Son môi Velvet Red",
+                      "comment_id": "R3",
+                      "rating_star": 4,
+                      "comment": "Dep nhung mau chot hoi nhạt",
+                      "review_time": "2026-01-10T10:30:00.000Z",
+                      "collected_at": "2026-10-15T11:18:33.174Z"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ],
+                []
+              ]
+            }
+          },
+          {
+            "startTime": 1792063145178,
+            "executionIndex": 71,
+            "source": [
+              {
+                "previousNode": "Loop Over Analysis Items",
+                "previousNodeOutput": 1,
+                "previousNodeRun": 3
+              }
+            ],
+            "hints": [],
+            "executionTime": 143,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "review_key": "111_502_R10",
+                      "shop_id": "111",
+                      "shop_name": "Shop Ánh Dương",
+                      "item_id": "502",
+                      "product_name": "Kem dưỡng ẩm Aloe",
+                      "comment_id": "R10",
+                      "rating_star": 1,
+                      "comment": "Kem dich vu, khong giong mo ta",
+                      "review_time": "2026-10-02T08:00:00.000Z",
+                      "collected_at": "2026-10-15T11:18:33.520Z"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ],
+                []
+              ]
+            }
+          },
+          {
+            "startTime": 1792063155543,
+            "executionIndex": 77,
+            "source": [
+              {
+                "previousNode": "Loop Over Analysis Items",
+                "previousNodeOutput": 1,
+                "previousNodeRun": 4
+              }
+            ],
+            "hints": [],
+            "executionTime": 147,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "review_key": "222_601_R20",
+                      "shop_id": "222",
+                      "shop_name": "Shop Bốn Mùa",
+                      "item_id": "601",
+                      "product_name": "Túi xách da mềm",
+                      "comment_id": "R20",
+                      "rating_star": 5,
+                      "comment": "Tui dep, giao nhanh",
+                      "review_time": "2026-10-03T00:00:00.000Z",
+                      "collected_at": "2026-10-15T11:18:33.901Z"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ],
+                []
+              ]
+            }
+          }
+        ],
+        "Code - Build Ollama Payload": [
+          {
+            "startTime": 1792063114272,
+            "executionIndex": 54,
+            "source": [
+              {
+                "previousNode": "Code - Throttle AI",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 33,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "review_key": "111_501_R9",
+                      "payload": {
+                        "model": "qwen2.5-coder:1.5b",
+                        "stream": false,
+                        "format": "json",
+                        "options": {
+                          "temperature": 0.1
+                        },
+                        "messages": [
+                          {
+                            "role": "system",
+                            "content": "Bạn là bộ phân tích đánh giá sản phẩm Shopee. Chỉ trả về MỘT đối tượng JSON hợp lệ, không kèm văn bản nào khác, đúng cấu trúc: {\"sentiment\":\"positive|neutral|negative\",\"issues\":[\"quality\"|\"packaging\"|\"delivery\"|\"price\"|\"customer_service\"|\"other\",...],\"summary\":\"...\",\"urgency\":\"low\"|\"medium\"|\"high\"}. Quy tắc: - sentiment: cảm xúc của người viết bình luận (positive, neutral hoặc negative). - issues: chỉ chọn các giá trị trong danh sách: quality, packaging, delivery, price, customer_service, other; nếu bình luận không nêu rõ vấn đề thì để mảng rỗng []. - summary: tóm tắt đúng nội dung bình luận trong 1 câu, cùng ngôn ngữ với bình luận. - urgency: low nếu chỉ khen hoặc nhận xét chung chung, medium nếu có phàn nàn, high nếu yêu cầu khiếu nại hoặc hoàn tiền. - Chỉ dùng thông tin có trong bình luận, không bịa thêm thông tin."
+                          },
+                          {
+                            "role": "user",
+                            "content": "Điểm đánh giá: 1/5\nBình luận: Cham giao hang qua, dong goi cau tat"
+                          }
+                        ]
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ],
+                []
+              ]
+            }
+          },
+          {
+            "startTime": 1792063124656,
+            "executionIndex": 60,
+            "source": [
+              {
+                "previousNode": "Code - Throttle AI",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 1
+              }
+            ],
+            "hints": [],
+            "executionTime": 38,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "review_key": "111_501_R2",
+                      "payload": {
+                        "model": "qwen2.5-coder:1.5b",
+                        "stream": false,
+                        "format": "json",
+                        "options": {
+                          "temperature": 0.1
+                        },
+                        "messages": [
+                          {
+                            "role": "system",
+                            "content": "Bạn là bộ phân tích đánh giá sản phẩm Shopee. Chỉ trả về MỘT đối tượng JSON hợp lệ, không kèm văn bản nào khác, đúng cấu trúc: {\"sentiment\":\"positive|neutral|negative\",\"issues\":[\"quality\"|\"packaging\"|\"delivery\"|\"price\"|\"customer_service\"|\"other\",...],\"summary\":\"...\",\"urgency\":\"low\"|\"medium\"|\"high\"}. Quy tắc: - sentiment: cảm xúc của người viết bình luận (positive, neutral hoặc negative). - issues: chỉ chọn các giá trị trong danh sách: quality, packaging, delivery, price, customer_service, other; nếu bình luận không nêu rõ vấn đề thì để mảng rỗng []. - summary: tóm tắt đúng nội dung bình luận trong 1 câu, cùng ngôn ngữ với bình luận. - urgency: low nếu chỉ khen hoặc nhận xét chung chung, medium nếu có phàn nàn, high nếu yêu cầu khiếu nại hoặc hoàn tiền. - Chỉ dùng thông tin có trong bình luận, không bịa thêm thông tin."
+                          },
+                          {
+                            "role": "user",
+                            "content": "Điểm đánh giá: 2/5\nBình luận: Giao hang cham, hang bi loi son"
+                          }
+                        ]
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ],
+                []
+              ]
+            }
+          },
+          {
+            "startTime": 1792063134930,
+            "executionIndex": 66,
+            "source": [
+              {
+                "previousNode": "Code - Throttle AI",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 2
+              }
+            ],
+            "hints": [],
+            "executionTime": 37,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "review_key": "111_501_R3",
+                      "payload": {
+                        "model": "qwen2.5-coder:1.5b",
+                        "stream": false,
+                        "format": "json",
+                        "options": {
+                          "temperature": 0.1
+                        },
+                        "messages": [
+                          {
+                            "role": "system",
+                            "content": "Bạn là bộ phân tích đánh giá sản phẩm Shopee. Chỉ trả về MỘT đối tượng JSON hợp lệ, không kèm văn bản nào khác, đúng cấu trúc: {\"sentiment\":\"positive|neutral|negative\",\"issues\":[\"quality\"|\"packaging\"|\"delivery\"|\"price\"|\"customer_service\"|\"other\",...],\"summary\":\"...\",\"urgency\":\"low\"|\"medium\"|\"high\"}. Quy tắc: - sentiment: cảm xúc của người viết bình luận (positive, neutral hoặc negative). - issues: chỉ chọn các giá trị trong danh sách: quality, packaging, delivery, price, customer_service, other; nếu bình luận không nêu rõ vấn đề thì để mảng rỗng []. - summary: tóm tắt đúng nội dung bình luận trong 1 câu, cùng ngôn ngữ với bình luận. - urgency: low nếu chỉ khen hoặc nhận xét chung chung, medium nếu có phàn nàn, high nếu yêu cầu khiếu nại hoặc hoàn tiền. - Chỉ dùng thông tin có trong bình luận, không bịa thêm thông tin."
+                          },
+                          {
+                            "role": "user",
+                            "content": "Điểm đánh giá: 4/5\nBình luận: Dep nhung mau chot hoi nhạt"
+                          }
+                        ]
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ],
+                []
+              ]
+            }
+          },
+          {
+            "startTime": 1792063145322,
+            "executionIndex": 72,
+            "source": [
+              {
+                "previousNode": "Code - Throttle AI",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 3
+              }
+            ],
+            "hints": [],
+            "executionTime": 39,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "review_key": "111_502_R10",
+                      "payload": {
+                        "model": "qwen2.5-coder:1.5b",
+                        "stream": false,
+                        "format": "json",
+                        "options": {
+                          "temperature": 0.1
+                        },
+                        "messages": [
+                          {
+                            "role": "system",
+                            "content": "Bạn là bộ phân tích đánh giá sản phẩm Shopee. Chỉ trả về MỘT đối tượng JSON hợp lệ, không kèm văn bản nào khác, đúng cấu trúc: {\"sentiment\":\"positive|neutral|negative\",\"issues\":[\"quality\"|\"packaging\"|\"delivery\"|\"price\"|\"customer_service\"|\"other\",...],\"summary\":\"...\",\"urgency\":\"low\"|\"medium\"|\"high\"}. Quy tắc: - sentiment: cảm xúc của người viết bình luận (positive, neutral hoặc negative). - issues: chỉ chọn các giá trị trong danh sách: quality, packaging, delivery, price, customer_service, other; nếu bình luận không nêu rõ vấn đề thì để mảng rỗng []. - summary: tóm tắt đúng nội dung bình luận trong 1 câu, cùng ngôn ngữ với bình luận. - urgency: low nếu chỉ khen hoặc nhận xét chung chung, medium nếu có phàn nàn, high nếu yêu cầu khiếu nại hoặc hoàn tiền. - Chỉ dùng thông tin có trong bình luận, không bịa thêm thông tin."
+                          },
+                          {
+                            "role": "user",
+                            "content": "Điểm đánh giá: 1/5\nBình luận: Kem dich vu, khong giong mo ta"
+                          }
+                        ]
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ],
+                []
+              ]
+            }
+          },
+          {
+            "startTime": 1792063155691,
+            "executionIndex": 78,
+            "source": [
+              {
+                "previousNode": "Code - Throttle AI",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 4
+              }
+            ],
+            "hints": [],
+            "executionTime": 39,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "review_key": "222_601_R20",
+                      "payload": {
+                        "model": "qwen2.5-coder:1.5b",
+                        "stream": false,
+                        "format": "json",
+                        "options": {
+                          "temperature": 0.1
+                        },
+                        "messages": [
+                          {
+                            "role": "system",
+                            "content": "Bạn là bộ phân tích đánh giá sản phẩm Shopee. Chỉ trả về MỘT đối tượng JSON hợp lệ, không kèm văn bản nào khác, đúng cấu trúc: {\"sentiment\":\"positive|neutral|negative\",\"issues\":[\"quality\"|\"packaging\"|\"delivery\"|\"price\"|\"customer_service\"|\"other\",...],\"summary\":\"...\",\"urgency\":\"low\"|\"medium\"|\"high\"}. Quy tắc: - sentiment: cảm xúc của người viết bình luận (positive, neutral hoặc negative). - issues: chỉ chọn các giá trị trong danh sách: quality, packaging, delivery, price, customer_service, other; nếu bình luận không nêu rõ vấn đề thì để mảng rỗng []. - summary: tóm tắt đúng nội dung bình luận trong 1 câu, cùng ngôn ngữ với bình luận. - urgency: low nếu chỉ khen hoặc nhận xét chung chung, medium nếu có phàn nàn, high nếu yêu cầu khiếu nại hoặc hoàn tiền. - Chỉ dùng thông tin có trong bình luận, không bịa thêm thông tin."
+                          },
+                          {
+                            "role": "user",
+                            "content": "Điểm đánh giá: 5/5\nBình luận: Tui dep, giao nhanh"
+                          }
+                        ]
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ],
+                []
+              ]
+            }
+          }
+        ],
+        "HTTP - Ollama Chat": [
+          {
+            "startTime": 1792063114305,
+            "executionIndex": 55,
+            "source": [
+              {
+                "previousNode": "Code - Build Ollama Payload",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 10186,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [],
+                [
+                  {
+                    "json": {
+                      "review_key": "111_501_R9",
+                      "payload": {
+                        "model": "qwen2.5-coder:1.5b",
+                        "stream": false,
+                        "format": "json",
+                        "options": {
+                          "temperature": 0.1
+                        },
+                        "messages": [
+                          {
+                            "role": "system",
+                            "content": "Bạn là bộ phân tích đánh giá sản phẩm Shopee. Chỉ trả về MỘT đối tượng JSON hợp lệ, không kèm văn bản nào khác, đúng cấu trúc: {\"sentiment\":\"positive|neutral|negative\",\"issues\":[\"quality\"|\"packaging\"|\"delivery\"|\"price\"|\"customer_service\"|\"other\",...],\"summary\":\"...\",\"urgency\":\"low\"|\"medium\"|\"high\"}. Quy tắc: - sentiment: cảm xúc của người viết bình luận (positive, neutral hoặc negative). - issues: chỉ chọn các giá trị trong danh sách: quality, packaging, delivery, price, customer_service, other; nếu bình luận không nêu rõ vấn đề thì để mảng rỗng []. - summary: tóm tắt đúng nội dung bình luận trong 1 câu, cùng ngôn ngữ với bình luận. - urgency: low nếu chỉ khen hoặc nhận xét chung chung, medium nếu có phàn nàn, high nếu yêu cầu khiếu nại hoặc hoàn tiền. - Chỉ dùng thông tin có trong bình luận, không bịa thêm thông tin."
+                          },
+                          {
+                            "role": "user",
+                            "content": "Điểm đánh giá: 1/5\nBình luận: Cham giao hang qua, dong goi cau tat"
+                          }
+                        ]
+                      },
+                      "error": {
+                        "message": "connect ECONNREFUSED 127.0.0.1:9",
+                        "name": "Error",
+                        "stack": "Error: connect ECONNREFUSED 127.0.0.1:9\n    at AxiosError.from (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/axios@1.18.0_patch_hash=149e256a2a7b632497650b32816716ced972ab02a5ab00fbd8a5158a51722c4_437e4fafb503be805d1d0ae72f0b0deb/node_modules/axios/dist/node/axios.cjs:1355:24)\n    at RedirectableRequest.handleRequestError (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/axios@1.18.0_patch_hash=149e256a2a7b632497650b32816716ced972ab02a5ab00fbd8a5158a51722c4_437e4fafb503be805d1d0ae72f0b0deb/node_modules/axios/dist/node/axios.cjs:4026:25)\n    at RedirectableRequest.emit (node:events:526:24)\n    at ClientRequest.eventHandlers.<computed> (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/follow-redirects@1.16.0_debug@4.4.3_supports-color@8.1.1_/node_modules/follow-redirects/index.js:56:24)\n    at ClientRequest.emit (node:events:514:20)\n    at emitErrorEvent (node:_http_client:114:11)\n    at Socket.socketErrorListener (node:_http_client:768:5)\n    at Socket.emit (node:events:526:24)\n    at emitErrorNT (node:internal/streams/destroy:170:8)\n    at emitErrorCloseNT (node:internal/streams/destroy:129:3)\n    at Axios.request (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/axios@1.18.0_patch_hash=149e256a2a7b632497650b32816716ced972ab02a5ab00fbd8a5158a51722c4_437e4fafb503be805d1d0ae72f0b0deb/node_modules/axios/dist/node/axios.cjs:5427:41)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at invokeAxios (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/@n8n+backend-network@file++++home+runner+_work+n8n+n8n+packages+@n8n+backend-network/node_modules/@n8n/backend-network/src/http/axios/invoke.ts:15:10)\n    at executeLegacyRequest (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/@n8n+backend-network@file++++home+runner+_work+n8n+n8n+packages+@n8n+backend-network/node_modules/@n8n/backend-network/src/http/legacy-request.ts:83:6)\n    at Object.requestLegacy (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/@n8n+backend-network@file++++home+runner+_work+n8n+n8n+packages+@n8n+backend-network/node_modules/@n8n/backend-network/src/http/outbound-http.ts:213:13)\n    at proxyRequestToAxios (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-core@file++++home+runner+_work+n8n+n8n+packages+core/node_modules/n8n-core/src/execution-engine/node-execution-context/utils/request-helpers/legacy-request-adapter.ts:27:9)\n    at Object.request (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-core@file++++home+runner+_work+n8n+n8n+packages+core/node_modules/n8n-core/src/execution-engine/node-execution-context/utils/request-helpers/factory.ts:167:11)",
+                        "code": "ECONNREFUSED"
+                      },
+                      "details": {
+                        "message": "The service refused the connection - perhaps it is offline",
+                        "httpCode": "ECONNREFUSED",
+                        "body": null,
+                        "context": {
+                          "itemIndex": 0
+                        }
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          },
+          {
+            "startTime": 1792063124694,
+            "executionIndex": 61,
+            "source": [
+              {
+                "previousNode": "Code - Build Ollama Payload",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 1
+              }
+            ],
+            "hints": [],
+            "executionTime": 10069,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [],
+                [
+                  {
+                    "json": {
+                      "review_key": "111_501_R2",
+                      "payload": {
+                        "model": "qwen2.5-coder:1.5b",
+                        "stream": false,
+                        "format": "json",
+                        "options": {
+                          "temperature": 0.1
+                        },
+                        "messages": [
+                          {
+                            "role": "system",
+                            "content": "Bạn là bộ phân tích đánh giá sản phẩm Shopee. Chỉ trả về MỘT đối tượng JSON hợp lệ, không kèm văn bản nào khác, đúng cấu trúc: {\"sentiment\":\"positive|neutral|negative\",\"issues\":[\"quality\"|\"packaging\"|\"delivery\"|\"price\"|\"customer_service\"|\"other\",...],\"summary\":\"...\",\"urgency\":\"low\"|\"medium\"|\"high\"}. Quy tắc: - sentiment: cảm xúc của người viết bình luận (positive, neutral hoặc negative). - issues: chỉ chọn các giá trị trong danh sách: quality, packaging, delivery, price, customer_service, other; nếu bình luận không nêu rõ vấn đề thì để mảng rỗng []. - summary: tóm tắt đúng nội dung bình luận trong 1 câu, cùng ngôn ngữ với bình luận. - urgency: low nếu chỉ khen hoặc nhận xét chung chung, medium nếu có phàn nàn, high nếu yêu cầu khiếu nại hoặc hoàn tiền. - Chỉ dùng thông tin có trong bình luận, không bịa thêm thông tin."
+                          },
+                          {
+                            "role": "user",
+                            "content": "Điểm đánh giá: 2/5\nBình luận: Giao hang cham, hang bi loi son"
+                          }
+                        ]
+                      },
+                      "error": {
+                        "message": "connect ECONNREFUSED 127.0.0.1:9",
+                        "name": "Error",
+                        "stack": "Error: connect ECONNREFUSED 127.0.0.1:9\n    at AxiosError.from (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/axios@1.18.0_patch_hash=149e256a2a7b632497650b32816716ced972ab02a5ab00fbd8a5158a51722c4_437e4fafb503be805d1d0ae72f0b0deb/node_modules/axios/dist/node/axios.cjs:1355:24)\n    at RedirectableRequest.handleRequestError (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/axios@1.18.0_patch_hash=149e256a2a7b632497650b32816716ced972ab02a5ab00fbd8a5158a51722c4_437e4fafb503be805d1d0ae72f0b0deb/node_modules/axios/dist/node/axios.cjs:4026:25)\n    at RedirectableRequest.emit (node:events:526:24)\n    at ClientRequest.eventHandlers.<computed> (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/follow-redirects@1.16.0_debug@4.4.3_supports-color@8.1.1_/node_modules/follow-redirects/index.js:56:24)\n    at ClientRequest.emit (node:events:514:20)\n    at emitErrorEvent (node:_http_client:114:11)\n    at Socket.socketErrorListener (node:_http_client:768:5)\n    at Socket.emit (node:events:526:24)\n    at emitErrorNT (node:internal/streams/destroy:170:8)\n    at emitErrorCloseNT (node:internal/streams/destroy:129:3)\n    at Axios.request (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/axios@1.18.0_patch_hash=149e256a2a7b632497650b32816716ced972ab02a5ab00fbd8a5158a51722c4_437e4fafb503be805d1d0ae72f0b0deb/node_modules/axios/dist/node/axios.cjs:5427:41)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at invokeAxios (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/@n8n+backend-network@file++++home+runner+_work+n8n+n8n+packages+@n8n+backend-network/node_modules/@n8n/backend-network/src/http/axios/invoke.ts:15:10)\n    at executeLegacyRequest (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/@n8n+backend-network@file++++home+runner+_work+n8n+n8n+packages+@n8n+backend-network/node_modules/@n8n/backend-network/src/http/legacy-request.ts:83:6)\n    at Object.requestLegacy (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/@n8n+backend-network@file++++home+runner+_work+n8n+n8n+packages+@n8n+backend-network/node_modules/@n8n/backend-network/src/http/outbound-http.ts:213:13)\n    at proxyRequestToAxios (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-core@file++++home+runner+_work+n8n+n8n+packages+core/node_modules/n8n-core/src/execution-engine/node-execution-context/utils/request-helpers/legacy-request-adapter.ts:27:9)\n    at Object.request (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-core@file++++home+runner+_work+n8n+n8n+packages+core/node_modules/n8n-core/src/execution-engine/node-execution-context/utils/request-helpers/factory.ts:167:11)",
+                        "code": "ECONNREFUSED"
+                      },
+                      "details": {
+                        "message": "The service refused the connection - perhaps it is offline",
+                        "httpCode": "ECONNREFUSED",
+                        "body": null,
+                        "context": {
+                          "itemIndex": 0
+                        }
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          },
+          {
+            "startTime": 1792063134967,
+            "executionIndex": 67,
+            "source": [
+              {
+                "previousNode": "Code - Build Ollama Payload",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 2
+              }
+            ],
+            "hints": [],
+            "executionTime": 10076,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [],
+                [
+                  {
+                    "json": {
+                      "review_key": "111_501_R3",
+                      "payload": {
+                        "model": "qwen2.5-coder:1.5b",
+                        "stream": false,
+                        "format": "json",
+                        "options": {
+                          "temperature": 0.1
+                        },
+                        "messages": [
+                          {
+                            "role": "system",
+                            "content": "Bạn là bộ phân tích đánh giá sản phẩm Shopee. Chỉ trả về MỘT đối tượng JSON hợp lệ, không kèm văn bản nào khác, đúng cấu trúc: {\"sentiment\":\"positive|neutral|negative\",\"issues\":[\"quality\"|\"packaging\"|\"delivery\"|\"price\"|\"customer_service\"|\"other\",...],\"summary\":\"...\",\"urgency\":\"low\"|\"medium\"|\"high\"}. Quy tắc: - sentiment: cảm xúc của người viết bình luận (positive, neutral hoặc negative). - issues: chỉ chọn các giá trị trong danh sách: quality, packaging, delivery, price, customer_service, other; nếu bình luận không nêu rõ vấn đề thì để mảng rỗng []. - summary: tóm tắt đúng nội dung bình luận trong 1 câu, cùng ngôn ngữ với bình luận. - urgency: low nếu chỉ khen hoặc nhận xét chung chung, medium nếu có phàn nàn, high nếu yêu cầu khiếu nại hoặc hoàn tiền. - Chỉ dùng thông tin có trong bình luận, không bịa thêm thông tin."
+                          },
+                          {
+                            "role": "user",
+                            "content": "Điểm đánh giá: 4/5\nBình luận: Dep nhung mau chot hoi nhạt"
+                          }
+                        ]
+                      },
+                      "error": {
+                        "message": "connect ECONNREFUSED 127.0.0.1:9",
+                        "name": "Error",
+                        "stack": "Error: connect ECONNREFUSED 127.0.0.1:9\n    at AxiosError.from (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/axios@1.18.0_patch_hash=149e256a2a7b632497650b32816716ced972ab02a5ab00fbd8a5158a51722c4_437e4fafb503be805d1d0ae72f0b0deb/node_modules/axios/dist/node/axios.cjs:1355:24)\n    at RedirectableRequest.handleRequestError (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/axios@1.18.0_patch_hash=149e256a2a7b632497650b32816716ced972ab02a5ab00fbd8a5158a51722c4_437e4fafb503be805d1d0ae72f0b0deb/node_modules/axios/dist/node/axios.cjs:4026:25)\n    at RedirectableRequest.emit (node:events:526:24)\n    at ClientRequest.eventHandlers.<computed> (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/follow-redirects@1.16.0_debug@4.4.3_supports-color@8.1.1_/node_modules/follow-redirects/index.js:56:24)\n    at ClientRequest.emit (node:events:514:20)\n    at emitErrorEvent (node:_http_client:114:11)\n    at Socket.socketErrorListener (node:_http_client:768:5)\n    at Socket.emit (node:events:526:24)\n    at emitErrorNT (node:internal/streams/destroy:170:8)\n    at emitErrorCloseNT (node:internal/streams/destroy:129:3)\n    at Axios.request (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/axios@1.18.0_patch_hash=149e256a2a7b632497650b32816716ced972ab02a5ab00fbd8a5158a51722c4_437e4fafb503be805d1d0ae72f0b0deb/node_modules/axios/dist/node/axios.cjs:5427:41)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at invokeAxios (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/@n8n+backend-network@file++++home+runner+_work+n8n+n8n+packages+@n8n+backend-network/node_modules/@n8n/backend-network/src/http/axios/invoke.ts:15:10)\n    at executeLegacyRequest (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/@n8n+backend-network@file++++home+runner+_work+n8n+n8n+packages+@n8n+backend-network/node_modules/@n8n/backend-network/src/http/legacy-request.ts:83:6)\n    at Object.requestLegacy (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/@n8n+backend-network@file++++home+runner+_work+n8n+n8n+packages+@n8n+backend-network/node_modules/@n8n/backend-network/src/http/outbound-http.ts:213:13)\n    at proxyRequestToAxios (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-core@file++++home+runner+_work+n8n+n8n+packages+core/node_modules/n8n-core/src/execution-engine/node-execution-context/utils/request-helpers/legacy-request-adapter.ts:27:9)\n    at Object.request (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-core@file++++home+runner+_work+n8n+n8n+packages+core/node_modules/n8n-core/src/execution-engine/node-execution-context/utils/request-helpers/factory.ts:167:11)",
+                        "code": "ECONNREFUSED"
+                      },
+                      "details": {
+                        "message": "The service refused the connection - perhaps it is offline",
+                        "httpCode": "ECONNREFUSED",
+                        "body": null,
+                        "context": {
+                          "itemIndex": 0
+                        }
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          },
+          {
+            "startTime": 1792063145361,
+            "executionIndex": 73,
+            "source": [
+              {
+                "previousNode": "Code - Build Ollama Payload",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 3
+              }
+            ],
+            "hints": [],
+            "executionTime": 10075,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [],
+                [
+                  {
+                    "json": {
+                      "review_key": "111_502_R10",
+                      "payload": {
+                        "model": "qwen2.5-coder:1.5b",
+                        "stream": false,
+                        "format": "json",
+                        "options": {
+                          "temperature": 0.1
+                        },
+                        "messages": [
+                          {
+                            "role": "system",
+                            "content": "Bạn là bộ phân tích đánh giá sản phẩm Shopee. Chỉ trả về MỘT đối tượng JSON hợp lệ, không kèm văn bản nào khác, đúng cấu trúc: {\"sentiment\":\"positive|neutral|negative\",\"issues\":[\"quality\"|\"packaging\"|\"delivery\"|\"price\"|\"customer_service\"|\"other\",...],\"summary\":\"...\",\"urgency\":\"low\"|\"medium\"|\"high\"}. Quy tắc: - sentiment: cảm xúc của người viết bình luận (positive, neutral hoặc negative). - issues: chỉ chọn các giá trị trong danh sách: quality, packaging, delivery, price, customer_service, other; nếu bình luận không nêu rõ vấn đề thì để mảng rỗng []. - summary: tóm tắt đúng nội dung bình luận trong 1 câu, cùng ngôn ngữ với bình luận. - urgency: low nếu chỉ khen hoặc nhận xét chung chung, medium nếu có phàn nàn, high nếu yêu cầu khiếu nại hoặc hoàn tiền. - Chỉ dùng thông tin có trong bình luận, không bịa thêm thông tin."
+                          },
+                          {
+                            "role": "user",
+                            "content": "Điểm đánh giá: 1/5\nBình luận: Kem dich vu, khong giong mo ta"
+                          }
+                        ]
+                      },
+                      "error": {
+                        "message": "connect ECONNREFUSED 127.0.0.1:9",
+                        "name": "Error",
+                        "stack": "Error: connect ECONNREFUSED 127.0.0.1:9\n    at AxiosError.from (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/axios@1.18.0_patch_hash=149e256a2a7b632497650b32816716ced972ab02a5ab00fbd8a5158a51722c4_437e4fafb503be805d1d0ae72f0b0deb/node_modules/axios/dist/node/axios.cjs:1355:24)\n    at RedirectableRequest.handleRequestError (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/axios@1.18.0_patch_hash=149e256a2a7b632497650b32816716ced972ab02a5ab00fbd8a5158a51722c4_437e4fafb503be805d1d0ae72f0b0deb/node_modules/axios/dist/node/axios.cjs:4026:25)\n    at RedirectableRequest.emit (node:events:526:24)\n    at ClientRequest.eventHandlers.<computed> (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/follow-redirects@1.16.0_debug@4.4.3_supports-color@8.1.1_/node_modules/follow-redirects/index.js:56:24)\n    at ClientRequest.emit (node:events:514:20)\n    at emitErrorEvent (node:_http_client:114:11)\n    at Socket.socketErrorListener (node:_http_client:768:5)\n    at Socket.emit (node:events:526:24)\n    at emitErrorNT (node:internal/streams/destroy:170:8)\n    at emitErrorCloseNT (node:internal/streams/destroy:129:3)\n    at Axios.request (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/axios@1.18.0_patch_hash=149e256a2a7b632497650b32816716ced972ab02a5ab00fbd8a5158a51722c4_437e4fafb503be805d1d0ae72f0b0deb/node_modules/axios/dist/node/axios.cjs:5427:41)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at invokeAxios (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/@n8n+backend-network@file++++home+runner+_work+n8n+n8n+packages+@n8n+backend-network/node_modules/@n8n/backend-network/src/http/axios/invoke.ts:15:10)\n    at executeLegacyRequest (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/@n8n+backend-network@file++++home+runner+_work+n8n+n8n+packages+@n8n+backend-network/node_modules/@n8n/backend-network/src/http/legacy-request.ts:83:6)\n    at Object.requestLegacy (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/@n8n+backend-network@file++++home+runner+_work+n8n+n8n+packages+@n8n+backend-network/node_modules/@n8n/backend-network/src/http/outbound-http.ts:213:13)\n    at proxyRequestToAxios (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-core@file++++home+runner+_work+n8n+n8n+packages+core/node_modules/n8n-core/src/execution-engine/node-execution-context/utils/request-helpers/legacy-request-adapter.ts:27:9)\n    at Object.request (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-core@file++++home+runner+_work+n8n+n8n+packages+core/node_modules/n8n-core/src/execution-engine/node-execution-context/utils/request-helpers/factory.ts:167:11)",
+                        "code": "ECONNREFUSED"
+                      },
+                      "details": {
+                        "message": "The service refused the connection - perhaps it is offline",
+                        "httpCode": "ECONNREFUSED",
+                        "body": null,
+                        "context": {
+                          "itemIndex": 0
+                        }
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          },
+          {
+            "startTime": 1792063155730,
+            "executionIndex": 79,
+            "source": [
+              {
+                "previousNode": "Code - Build Ollama Payload",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 4
+              }
+            ],
+            "hints": [],
+            "executionTime": 10062,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [],
+                [
+                  {
+                    "json": {
+                      "review_key": "222_601_R20",
+                      "payload": {
+                        "model": "qwen2.5-coder:1.5b",
+                        "stream": false,
+                        "format": "json",
+                        "options": {
+                          "temperature": 0.1
+                        },
+                        "messages": [
+                          {
+                            "role": "system",
+                            "content": "Bạn là bộ phân tích đánh giá sản phẩm Shopee. Chỉ trả về MỘT đối tượng JSON hợp lệ, không kèm văn bản nào khác, đúng cấu trúc: {\"sentiment\":\"positive|neutral|negative\",\"issues\":[\"quality\"|\"packaging\"|\"delivery\"|\"price\"|\"customer_service\"|\"other\",...],\"summary\":\"...\",\"urgency\":\"low\"|\"medium\"|\"high\"}. Quy tắc: - sentiment: cảm xúc của người viết bình luận (positive, neutral hoặc negative). - issues: chỉ chọn các giá trị trong danh sách: quality, packaging, delivery, price, customer_service, other; nếu bình luận không nêu rõ vấn đề thì để mảng rỗng []. - summary: tóm tắt đúng nội dung bình luận trong 1 câu, cùng ngôn ngữ với bình luận. - urgency: low nếu chỉ khen hoặc nhận xét chung chung, medium nếu có phàn nàn, high nếu yêu cầu khiếu nại hoặc hoàn tiền. - Chỉ dùng thông tin có trong bình luận, không bịa thêm thông tin."
+                          },
+                          {
+                            "role": "user",
+                            "content": "Điểm đánh giá: 5/5\nBình luận: Tui dep, giao nhanh"
+                          }
+                        ]
+                      },
+                      "error": {
+                        "message": "connect ECONNREFUSED 127.0.0.1:9",
+                        "name": "Error",
+                        "stack": "Error: connect ECONNREFUSED 127.0.0.1:9\n    at AxiosError.from (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/axios@1.18.0_patch_hash=149e256a2a7b632497650b32816716ced972ab02a5ab00fbd8a5158a51722c4_437e4fafb503be805d1d0ae72f0b0deb/node_modules/axios/dist/node/axios.cjs:1355:24)\n    at RedirectableRequest.handleRequestError (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/axios@1.18.0_patch_hash=149e256a2a7b632497650b32816716ced972ab02a5ab00fbd8a5158a51722c4_437e4fafb503be805d1d0ae72f0b0deb/node_modules/axios/dist/node/axios.cjs:4026:25)\n    at RedirectableRequest.emit (node:events:526:24)\n    at ClientRequest.eventHandlers.<computed> (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/follow-redirects@1.16.0_debug@4.4.3_supports-color@8.1.1_/node_modules/follow-redirects/index.js:56:24)\n    at ClientRequest.emit (node:events:514:20)\n    at emitErrorEvent (node:_http_client:114:11)\n    at Socket.socketErrorListener (node:_http_client:768:5)\n    at Socket.emit (node:events:526:24)\n    at emitErrorNT (node:internal/streams/destroy:170:8)\n    at emitErrorCloseNT (node:internal/streams/destroy:129:3)\n    at Axios.request (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/axios@1.18.0_patch_hash=149e256a2a7b632497650b32816716ced972ab02a5ab00fbd8a5158a51722c4_437e4fafb503be805d1d0ae72f0b0deb/node_modules/axios/dist/node/axios.cjs:5427:41)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at invokeAxios (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/@n8n+backend-network@file++++home+runner+_work+n8n+n8n+packages+@n8n+backend-network/node_modules/@n8n/backend-network/src/http/axios/invoke.ts:15:10)\n    at executeLegacyRequest (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/@n8n+backend-network@file++++home+runner+_work+n8n+n8n+packages+@n8n+backend-network/node_modules/@n8n/backend-network/src/http/legacy-request.ts:83:6)\n    at Object.requestLegacy (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/@n8n+backend-network@file++++home+runner+_work+n8n+n8n+packages+@n8n+backend-network/node_modules/@n8n/backend-network/src/http/outbound-http.ts:213:13)\n    at proxyRequestToAxios (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-core@file++++home+runner+_work+n8n+n8n+packages+core/node_modules/n8n-core/src/execution-engine/node-execution-context/utils/request-helpers/legacy-request-adapter.ts:27:9)\n    at Object.request (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-core@file++++home+runner+_work+n8n+n8n+packages+core/node_modules/n8n-core/src/execution-engine/node-execution-context/utils/request-helpers/factory.ts:167:11)",
+                        "code": "ECONNREFUSED"
+                      },
+                      "details": {
+                        "message": "The service refused the connection - perhaps it is offline",
+                        "httpCode": "ECONNREFUSED",
+                        "body": null,
+                        "context": {
+                          "itemIndex": 0
+                        }
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Code - Mark Analysis Failed": [
+          {
+            "startTime": 1792063124491,
+            "executionIndex": 56,
+            "source": [
+              {
+                "previousNode": "HTTP - Ollama Chat",
+                "previousNodeOutput": 1,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 25,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "review_key": "111_501_R9",
+                      "sentiment": "",
+                      "issues": "",
+                      "summary": "",
+                      "urgency": "",
+                      "analysis_status": "failed"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          },
+          {
+            "startTime": 1792063134763,
+            "executionIndex": 62,
+            "source": [
+              {
+                "previousNode": "HTTP - Ollama Chat",
+                "previousNodeOutput": 1,
+                "previousNodeRun": 1
+              }
+            ],
+            "hints": [],
+            "executionTime": 29,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "review_key": "111_501_R2",
+                      "sentiment": "",
+                      "issues": "",
+                      "summary": "",
+                      "urgency": "",
+                      "analysis_status": "failed"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          },
+          {
+            "startTime": 1792063145044,
+            "executionIndex": 68,
+            "source": [
+              {
+                "previousNode": "HTTP - Ollama Chat",
+                "previousNodeOutput": 1,
+                "previousNodeRun": 2
+              }
+            ],
+            "hints": [],
+            "executionTime": 90,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "review_key": "111_501_R3",
+                      "sentiment": "",
+                      "issues": "",
+                      "summary": "",
+                      "urgency": "",
+                      "analysis_status": "failed"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          },
+          {
+            "startTime": 1792063155436,
+            "executionIndex": 74,
+            "source": [
+              {
+                "previousNode": "HTTP - Ollama Chat",
+                "previousNodeOutput": 1,
+                "previousNodeRun": 3
+              }
+            ],
+            "hints": [],
+            "executionTime": 64,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "review_key": "111_502_R10",
+                      "sentiment": "",
+                      "issues": "",
+                      "summary": "",
+                      "urgency": "",
+                      "analysis_status": "failed"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          },
+          {
+            "startTime": 1792063165792,
+            "executionIndex": 80,
+            "source": [
+              {
+                "previousNode": "HTTP - Ollama Chat",
+                "previousNodeOutput": 1,
+                "previousNodeRun": 4
+              }
+            ],
+            "hints": [],
+            "executionTime": 54,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "review_key": "222_601_R20",
+                      "sentiment": "",
+                      "issues": "",
+                      "summary": "",
+                      "urgency": "",
+                      "analysis_status": "failed"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Google Sheets - Update Analysis": [
+          {
+            "startTime": 1792063124517,
+            "executionIndex": 57,
+            "source": [
+              {
+                "previousNode": "Code - Mark Analysis Failed",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 18,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "review_key": "111_501_R9",
+                      "sentiment": "",
+                      "issues": "",
+                      "summary": "",
+                      "urgency": "",
+                      "analysis_status": "failed"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ],
+                []
+              ]
+            }
+          },
+          {
+            "startTime": 1792063134792,
+            "executionIndex": 63,
+            "source": [
+              {
+                "previousNode": "Code - Mark Analysis Failed",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 1
+              }
+            ],
+            "hints": [],
+            "executionTime": 19,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "review_key": "111_501_R2",
+                      "sentiment": "",
+                      "issues": "",
+                      "summary": "",
+                      "urgency": "",
+                      "analysis_status": "failed"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ],
+                []
+              ]
+            }
+          },
+          {
+            "startTime": 1792063145134,
+            "executionIndex": 69,
+            "source": [
+              {
+                "previousNode": "Code - Mark Analysis Failed",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 2
+              }
+            ],
+            "hints": [],
+            "executionTime": 43,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "review_key": "111_501_R3",
+                      "sentiment": "",
+                      "issues": "",
+                      "summary": "",
+                      "urgency": "",
+                      "analysis_status": "failed"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ],
+                []
+              ]
+            }
+          },
+          {
+            "startTime": 1792063155501,
+            "executionIndex": 75,
+            "source": [
+              {
+                "previousNode": "Code - Mark Analysis Failed",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 3
+              }
+            ],
+            "hints": [],
+            "executionTime": 41,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "review_key": "111_502_R10",
+                      "sentiment": "",
+                      "issues": "",
+                      "summary": "",
+                      "urgency": "",
+                      "analysis_status": "failed"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ],
+                []
+              ]
+            }
+          },
+          {
+            "startTime": 1792063165846,
+            "executionIndex": 81,
+            "source": [
+              {
+                "previousNode": "Code - Mark Analysis Failed",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 4
+              }
+            ],
+            "hints": [],
+            "executionTime": 47,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "review_key": "222_601_R20",
+                      "sentiment": "",
+                      "issues": "",
+                      "summary": "",
+                      "urgency": "",
+                      "analysis_status": "failed"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ],
+                []
+              ]
+            }
+          }
+        ],
+        "Code - Build Product Checks": [
+          {
+            "startTime": 1792063165894,
+            "executionIndex": 83,
+            "source": [
+              {
+                "previousNode": "Loop Over Analysis Items",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 5
+              }
+            ],
+            "hints": [],
+            "executionTime": 44,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "shop_id": "111",
+                      "item_id": "501",
+                      "last_review_check": "2026-10-15T11:18:33.249Z",
+                      "status": "ok"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "shop_id": "111",
+                      "item_id": "502",
+                      "last_review_check": "2026-10-15T11:18:33.602Z",
+                      "status": "ok"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "shop_id": "222",
+                      "item_id": "601",
+                      "last_review_check": "2026-10-15T11:18:34.051Z",
+                      "status": "ok"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Google Sheets - Update Product Check": [
+          {
+            "startTime": 1792063165938,
+            "executionIndex": 84,
+            "source": [
+              {
+                "previousNode": "Code - Build Product Checks",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 45,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "shop_id": "111",
+                      "item_id": "501",
+                      "last_review_check": "2026-10-15T11:18:33.249Z",
+                      "status": "ok"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "shop_id": "111",
+                      "item_id": "502",
+                      "last_review_check": "2026-10-15T11:18:33.602Z",
+                      "status": "ok"
+                    },
+                    "pairedItem": {
+                      "item": 1
+                    }
+                  },
+                  {
+                    "json": {
+                      "shop_id": "222",
+                      "item_id": "601",
+                      "last_review_check": "2026-10-15T11:18:34.051Z",
+                      "status": "ok"
+                    },
+                    "pairedItem": {
+                      "item": 2
+                    }
+                  }
+                ],
+                []
+              ]
+            }
+          }
+        ],
+        "Code - Build Shop Status Rows": [
+          {
+            "startTime": 1792063165983,
+            "executionIndex": 85,
+            "source": [
+              {
+                "previousNode": "Google Sheets - Update Product Check",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 42,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "shop_id": "111",
+                      "last_checked_at": "2026-10-15T11:18:32.804Z",
+                      "status": "ok",
+                      "error_message": ""
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "shop_id": "222",
+                      "last_checked_at": "2026-10-15T11:18:32.852Z",
+                      "status": "ok",
+                      "error_message": ""
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Google Sheets - Update Shop Status": [
+          {
+            "startTime": 1792063166026,
+            "executionIndex": 86,
+            "source": [
+              {
+                "previousNode": "Code - Build Shop Status Rows",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 33,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "shop_id": "111",
+                      "last_checked_at": "2026-10-15T11:18:32.804Z",
+                      "status": "ok",
+                      "error_message": ""
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "shop_id": "222",
+                      "last_checked_at": "2026-10-15T11:18:32.852Z",
+                      "status": "ok",
+                      "error_message": ""
+                    },
+                    "pairedItem": {
+                      "item": 1
+                    }
+                  }
+                ],
+                []
+              ]
+            }
+          }
+        ],
+        "Code - Build Run Log": [
+          {
+            "startTime": 1792063166060,
+            "executionIndex": 87,
+            "source": [
+              {
+                "previousNode": "Google Sheets - Update Shop Status",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 34,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "run_started_at": "2026-10-15T11:18:32.619Z",
+                      "run_finished_at": "2026-10-15T11:19:26.092Z",
+                      "shops_total": 2,
+                      "shops_ok": 2,
+                      "shops_failed": 0,
+                      "products_discovered": 3,
+                      "reviews_new": 4,
+                      "analyses_done": 0,
+                      "analyses_failed": 5,
+                      "errors": "analysis:111_501_R9 - [object Object] | analysis:111_501_R2 - [object Object] | analysis:111_501_R3 - [object Object] | analysis:111_502_R10 - [object Object] | analysis:222_601_R20 - [object Object]"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Google Sheets - Save Run Log": [
+          {
+            "startTime": 1792063166094,
+            "executionIndex": 88,
+            "source": [
+              {
+                "previousNode": "Code - Build Run Log",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 35,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "run_started_at": "2026-10-15T11:18:32.619Z",
+                      "run_finished_at": "2026-10-15T11:19:26.092Z",
+                      "shops_total": 2,
+                      "shops_ok": 2,
+                      "shops_failed": 0,
+                      "products_discovered": 3,
+                      "reviews_new": 4,
+                      "analyses_done": 0,
+                      "analyses_failed": 5,
+                      "errors": "analysis:111_501_R9 - [object Object] | analysis:111_501_R2 - [object Object] | analysis:111_501_R3 - [object Object] | analysis:111_502_R10 - [object Object] | analysis:222_601_R20 - [object Object]",
+                      "__debug_products": "[{\"shop_id\":\"111\",\"shop_name\":\"Shop Ánh Dương\",\"item_id\":\"501\",\"product_name\":\"Son môi Velvet Red\",\"product_url\":\"https://shopee.vn/product/111/501\",\"last_review_check\":\"2026-10-15T11:18:33.249Z\",\"status\":\"ok\"},{\"shop_id\":\"111\",\"shop_name\":\"Shop Ánh Dương\",\"item_id\":\"502\",\"product_name\":\"Kem dưỡng ẩm Aloe\",\"product_url\":\"https://shopee.vn/product/111/502\",\"last_review_check\":\"2026-10-15T11:18:33.602Z\",\"status\":\"ok\"},{\"shop_id\":\"222\",\"shop_name\":\"Shop Bốn Mùa\",\"item_id\":\"601\",\"product_name\":\"Túi xách da mềm\",\"product_url\":\"https://shopee.vn/product/222/601\",\"last_review_check\":\"2026-10-15T11:18:34.051Z\",\"status\":\"ok\"}]",
+                      "__debug_reviews": "[{\"review_key\":\"111_501_R1\",\"shop_id\":\"111\",\"shop_name\":\"Shop Ánh Dương\",\"item_id\":\"501\",\"product_name\":\"Son môi Velvet Red\",\"comment_id\":\"R1\",\"rating_star\":5,\"comment\":\"San pham rat tot\",\"review_time\":\"2026-09-30T00:00:00.000Z\",\"collected_at\":\"2026-10-01T00:00:00.000Z\",\"sentiment\":\"positive\",\"issues\":\"[]\",\"summary\":\"Khen sản phẩm\",\"urgency\":\"low\",\"analysis_status\":\"done\"},{\"review_key\":\"111_501_R9\",\"shop_id\":\"111\",\"shop_name\":\"Shop Ánh Dương\",\"item_id\":\"501\",\"product_name\":\"Son môi Velvet Red\",\"comment_id\":\"R9\",\"rating_star\":1,\"comment\":\"Cham giao hang qua, dong goi cau tat\",\"review_time\":\"2026-09-30T01:00:00.000Z\",\"collected_at\":\"2026-10-01T00:00:00.000Z\",\"sentiment\":\"\",\"issues\":\"\",\"summary\":\"\",\"urgency\":\"\",\"analysis_status\":\"failed\"},{\"review_key\":\"111_501_R2\",\"shop_id\":\"111\",\"shop_name\":\"Shop Ánh Dương\",\"item_id\":\"501\",\"product_name\":\"Son môi Velvet Red\",\"comment_id\":\"R2\",\"rating_star\":2,\"comment\":\"Giao hang cham, hang bi loi son\",\"review_time\":\"2025-10-09T08:53:20.000Z\",\"collected_at\":\"2026-10-15T11:18:33.174Z\",\"sentiment\":\"\",\"issues\":\"\",\"summary\":\"\",\"urgency\":\"\",\"analysis_status\":\"failed\"},{\"review_key\":\"111_501_R3\",\"shop_id\":\"111\",\"shop_name\":\"Shop Ánh Dương\",\"item_id\":\"501\",\"product_name\":\"Son môi Velvet Red\",\"comment_id\":\"R3\",\"rating_star\":4,\"comment\":\"Dep nhung mau chot hoi nhạt\",\"review_time\":\"2026-01-10T10:30:00.000Z\",\"collected_at\":\"2026-10-15T11:18:33.174Z\",\"sentiment\":\"\",\"issues\":\"\",\"summary\":\"\",\"urgency\":\"\",\"analysis_status\":\"failed\"},{\"review_key\":\"111_502_R10\",\"shop_id\":\"111\",\"shop_name\":\"Shop Ánh Dương\",\"item_id\":\"502\",\"product_name\":\"Kem dưỡng ẩm Aloe\",\"comment_id\":\"R10\",\"rating_star\":1,\"comment\":\"Kem dich vu, khong giong mo ta\",\"review_time\":\"2026-10-02T08:00:00.000Z\",\"collected_at\":\"2026-10-15T11:18:33.520Z\",\"sentiment\":\"\",\"issues\":\"\",\"summary\":\"\",\"urgency\":\"\",\"analysis_status\":\"failed\"},{\"review_key\":\"222_601_R20\",\"shop_id\":\"222\",\"shop_name\":\"Shop Bốn Mùa\",\"item_id\":\"601\",\"product_name\":\"Túi xách da mềm\",\"comment_id\":\"R20\",\"rating_star\":5,\"comment\":\"Tui dep, giao nhanh\",\"review_time\":\"2026-10-03T00:00:00.000Z\",\"collected_at\":\"2026-10-15T11:18:33.901Z\",\"sentiment\":\"\",\"issues\":\"\",\"summary\":\"\",\"urgency\":\"\",\"analysis_status\":\"failed\"}]",
+                      "__debug_shops": "[{\"shop_id\":\"111\",\"shop_name\":\"Shop Ánh Dương\",\"shop_url\":\"https://shopee.vn/shop.111\",\"enabled\":\"TRUE\",\"last_checked_at\":\"2026-10-15T11:18:32.804Z\",\"status\":\"ok\",\"error_message\":\"\"},{\"shop_id\":\"222\",\"shop_name\":\"Shop Bốn Mùa\",\"shop_url\":\"https://shopee.vn/shop.222\",\"enabled\":\"true\",\"last_checked_at\":\"2026-10-15T11:18:32.852Z\",\"status\":\"ok\",\"error_message\":\"\"},{\"shop_id\":\"333\",\"shop_name\":\"Shop Tắt (disabled)\",\"shop_url\":\"https://shopee.vn/shop.333\",\"enabled\":\"FALSE\",\"last_checked_at\":\"\",\"status\":\"\",\"error_message\":\"\"}]"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ],
+                []
+              ]
+            }
+          }
+        ]
+      },
+      "lastNodeExecuted": "Google Sheets - Save Run Log"
+    },
+    "executionData": {
+      "contextData": {
+        "node:Loop Over Shops": {
+          "currentRunIndex": 2,
+          "maxRunIndex": 2,
+          "sourceData": {
+            "previousNode": "Code - Filter Enabled Shops",
+            "previousNodeOutput": 0,
+            "previousNodeRun": 0
+          },
+          "items": [],
+          "processedItems": [
+            {
+              "json": {
+                "shop_id": "111",
+                "shop_name": "Shop Ánh Dương",
+                "item_id": "501",
+                "product_name": "Son môi Velvet Red",
+                "product_url": "https://shopee.vn/product/111/501",
+                "last_review_check": "",
+                "status": "pending"
+              },
+              "pairedItem": {
+                "sourceOverwrite": {
+                  "previousNode": "Code - Normalize Products",
+                  "previousNodeOutput": 0,
+                  "previousNodeRun": 0
+                },
+                "item": 0
+              }
+            },
+            {
+              "json": {
+                "shop_id": "111",
+                "shop_name": "Shop Ánh Dương",
+                "item_id": "502",
+                "product_name": "Kem dưỡng ẩm Aloe",
+                "product_url": "https://shopee.vn/product/111/502",
+                "last_review_check": "",
+                "status": "pending"
+              },
+              "pairedItem": {
+                "sourceOverwrite": {
+                  "previousNode": "Code - Normalize Products",
+                  "previousNodeOutput": 0,
+                  "previousNodeRun": 0
+                },
+                "item": 1
+              }
+            },
+            {
+              "json": {
+                "shop_id": "222",
+                "shop_name": "Shop Bốn Mùa",
+                "item_id": "601",
+                "product_name": "Túi xách da mềm",
+                "product_url": "https://shopee.vn/product/222/601",
+                "last_review_check": "",
+                "status": "pending"
+              },
+              "pairedItem": {
+                "sourceOverwrite": {
+                  "previousNode": "Code - Normalize Products",
+                  "previousNodeOutput": 0,
+                  "previousNodeRun": 1
+                },
+                "item": 0
+              }
+            }
+          ],
+          "noItemsLeft": true,
+          "done": true
+        },
+        "node:Loop Over Products": {
+          "currentRunIndex": 3,
+          "maxRunIndex": 3,
+          "sourceData": {
+            "previousNode": "Google Sheets - Upsert Products",
+            "previousNodeOutput": 0,
+            "previousNodeRun": 0
+          },
+          "items": [],
+          "processedItems": [
+            {
+              "json": {
+                "review_key": "111_501_R9",
+                "shop_id": "111",
+                "shop_name": "Shop Ánh Dương",
+                "item_id": "501",
+                "product_name": "Son môi Velvet Red",
+                "comment_id": "R9",
+                "rating_star": 1,
+                "comment": "Cham giao hang qua, dong goi cau tat",
+                "review_time": "2026-09-30T01:00:00.000Z",
+                "collected_at": "2026-10-01T00:00:00.000Z"
+              },
+              "pairedItem": {
+                "sourceOverwrite": {
+                  "previousNode": "Code - Build Analysis Queue",
+                  "previousNodeOutput": 0,
+                  "previousNodeRun": 0
+                },
+                "item": 0
+              }
+            },
+            {
+              "json": {
+                "review_key": "111_501_R2",
+                "shop_id": "111",
+                "shop_name": "Shop Ánh Dương",
+                "item_id": "501",
+                "product_name": "Son môi Velvet Red",
+                "comment_id": "R2",
+                "rating_star": 2,
+                "comment": "Giao hang cham, hang bi loi son",
+                "review_time": "2025-10-09T08:53:20.000Z",
+                "collected_at": "2026-10-15T11:18:33.174Z"
+              },
+              "pairedItem": {
+                "sourceOverwrite": {
+                  "previousNode": "Code - Build Analysis Queue",
+                  "previousNodeOutput": 0,
+                  "previousNodeRun": 0
+                },
+                "item": 1
+              }
+            },
+            {
+              "json": {
+                "review_key": "111_501_R3",
+                "shop_id": "111",
+                "shop_name": "Shop Ánh Dương",
+                "item_id": "501",
+                "product_name": "Son môi Velvet Red",
+                "comment_id": "R3",
+                "rating_star": 4,
+                "comment": "Dep nhung mau chot hoi nhạt",
+                "review_time": "2026-01-10T10:30:00.000Z",
+                "collected_at": "2026-10-15T11:18:33.174Z"
+              },
+              "pairedItem": {
+                "sourceOverwrite": {
+                  "previousNode": "Code - Build Analysis Queue",
+                  "previousNodeOutput": 0,
+                  "previousNodeRun": 0
+                },
+                "item": 2
+              }
+            },
+            {
+              "json": {
+                "review_key": "111_502_R10",
+                "shop_id": "111",
+                "shop_name": "Shop Ánh Dương",
+                "item_id": "502",
+                "product_name": "Kem dưỡng ẩm Aloe",
+                "comment_id": "R10",
+                "rating_star": 1,
+                "comment": "Kem dich vu, khong giong mo ta",
+                "review_time": "2026-10-02T08:00:00.000Z",
+                "collected_at": "2026-10-15T11:18:33.520Z"
+              },
+              "pairedItem": {
+                "sourceOverwrite": {
+                  "previousNode": "Code - Build Analysis Queue",
+                  "previousNodeOutput": 0,
+                  "previousNodeRun": 1
+                },
+                "item": 0
+              }
+            },
+            {
+              "json": {
+                "review_key": "222_601_R20",
+                "shop_id": "222",
+                "shop_name": "Shop Bốn Mùa",
+                "item_id": "601",
+                "product_name": "Túi xách da mềm",
+                "comment_id": "R20",
+                "rating_star": 5,
+                "comment": "Tui dep, giao nhanh",
+                "review_time": "2026-10-03T00:00:00.000Z",
+                "collected_at": "2026-10-15T11:18:33.901Z"
+              },
+              "pairedItem": {
+                "sourceOverwrite": {
+                  "previousNode": "Code - Build Analysis Queue",
+                  "previousNodeOutput": 0,
+                  "previousNodeRun": 2
+                },
+                "item": 0
+              }
+            }
+          ],
+          "noItemsLeft": true,
+          "done": true
+        },
+        "node:Loop Over Analysis Items": {
+          "currentRunIndex": 5,
+          "maxRunIndex": 5,
+          "sourceData": {
+            "previousNode": "IF - Analysis Needed",
+            "previousNodeOutput": 0,
+            "previousNodeRun": 0
+          },
+          "items": [],
+          "processedItems": [
+            {
+              "json": {
+                "review_key": "111_501_R9",
+                "sentiment": "",
+                "issues": "",
+                "summary": "",
+                "urgency": "",
+                "analysis_status": "failed"
+              },
+              "pairedItem": {
+                "sourceOverwrite": {
+                  "previousNode": "Google Sheets - Update Analysis",
+                  "previousNodeOutput": 0,
+                  "previousNodeRun": 0
+                },
+                "item": 0
+              }
+            },
+            {
+              "json": {
+                "review_key": "111_501_R2",
+                "sentiment": "",
+                "issues": "",
+                "summary": "",
+                "urgency": "",
+                "analysis_status": "failed"
+              },
+              "pairedItem": {
+                "sourceOverwrite": {
+                  "previousNode": "Google Sheets - Update Analysis",
+                  "previousNodeOutput": 0,
+                  "previousNodeRun": 1
+                },
+                "item": 0
+              }
+            },
+            {
+              "json": {
+                "review_key": "111_501_R3",
+                "sentiment": "",
+                "issues": "",
+                "summary": "",
+                "urgency": "",
+                "analysis_status": "failed"
+              },
+              "pairedItem": {
+                "sourceOverwrite": {
+                  "previousNode": "Google Sheets - Update Analysis",
+                  "previousNodeOutput": 0,
+                  "previousNodeRun": 2
+                },
+                "item": 0
+              }
+            },
+            {
+              "json": {
+                "review_key": "111_502_R10",
+                "sentiment": "",
+                "issues": "",
+                "summary": "",
+                "urgency": "",
+                "analysis_status": "failed"
+              },
+              "pairedItem": {
+                "sourceOverwrite": {
+                  "previousNode": "Google Sheets - Update Analysis",
+                  "previousNodeOutput": 0,
+                  "previousNodeRun": 3
+                },
+                "item": 0
+              }
+            },
+            {
+              "json": {
+                "review_key": "222_601_R20",
+                "sentiment": "",
+                "issues": "",
+                "summary": "",
+                "urgency": "",
+                "analysis_status": "failed"
+              },
+              "pairedItem": {
+                "sourceOverwrite": {
+                  "previousNode": "Google Sheets - Update Analysis",
+                  "previousNodeOutput": 0,
+                  "previousNodeRun": 4
+                },
+                "item": 0
+              }
+            }
+          ],
+          "noItemsLeft": true,
+          "done": true
+        }
+      },
+      "nodeExecutionStack": [],
+      "metadata": {},
+      "waitingExecution": {},
+      "waitingExecutionSource": {},
+      "runtimeData": {
+        "version": 1,
+        "establishedAt": 1792063111343,
+        "source": "cli",
+        "triggerNode": {
+          "name": "Manual Trigger",
+          "type": "n8n-nodes-base.manualTrigger"
+        }
+      }
+    },
+    "resumeToken": "6f29e8bff47db3a1da679d9fcf5f67995dd8853792f3ffe0bd04162bc0bdb1f4"
+  },
+  "mode": "cli",
+  "startedAt": "2026-10-15T11:18:31.328Z",
+  "stoppedAt": "2026-10-15T11:19:26.130Z",
+  "storedAt": "db",
+  "status": "success",
+  "finished": true
+}

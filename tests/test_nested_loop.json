@@ -1,0 +1,94 @@
+{
+  "id": "ztestnestedloop1",
+  "name": "z_test_nested_loop",
+  "nodes": [
+    {
+      "id": "m1",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [0, 0],
+      "parameters": {}
+    },
+    {
+      "id": "m2",
+      "name": "Shops",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [200, 0],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "return [\n  { json: { shop_id: '111', shop_name: 'ShopA' } },\n  { json: { shop_id: '222', shop_name: 'ShopB' } }\n];"
+      }
+    },
+    {
+      "id": "m3",
+      "name": "Loop Over Shops",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [400, 0],
+      "parameters": { "batchSize": 1, "options": {} }
+    },
+    {
+      "id": "m4",
+      "name": "Make Products",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [600, 0],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const shop = $('Loop Over Shops').item.json;\nreturn [\n  { json: { shop_id: shop.shop_id, shop_name: shop.shop_name, item_id: shop.shop_id + '-P1' } },\n  { json: { shop_id: shop.shop_id, shop_name: shop.shop_name, item_id: shop.shop_id + '-P2' } }\n];"
+      }
+    },
+    {
+      "id": "m5",
+      "name": "Loop Over Products",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [800, 0],
+      "parameters": { "batchSize": 1, "options": {} }
+    },
+    {
+      "id": "m6",
+      "name": "Work",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1000, 0],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const p = $input.first().json;\nreturn [{ json: { work: p.shop_name + '/' + p.item_id } }];"
+      }
+    },
+    {
+      "id": "m7",
+      "name": "Collect",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [600, 220],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "return $input.all().map(i => ({ json: { collected: i.json.work ?? JSON.stringify(i.json) } }));"
+      }
+    }
+  ],
+  "connections": {
+    "Manual Trigger": { "main": [[{ "node": "Shops", "type": "main", "index": 0 }]] },
+    "Shops": { "main": [[{ "node": "Loop Over Shops", "type": "main", "index": 0 }]] },
+    "Loop Over Shops": {
+      "main": [
+        [{ "node": "Collect", "type": "main", "index": 0 }],
+        [{ "node": "Make Products", "type": "main", "index": 0 }]
+      ]
+    },
+    "Make Products": { "main": [[{ "node": "Loop Over Products", "type": "main", "index": 0 }]] },
+    "Loop Over Products": {
+      "main": [
+        [{ "node": "Loop Over Shops", "type": "main", "index": 0 }],
+        [{ "node": "Work", "type": "main", "index": 0 }]
+      ]
+    },
+    "Work": { "main": [[{ "node": "Loop Over Products", "type": "main", "index": 0 }]] }
+  },
+  "settings": { "executionOrder": "v1" },
+  "active": false
+}

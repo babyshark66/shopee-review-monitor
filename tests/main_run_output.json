@@ -1,0 +1,339 @@
+n8n Task Broker ready on 127.0.0.1, port 5679
+Failed to start Python task runner in internal mode. because Python 3 is missing from this system. Launching a Python runner in internal mode is intended only for debugging and is not recommended for production. Users are encouraged to deploy in external mode. See: https://docs.n8n.io/hosting/configuration/task-runners/#setting-up-external-mode
+[license SDK] Skipping renewal on init: renewOnInit is disabled in config
+[license SDK] Skipping renewal on init: license cert is not initialized
+[runner:js] (node:19) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Registered runner "JS Task Runner" (T6XHQk7a39nah5Gy2mily) 
+Node does not have any credentials set
+Node does not have any credentials set
+Node does not have any credentials set
+Node does not have any credentials set
+Node does not have any credentials set
+Node does not have any credentials set
+Execution was NOT successful. See log message for details.
+Execution error:
+====================================
+{
+  "data": {
+    "version": 1,
+    "startData": {},
+    "resultData": {
+      "error": {
+        "level": "warning",
+        "shouldReport": true,
+        "tags": {
+          "reWrapped": true
+        },
+        "timestamp": 1792115657025,
+        "context": {},
+        "functionality": "regular",
+        "name": "NodeApiError",
+        "node": {
+          "id": "googlesheetsreadshops",
+          "name": "Google Sheets - Read Shops",
+          "type": "n8n-nodes-base.googleSheets",
+          "typeVersion": 4.7,
+          "position": [
+            660,
+            300
+          ],
+          "parameters": {
+            "authentication": "oAuth2",
+            "resource": "sheet",
+            "operation": "read",
+            "documentId": {
+              "__rl": true,
+              "mode": "id",
+              "value": "__FILL_SPREADSHEET_ID__",
+              "cachedResultName": "Shopee Monitor"
+            },
+            "sheetName": {
+              "__rl": true,
+              "mode": "name",
+              "value": "ShopList",
+              "cachedResultName": "ShopList"
+            },
+            "filtersUI": {},
+            "combineFilters": "AND",
+            "options": {}
+          },
+          "alwaysOutputData": true,
+          "retryOnFail": true,
+          "maxTries": 2,
+          "waitBetweenTries": 3000
+        },
+        "messages": [
+          "Node does not have any credentials set"
+        ],
+        "httpCode": null,
+        "message": "Node does not have any credentials set",
+        "stack": "NodeApiError: Node does not have any credentials set\n    at ExecuteContext.apiRequest (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-nodes-base@file++++home+runner+_work+n8n+n8n+packages+nodes-base/node_modules/n8n-nodes-base/nodes/Google/Sheet/v2/transport/index.ts:80:9)\n    at GoogleSheet.spreadsheetGetSheet (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-nodes-base@file++++home+runner+_work+n8n+n8n+packages+nodes-base/node_modules/n8n-nodes-base/nodes/Google/Sheet/v2/helpers/GoogleSheet.ts:141:21)\n    at ExecuteContext.router (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-nodes-base@file++++home+runner+_work+n8n+n8n+packages+nodes-base/node_modules/n8n-nodes-base/nodes/Google/Sheet/v2/actions/router.ts:43:20)\n    at ExecuteContext.execute (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-nodes-base@file++++home+runner+_work+n8n+n8n+packages+nodes-base/node_modules/n8n-nodes-base/nodes/Google/Sheet/v2/GoogleSheetsV2.node.ts:30:10)\n    at WorkflowExecute.executeNode (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-core@file++++home+runner+_work+n8n+n8n+packages+core/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:1129:8)\n    at WorkflowExecute.runNode (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-core@file++++home+runner+_work+n8n+n8n+packages+core/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:1431:11)\n    at /usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-core@file++++home+runner+_work+n8n+n8n+packages+core/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:2333:27\n    at /usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-core@file++++home+runner+_work+n8n+n8n+packages+core/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:2814:11"
+      },
+      "runData": {
+        "Manual Trigger": [
+          {
+            "startTime": 1792115653305,
+            "executionIndex": 0,
+            "source": [],
+            "hints": [],
+            "executionTime": 3,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {},
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Config": [
+          {
+            "startTime": 1792115653309,
+            "executionIndex": 1,
+            "source": [
+              {
+                "previousNode": "Manual Trigger",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 9,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "DATA_SOURCE": "import",
+                      "OLLAMA_ENABLED": true,
+                      "OLLAMA_URL": "http://172.24.0.1:11434/api/chat",
+                      "OLLAMA_MODEL": "qwen2.5-coder:1.5b",
+                      "MAX_SHOPS": 10,
+                      "MAX_PRODUCTS_PER_SHOP": 20,
+                      "MAX_REVIEWS_PER_PRODUCT": 50,
+                      "MAX_REVIEW_PAGES": 3,
+                      "REVIEW_PAGE_SIZE": 20,
+                      "MAX_AI_PER_PRODUCT": 10,
+                      "REQUEST_DELAY_MS": 1000,
+                      "AI_DELAY_MS": 500,
+                      "SHOPEE_API_HOST": "https://partner.shopeemobile.com",
+                      "SHOPEE_PARTNER_ID": "",
+                      "SHOPEE_ACCESS_TOKEN": "",
+                      "SHOPEE_PARTNER_KEY": ""
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Init Run Stats": [
+          {
+            "startTime": 1792115653318,
+            "executionIndex": 2,
+            "source": [
+              {
+                "previousNode": "Config",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 665,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "started_at": "2026-10-16T01:54:13.980Z"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Google Sheets - Read Shops": [
+          {
+            "startTime": 1792115653983,
+            "executionIndex": 3,
+            "source": [
+              {
+                "previousNode": "Init Run Stats",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 3046,
+            "executionStatus": "error",
+            "error": {
+              "level": "warning",
+              "shouldReport": true,
+              "tags": {
+                "reWrapped": true
+              },
+              "timestamp": 1792115657025,
+              "context": {},
+              "functionality": "regular",
+              "name": "NodeApiError",
+              "node": {
+                "id": "googlesheetsreadshops",
+                "name": "Google Sheets - Read Shops",
+                "type": "n8n-nodes-base.googleSheets",
+                "typeVersion": 4.7,
+                "position": [
+                  660,
+                  300
+                ],
+                "parameters": {
+                  "authentication": "oAuth2",
+                  "resource": "sheet",
+                  "operation": "read",
+                  "documentId": {
+                    "__rl": true,
+                    "mode": "id",
+                    "value": "__FILL_SPREADSHEET_ID__",
+                    "cachedResultName": "Shopee Monitor"
+                  },
+                  "sheetName": {
+                    "__rl": true,
+                    "mode": "name",
+                    "value": "ShopList",
+                    "cachedResultName": "ShopList"
+                  },
+                  "filtersUI": {},
+                  "combineFilters": "AND",
+                  "options": {}
+                },
+                "alwaysOutputData": true,
+                "retryOnFail": true,
+                "maxTries": 2,
+                "waitBetweenTries": 3000
+              },
+              "messages": [
+                "Node does not have any credentials set"
+              ],
+              "httpCode": null,
+              "message": "Node does not have any credentials set",
+              "stack": "NodeApiError: Node does not have any credentials set\n    at ExecuteContext.apiRequest (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-nodes-base@file++++home+runner+_work+n8n+n8n+packages+nodes-base/node_modules/n8n-nodes-base/nodes/Google/Sheet/v2/transport/index.ts:80:9)\n    at GoogleSheet.spreadsheetGetSheet (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-nodes-base@file++++home+runner+_work+n8n+n8n+packages+nodes-base/node_modules/n8n-nodes-base/nodes/Google/Sheet/v2/helpers/GoogleSheet.ts:141:21)\n    at ExecuteContext.router (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-nodes-base@file++++home+runner+_work+n8n+n8n+packages+nodes-base/node_modules/n8n-nodes-base/nodes/Google/Sheet/v2/actions/router.ts:43:20)\n    at ExecuteContext.execute (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-nodes-base@file++++home+runner+_work+n8n+n8n+packages+nodes-base/node_modules/n8n-nodes-base/nodes/Google/Sheet/v2/GoogleSheetsV2.node.ts:30:10)\n    at WorkflowExecute.executeNode (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-core@file++++home+runner+_work+n8n+n8n+packages+core/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:1129:8)\n    at WorkflowExecute.runNode (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-core@file++++home+runner+_work+n8n+n8n+packages+core/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:1431:11)\n    at /usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-core@file++++home+runner+_work+n8n+n8n+packages+core/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:2333:27\n    at /usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-core@file++++home+runner+_work+n8n+n8n+packages+core/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:2814:11"
+            }
+          }
+        ]
+      },
+      "lastNodeExecuted": "Google Sheets - Read Shops"
+    },
+    "executionData": {
+      "contextData": {},
+      "nodeExecutionStack": [
+        {
+          "node": {
+            "id": "googlesheetsreadshops",
+            "name": "Google Sheets - Read Shops",
+            "type": "n8n-nodes-base.googleSheets",
+            "typeVersion": 4.7,
+            "position": [
+              660,
+              300
+            ],
+            "parameters": {
+              "authentication": "oAuth2",
+              "resource": "sheet",
+              "operation": "read",
+              "documentId": {
+                "__rl": true,
+                "mode": "id",
+                "value": "__FILL_SPREADSHEET_ID__",
+                "cachedResultName": "Shopee Monitor"
+              },
+              "sheetName": {
+                "__rl": true,
+                "mode": "name",
+                "value": "ShopList",
+                "cachedResultName": "ShopList"
+              },
+              "filtersUI": {},
+              "combineFilters": "AND",
+              "options": {}
+            },
+            "alwaysOutputData": true,
+            "retryOnFail": true,
+            "maxTries": 2,
+            "waitBetweenTries": 3000
+          },
+          "data": {
+            "main": [
+              [
+                {
+                  "json": {
+                    "started_at": "2026-10-16T01:54:13.980Z"
+                  },
+                  "pairedItem": {
+                    "item": 0
+                  }
+                }
+              ]
+            ]
+          },
+          "source": {
+            "main": [
+              {
+                "previousNode": "Init Run Stats",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ]
+          }
+        }
+      ],
+      "metadata": {},
+      "waitingExecution": {},
+      "waitingExecutionSource": {},
+      "runtimeData": {
+        "version": 1,
+        "establishedAt": 1792115653305,
+        "source": "cli",
+        "triggerNode": {
+          "name": "Manual Trigger",
+          "type": "n8n-nodes-base.manualTrigger"
+        }
+      }
+    },
+    "resumeToken": "7fa8884afd91e833fafa0affca77d46cea5538dd3c7298f324a20d59455c4c9b"
+  },
+  "mode": "cli",
+  "startedAt": "2026-10-16T01:54:13.279Z",
+  "stoppedAt": "2026-10-16T01:54:17.032Z",
+  "storedAt": "db",
+  "status": "error"
+}
+Error executing workflow. See log messages for details.
+
+Execution error:
+====================================
+Node does not have any credentials set
+NodeApiError: Node does not have any credentials set
+    at ExecuteContext.apiRequest (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-nodes-base@file++++home+runner+_work+n8n+n8n+packages+nodes-base/node_modules/n8n-nodes-base/nodes/Google/Sheet/v2/transport/index.ts:80:9)
+    at GoogleSheet.spreadsheetGetSheet (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-nodes-base@file++++home+runner+_work+n8n+n8n+packages+nodes-base/node_modules/n8n-nodes-base/nodes/Google/Sheet/v2/helpers/GoogleSheet.ts:141:21)
+    at ExecuteContext.router (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-nodes-base@file++++home+runner+_work+n8n+n8n+packages+nodes-base/node_modules/n8n-nodes-base/nodes/Google/Sheet/v2/actions/router.ts:43:20)
+    at ExecuteContext.execute (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-nodes-base@file++++home+runner+_work+n8n+n8n+packages+nodes-base/node_modules/n8n-nodes-base/nodes/Google/Sheet/v2/GoogleSheetsV2.node.ts:30:10)
+    at WorkflowExecute.executeNode (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-core@file++++home+runner+_work+n8n+n8n+packages+core/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:1129:8)
+    at WorkflowExecute.runNode (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-core@file++++home+runner+_work+n8n+n8n+packages+core/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:1431:11)
+    at /usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-core@file++++home+runner+_work+n8n+n8n+packages+core/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:2333:27
+    at /usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-core@file++++home+runner+_work+n8n+n8n+packages+core/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:2814:11
+Node does not have any credentials set
